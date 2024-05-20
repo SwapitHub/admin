@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Storage;
 	*/
 
 Route::get('/test', function () {
-	// Artisan::call('make:model BlogModel');
 	// return 'OK';
 	//phpinfo();
 	// $img_url = 's3://s3-sama/decorators.png';
