@@ -1,12 +1,12 @@
 <?php
-	
+
 	namespace App\Http\Controllers\API;
-	
+
 	use App\Http\Controllers\Controller;
 	use Illuminate\Http\Request;
 	use App\Models\AddresModel;
 	use Validator;
-	
+
 	class AddressController extends Controller
 	{
 		public function index(Request $request)
@@ -57,7 +57,7 @@
 				$output['data'] = AddresModel::latest()->first();
 				return response()->json($output, 200);
 			}
-			
+
 		}
 
         public function getUserAddress(Request $request)
