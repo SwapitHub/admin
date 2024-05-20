@@ -12,7 +12,7 @@ class NewsletterController extends Controller
     public function index(Request $request)
     {
         $rules = [
-            'email' => 'required|email|unique:newsletter',
+            'email' => 'required|email',
         ];
         $messages = [
             'email.required' => 'email id is required.',
@@ -27,11 +27,21 @@ class NewsletterController extends Controller
         else
         {
             $newsletter = new Newsletter;
-            $newsletter->email = $request->email;
-            $newsletter->save();
-            $output['res'] = 'success';
-            $output['msg'] = 'Data saved!';
-            $output['data'] = Newsletter::latest()->first();
+            $exist = Newsletter::where('email',$request->email)->exists();
+            if(!$exist)
+            {
+                $newsletter->email = $request->email;
+                $newsletter->save();
+                $output['res'] = 'success';
+                $output['msg'] = 'Data saved!';
+                $output['data'] = Newsletter::latest()->first();
+            }else
+            {
+                $output['res'] = 'success';
+                $output['msg'] = 'Email already exist.';
+                $output['data'] =[];
+            } 
+           
         }
        return response()->json($output, 200);
     }
