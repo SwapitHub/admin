@@ -58,9 +58,9 @@
                                             </td>
                                             <td> {{ $item->subtitle }}</td>
                                             <td>
-                                                <center><a href="{{ asset('storage/app/public') . '/' . $item->banner }}"
+                                                <center><a href="{{ env('AWS_URL') }}public/{{ $item->banner }}"
                                                         alt="{{ $item->title }}" target="_blank"><img
-                                                            src="{{ asset('storage/app/public') . '/' . $item->banner }}"
+                                                            src="{{ env('AWS_URL') }}public/{{ $item->banner }}"
                                                             alt="{{ $item->title }}"
                                                             style="height: 100px; width:100px"></a></center>
                                             </td>
