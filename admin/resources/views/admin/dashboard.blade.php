@@ -94,6 +94,34 @@
                     </div>
                 </div></a>
             </div>
+            <div class="col-xxl-3 col-md-6 xl-50">
+                <a href="{{ route('sale.orders') }}"><div class="card o-hidden widget-cards">
+                    <div class="primary-box card-body">
+                        <div class="media static-top-widget align-items-center">
+                            <div class="icons-widgets">
+                                <div class="align-self-center text-center"><i data-feather="users" class="font-danger"></i></div>
+                            </div>
+                            <div class="media-body media-doller"><span class="m-0">Orders</span>
+                                <h3 class="mb-0"><span class="counter">{{ $orders }}</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div></a>
+            </div>
+            <div class="col-xxl-3 col-md-6 xl-50">
+                <a href="{{ route('sale.transactions') }}"><div class="card o-hidden widget-cards">
+                    <div class="secondary-box card-body">
+                        <div class="media static-top-widget align-items-center">
+                            <div class="icons-widgets">
+                                <div class="align-self-center text-center"><i data-feather="users" class="font-danger"></i></div>
+                            </div>
+                            <div class="media-body media-doller"><span class="m-0">Transactions</span>
+                                <h3 class="mb-0"><span class="counter">{{ $trnsactions }}</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div></a>
+            </div>
         </div>
     </div>
     <!-- Container-fluid Ends-->

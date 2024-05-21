@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
 use App\Models\ProductModel;
+use App\Models\OrderModel;
+use App\Models\TransactionModel;
 use App\Models\Widget;
 use App\Models\ContactUs;
 use App\Models\User;
@@ -28,6 +30,8 @@ class AdminController extends Controller
         $this->widget = Widget::count();
         $this->contactMsg = ContactUs::where('type','general')->count();
         $this->users = User::count();
+        $this->orders = OrderModel::count();
+        $this->trnsactions = TransactionModel::count();
     }
 
     public function dashboard()
@@ -36,7 +40,9 @@ class AdminController extends Controller
             'productCount'=> $this->productCount,
             'widget'=> $this->widget,
             'contactMsg'=>  $this->contactMsg,
-            'users'=>  $this->users
+            'users'=>  $this->users,
+            'orders'=>$this->orders,
+            'trnsactions'=>$this->trnsactions,
         ];
         return view('admin.dashboard',$data);
     }
