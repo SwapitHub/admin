@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="page-header-left">
-						<h3>Edit diamond shape 
+						<h3>Edit diamond shape
 							<small>Dimond Admin panel</small>
 						</h3>
 					</div>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -71,12 +71,12 @@
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
 										Image</label>
 										<div class="col-xl-8 col-md-7">
-											<input type="file" name="image" data-default-file="{{ asset('storage/app/public') }}/{{ $shapedata->icon }}" class="form-control dropify">
+											<input type="file" name="image" data-default-file="{{ env('AWS_URL') }}public/{{ $shapedata->icon }}" class="form-control dropify">
 											@error('image')
 											<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
@@ -84,10 +84,10 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="order_number" value="{{ old('order_number',$shapedata->order_number) }}" class="form-control">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
-									
+
 										<label class="col-xl-3 col-md-4">Status   </label>
 										<div class="col-md-7">
 											<div class="checkbox checkbox-primary">
@@ -102,7 +102,7 @@
 										class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
 									</div>
 								</form>
-								
+
 							</div>
 						</div>
 					</div>

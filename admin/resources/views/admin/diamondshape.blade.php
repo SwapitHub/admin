@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -37,7 +37,7 @@
 						<a href="{{ route('admin.addshape') }}" type="button" class="btn btn-primary add-row mt-md-0 mt-2">Add
 						Shape</a>
 					</div>
-					
+
 					<div class="card-body">
 						<div class="table-responsive table-desi">
 							<table class="table all-package table-category " id="editableTable">
@@ -55,20 +55,20 @@
 										<th>Option</th>
 									</tr>
 								</thead>
-								
+
 								<tbody>
 									@foreach($shapeList as $item)
-									<tr><input type="hidden" value="{{ url('admin/deleteshape') }}" name="url" id="url"></tr>
+									<tr><input type="hidden" value="{{ url('deleteshape') }}" name="url" id="url"></tr>
 									<tr data-row-id="{{ $item->id }}">
 										<td>
 											<input class="checkbox_animated check-it" type="checkbox"
 											value="" id="flexCheckDefault" data-id="{{ $item->id }}">
 										</td>
 										<td data-field="name"> <span data-bs-toggle="tooltip" data-bs-placement="top" title="slug: {{ $item->slug }}">{{ $item->shape }}</span> <span  data-bs-toggle="tooltip" data-bs-placement="top" title="Order" class="badge badge-dark">{{ $item->order_number }}</span></td>
-										
+
 										<!--td data-field="slug">{{ $item->slug }}</td-->
-										<td data-field="image"><a href="{{ asset('storage/app/public') }}/{{ $item->icon }}" target="_blank"><img src="{{ asset('storage/app/public') }}/{{ $item->icon }}"/></a></td>
-										
+										<td data-field="image"><a href="{{ asset('storage/app/public') }}/{{ $item->icon }}" target="_blank"><img src="{{ env('AWS_URL') }}public/{{ $item->icon }}"/></a></td>
+
 										<td data-field="status">
 											<span class="badge badge-{{ ($item->status =='true')?'success':'primary' }}">{{ ($item->status =='true')?'Active':'Inactive' }}</span>
 										</td>
@@ -81,7 +81,7 @@
 									</tr>
 									@endforeach
 								</tbody>
-							</table> 
+							</table>
 						</div>
 							<div class="dataTables_paginate paging_simple_numbers d-flex justify-content-between align-items-center">
 								<div>

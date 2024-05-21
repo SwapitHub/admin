@@ -1,7 +1,7 @@
 <?php
-	
+
 	namespace App\Http\Controllers\API;
-	
+
 	use App\Http\Controllers\Controller;
 	use Illuminate\Http\Request;
 	use App\Models\DiamondShape;
@@ -9,22 +9,23 @@
 	use Illuminate\Support\Facades\File;
     use Illuminate\Pagination\LengthAwarePaginator;
 	use Illuminate\Support\Facades\Cache;
-	
+
 	class DiamondController extends Controller
 	{
 		public function diamondShape()
 		{
-			$output['res'] = 'success';  
+			$output['res'] = 'success';
 			$output['msg'] = 'data retrieved successfully';
 
 			$cacheKey = 'diamond_shape';
 			$diamond_shape = Cache::get($cacheKey);
 			if(!$diamond_shape)
 			{
-				$data = DiamondShape::orderBy('order_number')->where('status','true')->get();	
+				$data = DiamondShape::orderBy('order_number')->where('status','true')->get();
 				foreach($data as $shape)
 				{
-				   $shape->icon = env('AWS_URL').'public/storage/'.$shape->icon;
+				//    $shape->icon = env('AWS_URL').'public/storage/'.$shape->icon;
+				   $shape->icon = env('AWS_URL').'public/'.$shape->icon;
 				}
 				Cache::put($cacheKey, $data, $minutes = 60);
 				$output['data'] = $data;
@@ -35,9 +36,9 @@
 				$output['from'] = 'cache';
 				return response()->json($output, 200);
 			}
-			
-			
-			
+
+
+
 		}
 
 		public function getDiaminds(Request $request)
@@ -107,25 +108,25 @@
 							return $item->cut === $cut;
 						});
 					}
-				
+
 					if ($request->has('clarity')) {
 						$clarity = $request->input('clarity');
-				
+
 						// Filter data to include items with clarities in the provided clarities array
 						 $data = array_filter($data, function ($item) use ($clarity) {
 							return $item->clarity === $clarity;
 						});
 					}
-				
+
 					if ($request->has('color')) {
 						$colors = $request->input('color');
-				
+
 						// Filter data to include items with the provided color
 						$data = array_filter($data, function ($item) use ($colors) {
 							return $item->color === $colors;
 						});
 					}
-				
+
 
 					// Paginate the filtered data
 					$perPage = $request->input('perPage', 20); // Number of items per page, default 20
@@ -135,7 +136,7 @@
 					$pagedData = array_slice($data, $offset, $perPage);
 
 					// Return paginated JSON response with pagination information
-					
+
 					return response()->json([
 						'res'=>'seccess',
 						'msg'=>'data retrieved successfully',
@@ -147,7 +148,7 @@
 							'lastPage' => ceil(count($data) / $perPage),
 						],
 					]);
-						
+
 			}
 
 
