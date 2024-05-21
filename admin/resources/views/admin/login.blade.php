@@ -12,33 +12,33 @@
 		<meta name="keywords"
         content="">
 		<meta name="author" content="Diamond">
-		<link rel="icon" href="{{ asset('public/admin') }}/images/dashboard/favicon.png" type="image/x-icon">
-		<link rel="shortcut icon" href="{{ asset('public/admin') }}/images/dashboard/favicon.png" type="image/x-icon">
+		<link rel="icon" href="{{ env('AWS_URL') }}admin-assets/admin/images/dashboard/favicon.png" type="image/x-icon">
+		<link rel="shortcut icon" href="{{ env('AWS_URL') }}admin-assets/admin/images/dashboard/favicon.png" type="image/x-icon">
 		<title>SAMA - Sustainable Engagement Rings &amp; Fine Jewelry</title>
 
 		<!-- Google font-->
 		<link rel="stylesheet"
-        href="{{ asset('public/admin') }}/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap">
+        href="{{ env('AWS_URL') }}admin-assets/admin/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap">
 
 		<link rel="stylesheet"
-        href="{{ asset('public/admin') }}/css2-1?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+        href="{{ env('AWS_URL') }}admin-assets/admin/css2-1?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
 
 
 		<!-- Font Awesome-->
-		<link rel="stylesheet" type="text/css" href="{{ asset('public/admin') }}/css/vendors/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="{{ env('AWS_URL') }}admin-assets/admin/css/vendors/font-awesome.css">
 
 		<!-- Flag icon-->
-		<link rel="stylesheet" type="text/css" href="{{ asset('public/admin') }}/css/vendors/themify-icons.css">
+		<link rel="stylesheet" type="text/css" href="{{ env('AWS_URL') }}admin-assets/admin/css/vendors/themify-icons.css">
 
 		<!-- slick icon-->
-		<link rel="stylesheet" type="text/css" href="{{ asset('public/admin') }}/css/vendors/slick.css">
-		<link rel="stylesheet" type="text/css" href="{{ asset('public/admin') }}/css/vendors/slick-theme.css">
+		<link rel="stylesheet" type="text/css" href="{{ env('AWS_URL') }}admin-assets/admin/css/vendors/slick.css">
+		<link rel="stylesheet" type="text/css" href="{{ env('AWS_URL') }}admin-assets/admin/css/vendors/slick-theme.css">
 
 		<!-- Bootstrap css-->
-		<link rel="stylesheet" type="text/css" href="{{ asset('public/admin') }}/css/vendors/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="{{ env('AWS_URL') }}admin-assets/admin/css/vendors/bootstrap.css">
 
 		<!-- App css-->
-		<link rel="stylesheet" type="text/css" href="{{ asset('public/admin') }}/css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{ env('AWS_URL') }}admin-assets/admin/css/style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
 		<style>
 			body {
@@ -316,27 +316,27 @@
 	</div>
 
 	<!-- latest jquery-->
-	<script src="{{ asset('public/admin') }}/js/jquery-3.3.1.min.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/jquery-3.3.1.min.js"></script>
 
 	<!-- Bootstrap js-->
-	<script src="{{ asset('public/admin') }}/js/bootstrap.bundle.min.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/bootstrap.bundle.min.js"></script>
 
 	<!-- feather icon js-->
-	<script src="{{ asset('public/admin') }}/js/icons/feather-icon/feather.min.js"></script>
-	<script src="{{ asset('public/admin') }}/js/icons/feather-icon/feather-icon.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/icons/feather-icon/feather.min.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/icons/feather-icon/feather-icon.js"></script>
 
 	<!-- Sidebar jquery-->
-	<script src="{{ asset('public/admin') }}/js/sidebar-menu.js"></script>
-	<script src="{{ asset('public/admin') }}/js/slick.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/sidebar-menu.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/slick.js"></script>
 
 	<!-- lazyload js-->
-	<script src="{{ asset('public/admin') }}/js/lazysizes.min.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/lazysizes.min.js"></script>
 
 	<!--right sidebar js-->
-	<script src="{{ asset('public/admin') }}/js/chat-menu.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/chat-menu.js"></script>
 
 	<!--script admin-->
-	<script src="{{ asset('public/admin') }}/js/admin-script.js"></script>
+	<script src="{{ env('AWS_URL') }}admin-assets/admin/js/admin-script.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 	<script>
 	$('.single-item').slick({
