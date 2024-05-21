@@ -3,7 +3,7 @@
 <style>
 	#termsec{
 	display:none;
-	}	
+	}
 </style>
 <div class="page-body">
 	<!-- Container-fluid starts-->
@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -76,8 +76,8 @@
 										<label for="validationCustom0" class="col-xl-3 col-md-4">Type</label>
 										<div class="col-xl-8 col-md-7">
 											<select name="type" id="type" onchange="showTerm(this.value)" class="form-control">
-												<option value="general" {{ ($bannerdata->type == 'general')?'selected':'' }}>General</option>	
-												<option value="promotional" {{ ($bannerdata->type == 'promotional')?'selected':'' }}>Promotional</option>	
+												<option value="general" {{ ($bannerdata->type == 'general')?'selected':'' }}>General</option>
+												<option value="promotional" {{ ($bannerdata->type == 'promotional')?'selected':'' }}>Promotional</option>
 											</select>
 										</div>
 									</div>
@@ -100,11 +100,17 @@
 											value="{{ old('link',$bannerdata->link) }}" name="link" type="url">
 										</div>
 									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom2" class="col-xl-3 col-md-4">Button Name</label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="btn_name" placeholder="Custom Button Name"
+											value="{{ old('btn_name',$bannerdata->btn_name) }}" value="{{ old('link',$bannerdata->btn_name) }}" name="btn_name" type="text">
+										</div>
+									</div>
 									<div class="form-group row">
 										<label for="validationCustom2" class="col-xl-3 col-md-4">Banner</label>
 										<div class="col-xl-8 col-md-7">
-											<input class="form-control dropify" id="image" name="image"
-											data-default-file="{{ asset('storage/app/public') }}/{{ $bannerdata->banner }}" type="file">
+											<input class="form-control dropify" id="image" name="image" data-default-file="{{ env('AWS_URL') }}public/{{ $bannerdata->banner }}" type="file">
 											@error('image')
 											<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
@@ -116,7 +122,7 @@
 										<div class="col-xl-8 col-md-7">
 											<textarea name="description" id="" cols="30" rows="10" class="summernote">{{ old('description',$bannerdata->description) }}</textarea>
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label class="col-xl-3 col-md-4">Status</label>
@@ -133,7 +139,7 @@
 										class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
 									</div>
 								</form>
-								
+
 							</div>
 						</div>
 					</div>
@@ -150,11 +156,11 @@
 		showTerm(value);
 	});
 	function showTerm(value)
-	{   
+	{
 		if(value =='promotional')
 		{
-			$("#termsec").css('display','block');  
-			
+			$("#termsec").css('display','block');
+
 		}
 		else
 		{
