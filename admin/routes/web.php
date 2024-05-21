@@ -182,6 +182,7 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/product/export', [App\Http\Controllers\ProductController::class, 'exportProduct'])->name('admin.product.export');
 	Route::post('/product/create', [App\Http\Controllers\ProductController::class, 'productCreate'])->name('admin.product.create');
 	Route::post('/product/configurable', [App\Http\Controllers\ProductController::class, 'addConfigurableProduct'])->name('admin.product.configurable');
+	Route::post('/product/update/{id}', [App\Http\Controllers\ProductController::class, 'updateProduct'])->name('admin.product.postupdate');
 
 
 	Route::get('/blog/category', [App\Http\Controllers\BlogController::class, 'blogCategory'])->name('admin.blog.cat');

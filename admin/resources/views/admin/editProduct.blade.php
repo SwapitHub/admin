@@ -221,7 +221,7 @@
                             <hr>
                             <h5 style="margin-left:10px;">Similar Products</h5>
                             <div class="form-group row">
-                                <label for="menuname" class="col-xl-3 col-md-4">Products 
+                                <label for="menuname" class="col-xl-3 col-md-4">Products
                                 </label>
                                 <?php
                                 $similarProducts = explode(',',$product->similar_products);
@@ -231,10 +231,10 @@
                                         <?php
                                          if($product->similar_products == null){
                                             echo "<option selected disabled>select</option>";
-                                         }    
+                                         }
                                         ?>
                                         @foreach($similar_products as $similar_product)
-                                           
+
                                         <option <?= (in_array($similar_product->id,$similarProducts))?'selected':'' ?> value="{{ $similar_product->id }}">{{ $similar_product->sku }} - {{ $similar_product->name }}</option>
                                         @endforeach
                                     </select>
@@ -289,7 +289,7 @@
 	$(document).ready(function(){
 		getCatlist(menuid);
         getSubcategories(menuid,cat);
-		
+
 	});
 	function getCatlist(menuid)
 	{
@@ -300,7 +300,7 @@
         $.ajax({
             url : act_url,
             method:"POST",
-            data: { 
+            data: {
                 _token: csrfToken,
                 data: data
             },
@@ -332,7 +332,7 @@
         $.ajax({
             url : act_url,
             method:"POST",
-            data: { 
+            data: {
                 _token: csrfToken,
                 data: data
             },
@@ -355,7 +355,7 @@
     }
 
 
-	$("#menu_id").on('change',function(){  
+	$("#menu_id").on('change',function(){
 		var menuId = $(this).val();
 		if(menuId)
 		{
@@ -366,14 +366,14 @@
 		else
 		{
 		    $('#category_id').empty();
-            $('#category_id').append($('<option>').text('Select a category'));	 
+            $('#category_id').append($('<option>').text('Select a category'));
 		}
-	})	
+	})
     $("#category_id").on('change',function(){
         var categories = $(this).val();
         var categoriesString = categories.join(','); // Convert array to comma-separated string
         getSubcategories(menuid,categoriesString);
-        
+
     })
     $('#subcategory').select2({
 			selectOnClose: true
@@ -382,7 +382,7 @@
             selectOnClose: true
         })
 
-        // get products based on category id 
+        // get products based on category id
         function getSimilarProducts(cat_id)
         {
             alert(cat_id);
