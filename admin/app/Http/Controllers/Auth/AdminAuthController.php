@@ -8,6 +8,14 @@ use Auth;
 
 class AdminAuthController extends Controller
 {
+    public function index()
+    {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return view('admin.login');
+    }
+
     public function authenticate(Request $request) {
 
         $this->validate($request,[
@@ -17,7 +25,7 @@ class AdminAuthController extends Controller
             'email.required' => 'The Email field is required.',
             'password.required' => 'The Password field is required.',
         ]);
-		
+
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password],$request->get('remember'))) {
             return redirect()->route('admin.dashboard');
         } else {

@@ -13,25 +13,12 @@ use Illuminate\Support\Facades\Storage;
 		|
 	*/
 
-Route::get('/test', function () {
-	// return 'OK';
-	//phpinfo();
-	// $img_url = 's3://s3-sama/decorators.png';
-	Storage::put('test1.txt', 'test again');
-	$contents = Storage::disk('s3')->get('test1.txt');
-	var_dump($contents);
-
-	// return Storage::disk($disk)->url($uploadedPath);
-});
-Route::get('/', function () {
-	return view('admin.login');
-});
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::group(['prefix' => 'admin'], function() {
 Route::group(['middleware' => 'admin.guest'], function () {
-	Route::view('/login', 'admin.login')->name('admin.login');
+    Route::get('/', [App\Http\Controllers\Auth\AdminAuthController::class, 'index'])->name('admin.login');
 	Route::post('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'authenticate'])->name('admin.auth');
 });
 
