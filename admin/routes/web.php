@@ -22,7 +22,6 @@ Route::group(['middleware' => 'admin.guest'], function () {
 	Route::post('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'authenticate'])->name('admin.auth');
 });
 
-// Route::group(['middleware' => 'admin.auth'], function(){
 Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/logout', [App\Http\Controllers\Auth\AdminAuthController::class, 'logout'])->name('admin.logout');
 	Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -293,4 +292,4 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/price/discount', [App\Http\Controllers\ProductPriceDiscount::class, 'index'])->name('price.discount');
 	Route::post('/price/discount', [App\Http\Controllers\ProductPriceDiscount::class, 'update'])->name('price.discount.update');
 });
-	// });
+
