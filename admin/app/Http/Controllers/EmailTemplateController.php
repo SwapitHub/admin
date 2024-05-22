@@ -86,9 +86,22 @@ class EmailTemplateController extends Controller
             $template->status = $request->status ?? 'false';
             $template->save();
             return redirect()->back()->with('success', 'Template added successfully');
-        }else
-        {
+        } else {
             return redirect()->back()->with('error', 'Template Id \Invalid');
         }
+    }
+
+    public function distroy($id)
+    {
+        $id =  EmailTemplate::find($id);
+        if ($id) {
+            $id->delete();
+            $output['res'] = 'success';
+            $output['msg'] = 'Data Deleted';
+        } else {
+            $output['res'] = 'error';
+            $output['msg'] = 'Template Id Required';
+        }
+        echo json_encode($output);
     }
 }

@@ -56,7 +56,7 @@
 									</thead>
 
 									 <tbody>
-									<tr><input type="hidden" value="{{ url('admin/faq/delete') }}" name="url" id="url"></tr>
+									<tr><input type="hidden" value="{{ url('email_template/delete') }}" name="url" id="url"></tr>
 										@foreach($list as $item)
 
 										<tr data-row-id="{{ $item->id }}">
