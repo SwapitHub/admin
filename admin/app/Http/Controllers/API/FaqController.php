@@ -27,8 +27,6 @@
 				'last_name' => 'required',
 				'email' => 'required|email',
 				'type' => 'required',
-				'product_id' => $request->type == 'product_enquiry' ? 'required' : '',
-				'product_color' => $request->type == 'product_enquiry' ? 'required' : '',
 				]);
 				if($validator->fails())
 				{
