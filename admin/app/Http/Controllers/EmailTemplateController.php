@@ -104,4 +104,9 @@ class EmailTemplateController extends Controller
         }
         echo json_encode($output);
     }
+
+    public function testGateway()
+    {
+       return view('payment_form');
+    }
 }

@@ -9,6 +9,15 @@
 
 	class RegisterController extends BaseController
 	{
+        // public function __destruct()
+        // {
+        //     $this->emailGroup = [
+        //         'send_registratino_email',
+        //         'send_account_verification_email',
+        //         'send_registratino_email_to_admin'
+        //     ];
+        // }
+
 		public function registerUser(Request $request)
 		{
 			$validator = Validator::make($request->all(), [

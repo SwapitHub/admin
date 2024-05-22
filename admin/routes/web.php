@@ -300,5 +300,7 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
     Route::get('/email_template/edit/{id}',[App\Http\Controllers\EmailTemplateController::class, 'editTemplate'])->name('template.edit');
     Route::post('/email_template/edit/{id}',[App\Http\Controllers\EmailTemplateController::class, 'updateTemplate'])->name('template.update');
     Route::get('/email_template/delete/{id}',[App\Http\Controllers\EmailTemplateController::class, 'distroy'])->name('template.delete');
+    Route::get('/email_template/test',[App\Http\Controllers\EmailTemplateController::class, 'testing']);
+    Route::get('/payment',[App\Http\Controllers\EmailTemplateController::class, 'testGateway']);
 });
 
