@@ -7,7 +7,7 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="page-header-left">
-							<h3>Gemstone  Lists
+							<h3>Email Template List
 								<small>Diamond Admin panel</small>
 							</h3>
 						</div>
@@ -15,12 +15,12 @@
 					<div class="col-lg-6">
 						<ol class="breadcrumb pull-right">
 							<li class="breadcrumb-item">
-								<a href="index.html">
+								<a href="{{ route('admin.dashboard') }}">
 									<i data-feather="home"></i>
 								</a>
 							</li>
-							<li class="breadcrumb-item">Gemstones</li>
-							<li class="breadcrumb-item active">gemstone Lists</li>
+							<li class="breadcrumb-item">Email Template </li>
+							<li class="breadcrumb-item active">Template Lists</li>
 						</ol>
 					</div>
 				</div>
@@ -48,7 +48,7 @@
 												class="badge badge-primary add-row delete_all"><i class="fa fa-trash"></i></span>
 											</th>
 											<th>Name</th>
-											<th>Image</th>
+											<th>Group</th>
 											<th>Status</th>
 											<th>Options</th>
 
@@ -56,8 +56,9 @@
 									</thead>
 
 									 <tbody>
-									<tr><input type="hidden" value="{{ url('gemstones/delete') }}" name="url" id="url"></tr>
+									<tr><input type="hidden" value="{{ url('admin/faq/delete') }}" name="url" id="url"></tr>
 										@foreach($list as $item)
+
 										<tr data-row-id="{{ $item->id }}">
 											<td>
 												<input class="checkbox_animated check-it" type="checkbox"
@@ -65,9 +66,9 @@
 											</td>
 
 											<td>{{ $item->name }}</td>
-											<td><img src="{{ env('AWS_URL') }}.'public/'{{ $item->image }}"></td>
+											<td>{{ ucfirst(str_replace('_',' ',$item->group)) }}</td>
 
-											<td >
+											<td>
 												<span class="badge badge-{{ ($item->status =='true')?'success':'primary' }}">{{ ($item->status =='true')?'Active':'Inactive' }}</span>
 											</td>
 											<td class="list-date">

@@ -292,5 +292,12 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/product/check', [App\Http\Controllers\ProductController::class, 'Testing']);
 	Route::get('/price/discount', [App\Http\Controllers\ProductPriceDiscount::class, 'index'])->name('price.discount');
 	Route::post('/price/discount', [App\Http\Controllers\ProductPriceDiscount::class, 'update'])->name('price.discount.update');
+
+    // email template route
+    Route::get('/email_template',[App\Http\Controllers\EmailTemplateController::class, 'index'])->name('template.list');
+    Route::get('/email_template/add',[App\Http\Controllers\EmailTemplateController::class, 'addTemplate'])->name('template.add');
+    Route::post('/email_template/add',[App\Http\Controllers\EmailTemplateController::class, 'postAddTemplate'])->name('template.postadd');
+    Route::get('/email_template/edit/{id}',[App\Http\Controllers\EmailTemplateController::class, 'editTemplate'])->name('template.edit');
+    Route::post('/email_template/edit/{id}',[App\Http\Controllers\EmailTemplateController::class, 'updateTemplate'])->name('template.update');
 });
 

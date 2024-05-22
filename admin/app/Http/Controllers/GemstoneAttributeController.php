@@ -33,7 +33,7 @@ class GemstoneAttributeController extends Controller
     }
 
     public function gemstoneStore(Request $request)
-    { 
+    {
 			$this->validate($request, [
                 'name' => 'required',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048',
@@ -44,7 +44,7 @@ class GemstoneAttributeController extends Controller
                 'image.mimes' => 'The image must be a JPEG, PNG, JPG, WEBP or GIF file.',
                 'image.max' => 'The image size must not exceed 5 MB.',
                 ]);
-                
+
                 if ($request->file('image') != NULL) {
                     $extension = $request->file('image')->getClientOriginalExtension();
                     $fileName = "gemstone_" . time() . '.' . $extension;
@@ -84,19 +84,19 @@ class GemstoneAttributeController extends Controller
 			]);
 			$stonedata = gemstoneModel::find($request->id);
 			if ($request->file('image') != NULL) {
-				$oldImagePath = 'public/' . $stonedata->image; 
+				$oldImagePath = 'public/' . $stonedata->image;
 				if (Storage::exists($oldImagePath)) {
 					Storage::delete($oldImagePath);
 				}
 				$extension = $request->file('image')->getClientOriginalExtension();
 				$fileName = "gemstone_" . time() . '.' . $extension;
-                
+
 				$path = $request->file('image')->storeAs('public/images', $fileName);
 				$bannerpath = 'images/' . $fileName;
 			}else{
 			    $bannerpath = $stonedata->image;
 			}
-			
+
 			$stonedata->name = $request->name;
 			$stonedata->image = $bannerpath;
 			$stonedata->status = $request->status ?? 'false';
@@ -115,11 +115,11 @@ class GemstoneAttributeController extends Controller
             $output['res'] = 'error';
             $output['msg'] = 'Carat Id Required';
         }
-        echo json_encode($output);	
+        echo json_encode($output);
     }
 
 
-    ############# Stone shape start ################ 
+    ############# Stone shape start ################
 
     public function stoneShape()
     {
@@ -144,7 +144,7 @@ class GemstoneAttributeController extends Controller
     }
 
     public function stoneShapeStore(Request $request)
-    { 
+    {
 			$this->validate($request, [
                 'name' => 'required',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048',
@@ -155,7 +155,7 @@ class GemstoneAttributeController extends Controller
                 'image.mimes' => 'The image must be a JPEG, PNG, JPG, WEBP or GIF file.',
                 'image.max' => 'The image size must not exceed 5 MB.',
                 ]);
-                
+
                 if ($request->file('image') != NULL) {
                     $extension = $request->file('image')->getClientOriginalExtension();
                     $fileName = "gemstone_" . time() . '.' . $extension;
@@ -195,19 +195,19 @@ class GemstoneAttributeController extends Controller
 			]);
 			$stonedata = gemstoneShapeModel::find($request->id);
 			if ($request->file('image') != NULL) {
-				$oldImagePath = 'public/' . $stonedata->image; 
+				$oldImagePath = 'public/' . $stonedata->image;
 				if (Storage::exists($oldImagePath)) {
 					Storage::delete($oldImagePath);
 				}
 				$extension = $request->file('image')->getClientOriginalExtension();
 				$fileName = "gemstone_" . time() . '.' . $extension;
-                
+
 				$path = $request->file('image')->storeAs('public/images', $fileName);
 				$bannerpath = 'images/' . $fileName;
 			}else{
 			    $bannerpath = $stonedata->image;
 			}
-			
+
 			$stonedata->name = $request->name;
 			$stonedata->image = $bannerpath;
 			$stonedata->status = $request->status ?? 'false';
@@ -226,12 +226,12 @@ class GemstoneAttributeController extends Controller
             $output['res'] = 'error';
             $output['msg'] = 'Id Required';
         }
-        echo json_encode($output);	
+        echo json_encode($output);
     }
 
-    ############# Stone shape end ################ 
+    ############# Stone shape end ################
 
-    ############# Stone color start ################ 
+    ############# Stone color start ################
 
     public function stoneColor()
     {
@@ -256,7 +256,7 @@ class GemstoneAttributeController extends Controller
     }
 
     public function stoneColorStore(Request $request)
-    { 
+    {
 			$this->validate($request, [
                 'name' => 'required',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048',
@@ -267,7 +267,7 @@ class GemstoneAttributeController extends Controller
                 'image.mimes' => 'The image must be a JPEG, PNG, JPG, WEBP or GIF file.',
                 'image.max' => 'The image size must not exceed 5 MB.',
                 ]);
-                
+
                 if ($request->file('image') != NULL) {
                     $extension = $request->file('image')->getClientOriginalExtension();
                     $fileName = "gemstone_" . time() . '.' . $extension;
@@ -307,19 +307,19 @@ class GemstoneAttributeController extends Controller
 			]);
 			$stonedata = gemstoneColorModel::find($request->id);
 			if ($request->file('image') != NULL) {
-				$oldImagePath = 'public/' . $stonedata->image; 
+				$oldImagePath = 'public/' . $stonedata->image;
 				if (Storage::exists($oldImagePath)) {
 					Storage::delete($oldImagePath);
 				}
 				$extension = $request->file('image')->getClientOriginalExtension();
 				$fileName = "gemstone_" . time() . '.' . $extension;
-                
+
 				$path = $request->file('image')->storeAs('public/images', $fileName);
 				$bannerpath = 'images/' . $fileName;
 			}else{
 			    $bannerpath = $stonedata->image;
 			}
-			
+
 			$stonedata->name = $request->name;
 			$stonedata->image = $bannerpath;
 			$stonedata->status = $request->status ?? 'false';
@@ -338,9 +338,9 @@ class GemstoneAttributeController extends Controller
             $output['res'] = 'error';
             $output['msg'] = 'Id Required';
         }
-        echo json_encode($output);	
+        echo json_encode($output);
     }
 
-    ############# Stone color end ################ 
+    ############# Stone color end ################
 
 }

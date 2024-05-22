@@ -1,5 +1,5 @@
 <?php
-	
+
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\Route;
 	/*
@@ -15,14 +15,14 @@
 	Route::get('/csrf-token', function () {
 		return response()->json(['csrf_token' => csrf_token()]);
 	});
-	
+
 	Route::prefix('v1')->group(function () {
 		Route::any('newsletter',[App\Http\Controllers\API\NewsletterController::class,'index']);
 		Route::get('token', [App\Http\Controllers\API\SiteinfoController::class, 'getCsrfToken']);
 		Route::post('user-registration', [App\Http\Controllers\API\RegisterController::class, 'registerUser']);
 		Route::any('login', [App\Http\Controllers\API\RegisterController::class, 'login']);
 		Route::get('diamondshape',[App\Http\Controllers\API\DiamondController::class,'diamondShape']);
-		Route::post('contact',[App\Http\Controllers\API\FaqController::class,'contactUs']);
+		Route::any('contact',[App\Http\Controllers\API\FaqController::class,'contactUs']);
 		Route::get('languages',[App\Http\Controllers\API\LocalizationController::class,'index']);
 		Route::get('banners',[App\Http\Controllers\API\BannerController::class,'index']);
 		Route::get('siteinfo',[App\Http\Controllers\API\SiteinfoController::class,'index']);
@@ -60,9 +60,9 @@
 		Route::any('checkout',[App\Http\Controllers\API\CheckOutController::class,'checkout']);
 		Route::get('order-history',[App\Http\Controllers\API\OrdersController::class,'index']);
 		Route::get('order-detail',[App\Http\Controllers\API\OrdersController::class,'historyDetail']);
-		
+
 	});
-	
+
 	// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 		// return $request->user();
 	// });

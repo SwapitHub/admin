@@ -544,7 +544,7 @@
 
 								<ul class="sidebar-submenu">
 									<li>
-										<a href="#">
+										<a href="{{ route('template.list') }}">
 											<i class="fa fa-circle"></i>Email template
 										</a>
 									</li>
