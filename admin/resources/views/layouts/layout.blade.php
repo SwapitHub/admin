@@ -720,7 +720,7 @@
 <script src=" {{ env('AWS_URL') }}admin-assets/admin/js/chart/google/google-chart-loader.js"></script>
 <!--Report chart-->
 {{-- <script src=" {{ env('AWS_URL') }}admin-assets/admin/js/admin-reports.js"></script> --}}
-{{-- <script src=" {{ env('AWS_URL') }}admin-assets/admin/js/admin-reports.js"></script> --}}
+<script src=" {{ env('AWS_URL') }}admin-assets/admin/js/admin-reports.js"></script>
 
 <!--script admin-->
 <script src=" {{ env('AWS_URL') }}admin-assets/admin/js/admin-script.js"></script>
