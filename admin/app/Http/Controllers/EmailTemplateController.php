@@ -54,12 +54,11 @@ class EmailTemplateController extends Controller
     public function editTemplate($id)
     {
         $editdata = EmailTemplate::find($id);
-        if($editdata == null)
-        {
+        if ($editdata == null) {
             return 'no data';
         }
         $data = [
-            'url_action' => route('template.update',['id'=>$id]),
+            'url_action' => route('template.update', ['id' => $id]),
             'backtrack' => 'template.list',
             'title' => 'Edit Email Template',
             "obj" => $editdata,
@@ -67,7 +66,29 @@ class EmailTemplateController extends Controller
         return view('admin.email_template', $data);
     }
 
-    public function updateTemplate($id)
+    public function updateTemplate(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required',
+            'group' => 'required',
+            'content' => 'required',
+        ], [
+            'name.required' => 'The name title field is required.',
+            'group.required' => 'The group title field is required.',
+            'content.required' => 'The content title field is required.',
+        ]);
+
+        $template = EmailTemplate::find($id);
+        if ($template) {
+            $template->name = $request->name;
+            $template->group = $request->group;
+            $template->content = $request->content;
+            $template->status = $request->status ?? 'false';
+            $template->save();
+            return redirect()->back()->with('success', 'Template added successfully');
+        }else
+        {
+            return redirect()->back()->with('error', 'Template Id \Invalid');
+        }
     }
 }
