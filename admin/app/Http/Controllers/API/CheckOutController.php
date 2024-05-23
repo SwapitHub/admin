@@ -132,7 +132,7 @@ class CheckOutController extends Controller
             'card_no' => 'required|numeric|digits:16',
             'exp_date' => 'required',
             'cvv' => 'required|numeric|digits_between:3,4',
-            'zip' => 'required|numeric|digits_between:7,8',
+            'zip' => 'required|numeric|digits_between:4,8',
         ];
         $messages = [
             'card_no.required' => 'Card number is required.',

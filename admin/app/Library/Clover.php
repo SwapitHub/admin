@@ -53,13 +53,14 @@ class Clover
     {
         $client = new \GuzzleHttp\Client();
         $response = $client->request('POST', 'https://scl-sandbox.dev.clover.com/v1/charges', [
-            'body' => '{"amount":2000,"currency":"usd","capture":true,"ecomind":"ecom","receipt_email":"34ey8e3lvq@rfcdrive.com","source":"clv_1TSTS2go8L5Q7Kmzxsraj5kM","partial_redemption":true}',
+            'body' => '{"amount":"'.$chargeData['amount'].'","currency":"'.$chargeData['currency'].'","capture":true,"ecomind":"ecom","receipt_email":"'.$chargeData['email'].'","source":"'.$chargeData['token'].'","partial_redemption":true}',
             'headers' => [
                 'accept' => 'application/json',
                 'authorization' => 'Bearer "' . $this->authorizationKey . '"',
                 'content-type' => 'application/json',
             ],
         ]);
-        echo $response->getBody();
+        $json_data = json_decode($response->getBody());
+        return $json_data;
     }
 }
