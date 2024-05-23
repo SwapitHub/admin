@@ -169,9 +169,9 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($bannerlist as $item)
+                                                        @foreach ($bannerlist as $index=>$item)
                                                             <tr>
-                                                                <td>{{ $item->id }}</td>
+                                                                <td>{{ $index+1 }}</td>
                                                                 <td>
                                                                     {{ $item->title }}
                                                                 </td>
