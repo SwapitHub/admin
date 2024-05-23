@@ -12,7 +12,7 @@
 	{
 		public function index()
 		{
-			$banner = Banner::orderBy('id', 'desc')->get();
+			$banner = Banner::orderBy('id', 'desc')->where('type','!=','Home')->get();
 			$data = [
             'bannerlist' => $banner,
 			];
@@ -41,15 +41,10 @@
 			if ($request->file('image') != NULL) {
 				$extension = $request->file('image')->getClientOriginalExtension();
 				$fileName = "banner_" . time() . '.' . $extension;
-				$path = $request->file('image')->storeAs('public/images/banner', $fileName);
+                $path = $request->file('image')->storeAs('public/images/banner', $fileName,'s3');
+                Storage::disk('s3')->setVisibility($path, 'public');
 				$bannerpath = 'images/banner/' . $fileName;
 
-				$path = $request->file('image')->storeAs(
-					'banner',
-					$fileName,
-					's3'
-				);
-                Storage::disk('s3')->setVisibility($path, 'public');
 			}
 			$banner = new Banner;
 			$banner->title = $request->title;

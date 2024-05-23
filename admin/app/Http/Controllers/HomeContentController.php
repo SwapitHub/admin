@@ -12,7 +12,7 @@
 	{
 	    public function index()
 		{
-            $banner = Banner::orderBy('id', 'desc')->get();
+            $banner = Banner::orderBy('id', 'desc')->where('type','Home')->get();
 			$data = [
 			"title"=>'Home Content',
 			"url_action"=>route('admin.homecontent.update'),
