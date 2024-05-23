@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\OrderItem;
 use App\Models\OrderModel;
 use App\Models\TransactionModel;
+use App\Library\Clover;
 use Validator;
 
 class CheckOutController extends Controller
@@ -22,6 +23,7 @@ class CheckOutController extends Controller
         }
         return 'ORDER_' . date('YmdHis') . '_' . $randomString;
     }
+
     //first make payment then create order
     public function checkout(Request $request)
     {
@@ -41,11 +43,10 @@ class CheckOutController extends Controller
             return response()->json($output, 401);
         } else {
             $is_valid = json_decode($request->order_data);
-            if(empty(get_object_vars($is_valid)))
-            {
+            if (empty(get_object_vars($is_valid))) {
                 $output['res'] = 'error';
                 $output['msg'] = 'Order Data is empty please add some order first.';
-                 return response()->json($output, 401);
+                return response()->json($output, 401);
             }
             $order = new OrderModel();
             $order->order_id = $this->generateOrderID();
@@ -115,12 +116,68 @@ class CheckOutController extends Controller
         }
     }
 
-    ## Save OrderItem in orderItem table 
+    ## Save OrderItem in orderItem table
     private function saveOrderItem($orderIremArr)
     {
         $saveOrder = OrderItem::create($orderIremArr);
         if ($saveOrder) {
             return 'true';
+        }
+    }
+
+    ## tokenize card
+    public function tokenizeCard(Request $request)
+    {
+        $rules = [
+            'card_no' => 'required|numeric|digits:16',
+            'exp_date' => 'required',
+            'cvv' => 'required|numeric|digits_between:3,4',
+            'zip' => 'required|numeric|digits_between:7,8',
+        ];
+        $messages = [
+            'card_no.required' => 'Card number is required.',
+            'card_no.numeric' => 'Card number must be numeric.',
+            'card_no.digits' => 'Card number must be exactly 16 digits long.',
+            'exp_date.required' => 'Expiry date is required.',
+            'cvv.required' => 'CVV field is required.',
+            'cvv.numeric' => 'CVV must be numeric.',
+            'cvv.digits_between' => 'CVV must be between 3 and 4 digits long.',
+            'zip.required' => 'Zip code field is required.',
+            'zip.numeric' => 'Zip code must be numeric.',
+            'zip.digits' => 'Zip code must be between 6 and 8 digits long',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            $output['res'] = 'error';
+            $output['msg'] = $errors;
+            return response()->json($output, 401);
+        }
+        try {
+            $clover = new Clover();
+            $cardData = [
+                'card_no' => $request->card_no,
+                'cvv' => $request->cvv,
+                'exp_date' => $request->exp_date,
+            ];
+            $token = $clover->tokenizeCard($cardData);
+            if ($token != NULL) {
+                $output['res'] = 'success';
+                $output['msg'] = 'Token retrieved successfully.';
+                $output['data'] = ['token' => $token];
+            } else {
+                $output['res'] = 'error';
+                $output['msg'] = 'Try again, something went wrong.';
+                $output['data'] = [];
+            }
+            return response()->json($output, 200);
+        } catch (Exception $e) {
+            // Handle exceptions
+            $output['res'] = 'error';
+            $output['msg'] = $e->getMessage(); // Get the error message from the exception
+            $output['data'] = [];
+            return response()->json($output, 500); // Return a
         }
     }
 }

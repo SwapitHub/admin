@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EmailTemplate;
+use App\Library\Clover;
 
 class EmailTemplateController extends Controller
 {
@@ -107,6 +108,8 @@ class EmailTemplateController extends Controller
 
     public function testGateway()
     {
-       return view('payment_form');
+    //    return view('payment_form');
+       $clover = new Clover();
+       $clover->tokenizeCard();
     }
 }

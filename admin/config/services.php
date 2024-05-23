@@ -30,4 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'clover' => [
+        'client_id' => env('CLOVER_CLIENT_ID'),
+        'client_secret' => env('CLOVER_CLIENT_SECRET'),
+        'redirect_uri' => env('CLOVER_REDIRECT_URI'),
+        'base_uri' => env('CLOVER_BASE_URI', 'https://sandbox.dev.clover.com'),
+    ],
+
 ];

@@ -7,18 +7,56 @@ use GuzzleHttp\Client;
 
 class Clover
 {
-    public $baseUrl = 'https://apisandbox.dev.clover.com';
-    public $merchantId = 'D5SEVBPF31J31';
-    public $appSecrect = '45a9c123-c9ae-e33f-6ec4-474eb894c5ec';
+    public $baseUrl;
+    public $merchantId;
+    public $apiKey;
+    public $authorizationKey;
 
-    public function tokenizeCard()
+    public function __construct()
+    {
+        $this->baseUrl = env('CLOVER_BASE_URI');
+        $this->merchantId = env('CLOVER_CLIENT_ID');
+        $this->apiKey = env('CLOVER_API_KEY');
+        $this->authorizationKey = env('CLOVER_PRIVATE_KEY');
+    }
+    // generate card token
+    public function tokenizeCard($cardData)
+    {
+        $expiry =  explode('/', $cardData['exp_date']);
+        $number =  $cardData['card_no'];
+        $exp_month = $expiry[0];
+        $exp_year = $expiry[1];
+        $cvv = $cardData['cvv'];
+        $first6 = substr($number, 0, 6);
+        $last4 = substr($number, -4);
+
+
+        try {
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', 'https://token-sandbox.dev.clover.com/v1/tokens', [
+                'body' => '{"card":{ "number":"' . $number . '","exp_month":"' . $exp_month . '","exp_year":"' . $exp_year . '","cvv":"' . $cvv . '","last4":"' . $last4 . '","first6":"' . $first6 . '"}}',
+                'headers' => [
+                    'accept' => 'application/json',
+                    'content-type' => 'application/json',
+                    'apikey' => $this->apiKey,
+                ],
+            ]);
+            $body = json_decode($response->getBody());
+            return $body->id ?? NULL;
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
+    }
+
+    public function createCharge($chargeData)
     {
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', 'https://token-sandbox.dev.clover.com/v1/tokens', [
-            'body' => '{"card":{"brand":"VISA","number":"4242424242424242","exp_month":"12","exp_year":"2030","cvv":"123","last4":"4242","first6":"424242"}}',
+        $response = $client->request('POST', 'https://scl-sandbox.dev.clover.com/v1/charges', [
+            'body' => '{"amount":2000,"currency":"usd","capture":true,"ecomind":"ecom","receipt_email":"34ey8e3lvq@rfcdrive.com","source":"clv_1TSTS2go8L5Q7Kmzxsraj5kM","partial_redemption":true}',
             'headers' => [
                 'accept' => 'application/json',
-                'apikey' => 'e353b72c-8700-ff76-79b8-aaf4ac572f8d',
+                'authorization' => 'Bearer "' . $this->authorizationKey . '"',
                 'content-type' => 'application/json',
             ],
         ]);

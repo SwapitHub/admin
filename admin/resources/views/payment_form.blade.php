@@ -114,11 +114,8 @@
 
 
 <script>
-    // const clover = new Clover('45a9c123-c9ae-e33f-6ec4-474eb894c5ec');
-    // const elements = clover.elements();
-
-    const clover = new Clover('0bd1fff0-38d6-a513-b31b-24f4402e7c5c', {
-        merchantId: 'D5SEVBPF31J31'
+    const clover = new Clover('45a9c123-c9ae-e33f-6ec4-474eb894c5ec', {
+        merchantId: '2QMA6A0REPAA2'
     });
     const elements = clover.elements();
 

@@ -60,6 +60,7 @@
 		Route::any('checkout',[App\Http\Controllers\API\CheckOutController::class,'checkout']);
 		Route::get('order-history',[App\Http\Controllers\API\OrdersController::class,'index']);
 		Route::get('order-detail',[App\Http\Controllers\API\OrdersController::class,'historyDetail']);
+		Route::any('tokenize-card',[App\Http\Controllers\API\CheckOutController::class,'tokenizeCard']);
 
 	});
 
