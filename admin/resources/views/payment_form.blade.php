@@ -190,15 +190,14 @@
         // Use the iframe's tokenization method with the user-entered card details
         clover.createToken()
             .then(async function(result) {
-                conslo.log(result);
-                // if (result.errors) {
-                //     Object.values(result.errors).forEach(function(value) {
-                //         displayError.textContent = value;
-                //     });
-                // } else {
-                //     const token = await result.token;
-                //     console.log("find token", token);
-                // }
+                if (result.errors) {
+                    Object.values(result.errors).forEach(function(value) {
+                        displayError.textContent = value;
+                    });
+                } else {
+                    const token = await result.token;
+                    console.log("find token", token);
+                }
             }).catch(function(data) {
                 console.log(data);
             })

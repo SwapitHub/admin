@@ -6,14 +6,17 @@
 	use Illuminate\Support\Facades\Validator;
     use Illuminate\Support\Facades\Storage;
 	use App\Models\HomeContent;
+	use App\Models\Banner;
 
 	class HomeContentController extends Controller
 	{
 	    public function index()
 		{
+            $banner = Banner::orderBy('id', 'desc')->get();
 			$data = [
-			"title"=>'Faqs',
+			"title"=>'Home Content',
 			"url_action"=>route('admin.homecontent.update'),
+            'bannerlist' => $banner,
 			"obj"=> HomeContent::find(1)
 			];
 			return view('admin.homecontant',$data);
