@@ -14,7 +14,7 @@
 			$output['res'] = 'success';
 			$output['msg'] = 'data retrieved successfully';
 
-			$data = Banner::orderBy('id','desc')->where('type','home')->where('status','true')->get();
+			$data = Banner::orderBy('order_number','asc')->where('type','home')->where('status','true')->get();
 			foreach($data as $banner){
 			  $banner->banner =env('AWS_URL').'public/'.$banner->banner;
 			}
