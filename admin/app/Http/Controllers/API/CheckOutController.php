@@ -180,10 +180,8 @@ class CheckOutController extends Controller
 
         if($response['res'] =='success')
         {
-            // $orderData['ref_num'] = $response['ref_num'];
-            // $orderData['status'] = 'SUCCESS';
-            var_dump($response['data']['id']);
-            exit;
+            $orderData['ref_num'] = $response['data']['id'];
+            $orderData['status'] = 'SUCCESS';
         }
         else
         {
