@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -42,7 +42,7 @@
 								</label>
 								<div class="col-md-8">
 									<select name="menu_id" id="menu_id"  class="form-control">
-										<option>select</option>	
+										<option>select</option>
 										@foreach($menus as $menu)
 										<option value="{{ $menu->id }}" {{ $subcat->menu_id == $menu->id ? 'selected' : '' }} >{{ $menu->name }}</option>
 										@endforeach
@@ -57,7 +57,7 @@
 								</label>
 								<div class="col-md-8">
 									<select name="category_id" id="category_id" class="form-control">
-										<option>select</option>	
+										<option>select</option>
 									</select>
 									@error('category_id')
 									<div class="invalid-feedback">{{ $message }}</div>
@@ -113,7 +113,8 @@
 								<label for="image" class="col-xl-3 col-md-4">
 								Image</label>
 								<div class="col-md-8">
-									<input class="form-control dropify" id="image" data-default-file="{{ asset('storage/app/public') }}/{{ $subcat->image }}" name="image" type="file">
+									{{-- <input class="form-control dropify" id="image" data-default-file="{{ asset('storage/app/public') }}/{{ $subcat->image }}" name="image" type="file"> --}}
+									<input class="form-control dropify" id="image" data-default-file="{{ env('AWS_URL') }} '/public/images/subcategory/'. {{ $subcat->image }}" name="image" type="file">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -150,7 +151,7 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="meta_title" value="{{ $subcat->meta_title }}" class="form-control" placeholder="Meta Title">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
@@ -158,7 +159,7 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="meta_keyword" value="{{ $subcat->meta_keyword }}" class="form-control" placeholder="Meta Keyword">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4" >
@@ -182,7 +183,7 @@
 	$(document).ready(function(){
 		var  menuid = {{ $subcat->menu_id }}
 		getCatlist(menuid);
-		
+
 	});
 	function getCatlist(menuid)
 	{
@@ -191,7 +192,7 @@
 		$("#category_id").html('<option>processing...</option>');
 		$("#category_id").load(act_url);
 	}
-	$("#menu_id").on('change',function(){  
+	$("#menu_id").on('change',function(){
 		var menuId = $(this).val();
 		if(menuId)
 		{
@@ -202,9 +203,9 @@
 		else
 		{
 		    $('#category_id').empty();
-            $('#category_id').append($('<option>').text('Select a category'));	 
+            $('#category_id').append($('<option>').text('Select a category'));
 		}
-	})	
+	})
 </script>
 @endpush
-@endsection		
+@endsection
