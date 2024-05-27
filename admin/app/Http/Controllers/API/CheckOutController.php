@@ -178,12 +178,13 @@ class CheckOutController extends Controller
         ];
         $response =  $this->createCharge($chargeData);
 
-        var_dump($response);
-        exit;
+
         if($response['res'] =='success')
         {
             $orderData['ref_num'] = $response['ref_num'];
             $orderData['status'] = 'SUCCESS';
+            var_dump($response);
+            exit;
         }
         else
         {
