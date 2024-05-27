@@ -177,6 +177,10 @@ class CheckOutController extends Controller
             'email'=>$userEmail,
         ];
         $response =  $this->createCharge($chargeData);
+
+        var_dump($response);
+        exit;
+
         if($response['res'] =='success')
         {
             $orderData['ref_num'] = $response['ref_num'];
