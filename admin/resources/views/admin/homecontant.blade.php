@@ -46,7 +46,23 @@
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-contact" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="activity" class="me-2"></i>Content</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 1</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
+                                        href="#top-section2" role="tab" aria-controls="top-contact"
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 2</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
+                                        href="#top-section3" role="tab" aria-controls="top-contact"
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 3</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
+                                        href="#top-section4" role="tab" aria-controls="top-contact"
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 4</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
+                                        href="#top-section5" role="tab" aria-controls="top-contact"
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 5</a>
                                 </li>
                             </ul>
 
@@ -64,7 +80,8 @@
                                                         <label for="validationCustom0"
                                                             class="col-xl-3 col-md-4"><span>*</span>Title</label>
                                                         <div class="col-xl-8 col-md-7">
-                                                            <input class="form-control @error('title') is-invalid @enderror"
+                                                            <input
+                                                                class="form-control @error('title') is-invalid @enderror"
                                                                 id="title" name="title" value="{{ old('title') }}"
                                                                 type="text" placeholder="Title">
                                                             @error('title')
@@ -77,8 +94,8 @@
                                                             Title</label>
                                                         <div class="col-xl-8 col-md-7">
                                                             <input class="form-control" id="name" value=""
-                                                                name="subtitle" value="{{ old('subtitle') }}" type="text"
-                                                                placeholder="Sub Title">
+                                                                name="subtitle" value="{{ old('subtitle') }}"
+                                                                type="text" placeholder="Sub Title">
                                                             @error('subtitle')
                                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
@@ -169,9 +186,9 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($bannerlist as $index=>$item)
+                                                        @foreach ($bannerlist as $index => $item)
                                                             <tr>
-                                                                <td>{{ $index+1 }}</td>
+                                                                <td>{{ $index + 1 }}</td>
                                                                 <td>
                                                                     {{ $item->title }}
                                                                 </td>
@@ -210,8 +227,408 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="top-contact" role="tabpanel" aria-labelledby="contact-top-tab">
+                                <div class="tab-pane fade" id="top-contact" role="tabpanel"
+                                    aria-labelledby="contact-top-tab">
+                                    <h5 class="f-w-600">Section 1</h5>
+                                    <form action="{{ route('home.section1') }}" method="POST" enctype="multipart/form-data"
+                                        class="needs-validation" novalidate>
+                                        @csrf
 
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Heading</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control @error('heading') is-invalid @enderror"
+                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section1']->heading) }}"
+                                                    type="text" placeholder="Heading">
+                                                @error('heading')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Description</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section1']->description) }}</textarea>
+                                                @error('description')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                                image</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section1']->image }}">
+                                                @error('image')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                name</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section1']->btn_name) }}">
+                                                @error('btn_name')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                link</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section1']->link) }}">
+                                                @error('link')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-md-4">Status</label>
+                                            <div class="col-md-7">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox-primary-2" type="checkbox" checked name="status"
+                                                        value="true" data-original-title="">
+                                                    <label for="checkbox-primary-2">Enable the Section</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="submit" class="btn btn-primary submitBtn">Save <i
+                                                    class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="top-section2" role="tabpanel"
+                                    aria-labelledby="contact-top-tab">
+                                    <h5 class="f-w-600">Section 2</h5>
+                                    <form action="{{ route('home.section2') }}" method="POST" enctype="multipart/form-data"
+                                        class="needs-validation" novalidate>
+                                        @csrf
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Heading</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control @error('heading') is-invalid @enderror"
+                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section2']->heading) }}"
+                                                    type="text" placeholder="Heading">
+                                                @error('heading')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Description</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section2']->description) }}</textarea>
+                                                @error('description')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                                image</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section2']->image }}">
+                                                @error('image')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                name</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section2']->btn_name) }}">
+                                                @error('btn_name')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                link</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section2']->link) }}">
+                                                @error('link')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-md-4">Status</label>
+                                            <div class="col-md-7">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox-primary-2" type="checkbox" checked name="status"
+                                                        value="true" data-original-title="">
+                                                    <label for="checkbox-primary-2">Enable the Section</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="submit" class="btn btn-primary submitBtn">Save <i
+                                                    class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="top-section3" role="tabpanel"
+                                    aria-labelledby="contact-top-tab">
+                                    <h5 class="f-w-600">Section 3</h5>
+                                    <form action="{{ route('home.section3') }}" method="POST" enctype="multipart/form-data"
+                                        class="needs-validation" novalidate>
+                                        @csrf
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Heading</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control @error('heading') is-invalid @enderror"
+                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section3']->heading) }}"
+                                                    type="text" placeholder="Heading">
+                                                @error('heading')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Description</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section3']->description) }}</textarea>
+                                                @error('description')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                                image</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section3']->image }}">
+                                                @error('image')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                name</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section3']->btn_name) }}">
+                                                @error('btn_name')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                link</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section3']->link) }}">
+                                                @error('link')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-md-4">Status</label>
+                                            <div class="col-md-7">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox-primary-2" type="checkbox" checked name="status"
+                                                        value="true" data-original-title="">
+                                                    <label for="checkbox-primary-2">Enable the Section</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="submit" class="btn btn-primary submitBtn">Save <i
+                                                    class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="top-section4" role="tabpanel"
+                                    aria-labelledby="contact-top-tab">
+                                    <h5 class="f-w-600">Section 4</h5>
+                                    <form action="{{ route('home.section4')  }}" method="POST" enctype="multipart/form-data"
+                                        class="needs-validation" novalidate>
+                                        @csrf
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Heading</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control @error('heading') is-invalid @enderror"
+                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section4']->heading) }}"
+                                                    type="text" placeholder="Heading">
+                                                @error('heading')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Description</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section4']->description) }}</textarea>
+                                                @error('description')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                                image</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image1" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section4']->image1 }}">
+                                                @error('image1')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                                image</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image2" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section4']->image2 }}">
+                                                @error('image2')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                name</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section4']->btn_name) }}">
+                                                @error('btn_name')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                link</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section4']->link) }}">
+                                                @error('link')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-md-4">Status</label>
+                                            <div class="col-md-7">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox-primary-2" type="checkbox" checked name="status"
+                                                        value="true" data-original-title="">
+                                                    <label for="checkbox-primary-2">Enable the Section</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="submit" class="btn btn-primary submitBtn">Save <i
+                                                    class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="top-section5" role="tabpanel"
+                                    aria-labelledby="contact-top-tab">
+                                    <h5 class="f-w-600">Section 5</h5>
+                                    <form action="{{ route('home.section5') }}" method="POST" enctype="multipart/form-data"
+                                        class="needs-validation" novalidate>
+                                        @csrf
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Heading</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control @error('heading') is-invalid @enderror"
+                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section5']->heading) }}"
+                                                    type="text" placeholder="Heading">
+                                                @error('heading')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Sub heading</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control @error('subheading') is-invalid @enderror"
+                                                    id="subheading" name="subheading" value="{{ old('subheading',$sectionList['section5']->subheading) }}"
+                                                    type="text" placeholder="subheading">
+                                                @error('subheading')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Description</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section5']->description) }}</textarea>
+                                                @error('description')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                                image (desktop)</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image_desktop" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_desktop }}">
+                                                @error('image_desktop')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                                image (mobile)</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image_mobile" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_mobile }}">
+                                                @error('image_mobile')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                name</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section5']->btn_name) }}">
+                                                @error('btn_name')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                link</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section5']->btn_name) }}">
+                                                @error('link')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-md-4">Status</label>
+                                            <div class="col-md-7">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox-primary-2" type="checkbox" checked name="status"
+                                                        value="true" data-original-title="">
+                                                    <label for="checkbox-primary-2">Enable the Section</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="submit" class="btn btn-primary submitBtn">Save <i
+                                                    class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

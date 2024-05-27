@@ -302,5 +302,13 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
     Route::get('/email_template/delete/{id}',[App\Http\Controllers\EmailTemplateController::class, 'distroy'])->name('template.delete');
     Route::get('/email_template/test',[App\Http\Controllers\EmailTemplateController::class, 'testing']);
     Route::get('/payment',[App\Http\Controllers\EmailTemplateController::class, 'testGateway']);
+
+    ## updated home content route
+    Route::post('/section1',[App\Http\Controllers\HomeContentController::class, 'section1'])->name('home.section1');
+    Route::post('/section2',[App\Http\Controllers\HomeContentController::class, 'section2'])->name('home.section2');
+    Route::post('/section3',[App\Http\Controllers\HomeContentController::class, 'section3'])->name('home.section3');
+    Route::post('/section4',[App\Http\Controllers\HomeContentController::class, 'section4'])->name('home.section4');
+    Route::post('/section5',[App\Http\Controllers\HomeContentController::class, 'section5'])->name('home.section5');
+
 });
 
