@@ -71,8 +71,8 @@ class ProductController extends Controller
 	{
 		$output['res'] = 'success';
 		$output['msg'] = 'data retrieved successfully';
-		
-		
+
+
 		$products = ProductModel::orderBy('entity_id', 'asc')->where('status', 'true')->whereNull('parent_sku');
 		if($request->bridal_sets =='true')
 		{
@@ -97,7 +97,7 @@ class ProductController extends Controller
 		if (!is_null($request->query('shape'))) {
 			$products->where('CenterShape', strtoupper(trim($request->query('shape'))));
 		}
-	
+
 		if (!is_null($request->query('ring_style'))) {
 			$subcatSlugs = explode(',', $request->query('ring_style'));
 
@@ -180,11 +180,11 @@ class ProductController extends Controller
 				$product['diamond_type'] = 'natural';
 				$product['diamondQuality'] = $priceData['diamondQuality']??0;
 				$product['metalType'] = '18KT Gold';
-	
+
 				if (!is_null($product['similar_products'])) {
 					$product['similar_products'] = json_encode($this->getSimilarProducts($product['similar_products']));
 				}
-	
+
 				if ($product['parent_sku'] != NULL) {
 					$var = ProductModel::where('parent_sku', $product['parent_sku'])->get();
 					if ($var->isNotEmpty()) {
@@ -232,15 +232,15 @@ class ProductController extends Controller
 			$output['from'] = 'db';
 			$output['data'] = $product;
 			return response()->json($output, 200);
-		
+
 		}else
-		{	
+		{
 			$output['from'] = 'cache';
 			$output['data'] = $product_detail;
 			return response()->json($output, 200);
 		}
 
-		
+
 	}
 
 	public function searhSuggestion(Request $request)
@@ -369,7 +369,9 @@ class ProductController extends Controller
 			$ring_styles = Subcategory::orderBy('order_number', 'asc')->where('menu_id', 7)->where('category_id', 7)->where('status', 'true')->get();
 			foreach ($ring_styles as $val) {
 				if (!empty($val['image'])) {
-					$val['image'] = env('AWS_URL').'public/storage/' . $val->image;
+					// $val['image'] = env('AWS_URL').'public/storage/' . $val->image;
+					$val['image'] =  env('AWS_URL').'public/'.$val->image;
+
 				}
 			}
 			Cache::put($cacheKey, $ring_styles, $minutes = 60);
@@ -383,7 +385,7 @@ class ProductController extends Controller
 			return response()->json($output, 200);
 		}
 
-	
+
 	}
 
 	public function getSimilarProducts($ids)
