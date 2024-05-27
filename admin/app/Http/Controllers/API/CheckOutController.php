@@ -186,6 +186,7 @@ class CheckOutController extends Controller
         {
             $orderData['status'] = 'FAILED';
         }
+        unset($orderData['card_token']);
         $transaction = TransactionModel::create($orderData);
         if ($transaction) {
             return ['res'=>'success','order_status'=>$orderData['status']];
