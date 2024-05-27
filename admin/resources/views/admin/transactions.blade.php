@@ -44,6 +44,7 @@
                                         <th>#</th>
                                         <th>Order Id</th>
                                         <th>Transaction Id</th>
+                                        <th>Reference No.</th>
                                         <th>Date</th>
                                         <th>Payment Method</th>
                                         <th>Delivery Status</th>
@@ -58,6 +59,7 @@
                                         <td><a href="{{ route('sale.orders.detail',['id'=>$transaction->order_id]) }}" style="text-decoration:underline;color:blue !important">#{{ $transaction->order_id }}</a></td>
 
                                         <td>#{{ $transaction->transaction_id }}</td>
+                                        <td>{{ $transaction->ref_num }}</td>
 
                                         <td>{{ date('M d, Y', strtotime($transaction->created_at)) }}</td>
 
@@ -66,7 +68,7 @@
                                         <td>{{ $transaction->status }}</td>
 
                                         <td>${{ $transaction->amount }}/-</td>
-                                    </tr> 
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
