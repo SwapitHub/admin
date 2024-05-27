@@ -1,5 +1,5 @@
 <?php
-	
+
 	namespace App\Http\Controllers;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\DB;
@@ -9,7 +9,7 @@
 	use App\Models\Category;
 	use App\Models\Subcategory;
 	use App\Models\Menu;
-	
+
 	class SubcategoryController extends Controller
 	{
 		public function index(Request $request)
@@ -26,7 +26,7 @@
 					->orderBy('subcategories.id', 'desc')
 					->select('subcategories.*', 'menus.name as menu_name', 'categories.name as catname')
 					->paginate(20);
-			
+
 			}else{
 				$subCategoryWithMenu = DB::table('subcategories')
 				->join('menus', 'subcategories.menu_id', '=', 'menus.id')
@@ -40,38 +40,34 @@
 			$data['subcategories'] = $subCategoryWithMenu;
 			return view('admin.subcategories',$data);
 		}
-		
+
 		public function createSubcategoryView()
 		{
 			$data['menus'] = Menu::orderBy('id','desc')->where('status','true')->get();
-			return view('admin.createsubcategory',$data);	
+			return view('admin.createsubcategory',$data);
 		}
-		
+
 		public function addSubcategory(Request $request)
 		{
 			$this->validate($request, [
             'menu_id' => 'required',
             'category_id' => 'required',
             'name' => 'required',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048', // Adjust mime types and max size as needed
 			], [
             'menu_id.required' => 'The menu field is required.',
             'category_id.required' => 'The category  field is required.',
             'name.required' => 'The name field is required.',
-            // 'image.required' => 'An image is required.',
-            // 'image.image' => 'The uploaded file must be an image.',
-            // 'image.mimes' => 'The image must be a JPEG, PNG, JPG, WEBP or GIF file.',
-            // 'image.max' => 'The image size must not exceed 5 MB.',
 			]);
-			
+
 			if ($request->file('image') != NULL) {
 				$extension = $request->file('image')->getClientOriginalExtension();
 				$fileName = "subcat_" . time() . '.' . $extension;
-				$path = $request->file('image')->storeAs('public/images/subcategory', $fileName);
+				$path = $request->file('image')->storeAs('public/images/subcategory', $fileName,'s3');
 				$subcatpath = 'images/subcategory/' . $fileName;
+                Storage::disk('s3')->setVisibility($path, 'public');
 			}else
 			{
-			  $subcatpath = '';	
+			  $subcatpath = '';
 			}
 			$subcat = new Subcategory;
 			$subcat->name = $request->name;
@@ -93,16 +89,16 @@
 			$subcat->save();
 			return redirect()->back()->with('success', 'Subcategory added successfully');
 		}
-		
+
 		public function editSubcategory($id)
 		{
 		    $data = [
 			'subcat'=>Subcategory::find($id),
 			'menus' => Menu::orderBy('id','desc')->where('status','true')->get()
-			];	
+			];
 			return view('admin.editsubcat',$data);
 		}
-		
+
 		public function updateSubcategory(Request $request)
 		{
 		    $this->validate($request, [
@@ -116,17 +112,19 @@
             'category_id.required' => 'The category  field is required.',
             'name.required' => 'The name  field is required.',
 			]);
-			
+
 			$subcat = Subcategory::find($request->id);
 			if ($request->file('image') != NULL) {
-				$oldImagePath = 'public/' . $subcat->image; // Replace with the actual path
-				if (Storage::exists($oldImagePath)) {
-					Storage::delete($oldImagePath);
+				$oldImagePath = $subcat->image; // Replace with the actual path
+                if ($oldImagePath) {
+                    $oldImagePath = 'public/storage/'.$oldImagePath;
+                    Storage::disk('s3')->delete($oldImagePath);
 				}
 				$extension = $request->file('image')->getClientOriginalExtension();
 				$fileName = "subcat_" . time() . '.' . $extension;
-				$path = $request->file('image')->storeAs('public/images/subcategory', $fileName);
+				$path = $request->file('image')->storeAs('public/images/subcategory', $fileName,'s3');
 				$subcatpath = 'images/subcategory/' . $fileName;
+                Storage::disk('s3')->setVisibility($path, 'public');
 			}
 			else
 			{
@@ -155,17 +153,18 @@
 			$subcat->meta_keyword = $request->meta_keyword;
 			$subcat->meta_description = $request->meta_description;
 			$subcat->save();
-			return redirect()->back()->with('success', 'Subcategory added successfully');	
+			return redirect()->back()->with('success', 'Subcategory added successfully');
 		}
-		
-		
+
+
 		public function deleteSubcategory($id)
 		{
 			if ($id) {
 				$Subcategory = Subcategory::find($id);
 				$oldImagePath = 'public/' . $Subcategory->image; // Replace with the actual path
-				if (Storage::exists($oldImagePath)) {
-					Storage::delete($oldImagePath);
+                if ($oldImagePath) {
+                    $oldImagePath = 'public/storage/'.$oldImagePath;
+                    Storage::disk('s3')->delete($oldImagePath);
 				}
 				$Subcategory->delete();
 				$output['res'] = 'success';
@@ -198,7 +197,7 @@
 			else {
 				echo '<option selected disabled>no subcategory found!</option>';
 				}
-		} 
+		}
 			// 	$res = $query->get();
 			// 	$htmloption = '';
 			// 	$htmloption = '<option selected disabled>select category</option>';
@@ -213,5 +212,5 @@
 			// 	echo '<option selected disabled>no subcategory found!</option>';
 			// }
 		// }
-		
+
 	}

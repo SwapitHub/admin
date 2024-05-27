@@ -78,6 +78,7 @@
 											<select name="type" id="type" onchange="showTerm(this.value)" class="form-control">
 												<option value="general" {{ ($bannerdata->type == 'general')?'selected':'' }}>General</option>
 												<option value="promotional" {{ ($bannerdata->type == 'promotional')?'selected':'' }}>Promotional</option>
+												<option value="Home" {{ ($bannerdata->type == 'Home')?'selected':'' }}>Home</option>
 											</select>
 										</div>
 									</div>

@@ -8,9 +8,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description"
-        content="">
+        content="SAMA DIAMOND">
 		<meta name="keywords"
-        content="">
+        content="SAMA DIAMOND">
 		<meta name="author" content="Diamond">
 		<link rel="icon" href="{{ env('AWS_URL') }}admin-assets/admin/images/dashboard/favicon.png" type="image/x-icon">
 		<link rel="shortcut icon" href="{{ env('AWS_URL') }}admin-assets/admin/images/dashboard/favicon.png" type="image/x-icon">
