@@ -29,8 +29,6 @@ class Clover
         $cvv = $cardData['cvv'];
         $first6 = substr($number, 0, 6);
         $last4 = substr($number, -4);
-
-
         try {
             $client = new \GuzzleHttp\Client();
             $response = $client->request('POST', 'https://token-sandbox.dev.clover.com/v1/tokens', [
@@ -51,16 +49,35 @@ class Clover
 
     public function createCharge($chargeData)
     {
+        $output['res'] = 'error';
+        $output['msg'] = 'error';
+        $output['data'] = [];
+        $authorization = 'Bearer' . ' ' . $this->authorizationKey;
+        $amount = $chargeData['amount'] * 100;
         $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', 'https://scl-sandbox.dev.clover.com/v1/charges', [
-            'body' => '{"amount":"'.$chargeData['amount'].'","currency":"'.$chargeData['currency'].'","capture":true,"ecomind":"ecom","receipt_email":"'.$chargeData['email'].'","source":"'.$chargeData['token'].'","partial_redemption":true}',
-            'headers' => [
-                'accept' => 'application/json',
-                'authorization' => 'Bearer "' . $this->authorizationKey . '"',
-                'content-type' => 'application/json',
-            ],
-        ]);
-        $json_data = json_decode($response->getBody());
-        return $json_data;
+        try {
+            $response = $client->request('POST', 'https://scl-sandbox.dev.clover.com/v1/charges', [
+                'body' => '{"amount":"'.$amount.'","currency":"usd","capture":true,"ecomind":"ecom","receipt_email":"'.$chargeData['email'].'","source":"'.$chargeData['card_token'].'"}',
+                'headers' => [
+                    'accept' => 'application/json',
+                    'authorization' => $authorization,
+                    'content-type' => 'application/json',
+                ],
+            ]);
+            if ($response->getBody()) {
+                $json_data = json_decode($response->getBody(), true);
+                return ['res' => 'success', 'message' => 'charge created','data'=>$json_data];
+            }
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            //throw $th;
+            return ['res'=>'error','type' => 'Client error', 'message' => $e->getMessage(), 'status_code' => $e->getResponse()->getStatusCode()];
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            // Handle other request errors (e.g., network errors)
+            return ['res'=>'error','type' => 'Request error', 'message' => $e->getMessage()];
+
+        } catch (\Exception $e) {
+            // Handle any other errors
+            return ['res'=>'error','type' => 'General error', 'message' => $e->getMessage()];
+        }
     }
 }
