@@ -59,13 +59,13 @@
                                         <td><a href="{{ route('sale.orders.detail',['id'=>$transaction->order_id]) }}" style="text-decoration:underline;color:blue !important">#{{ $transaction->order_id }}</a></td>
 
                                         <td>#{{ $transaction->transaction_id }}</td>
-                                        <td>{{ is_null($transaction->ref_num)?"NA":$transaction->ref_num }}</td>
+                                        <td>{{ is_null($transaction->ref_num) || empty($transaction->ref_num)?"NA":$transaction->ref_num }}</td>
 
                                         <td>{{ date('M d, Y', strtotime($transaction->created_at)) }}</td>
 
                                         <td>{{ $transaction->paymanet_method }}</td>
 
-                                        <td><span class="badge badge-{{ $transaction->status =='SUCCESS'?'success':'danger'; }}">{{ $transaction->status }}</span></td>
+                                        <td><span class="badge badge-{{ $transaction->status =='SUCCESS'?'success':'primary'; }}">{{ $transaction->status }}</span></td>
 
                                         <td>${{ $transaction->amount }}/-</td>
                                     </tr>
