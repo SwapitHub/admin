@@ -158,6 +158,8 @@ class ProductController extends Controller
         $data['menus'] = Menu::orderBy('id', 'desc')
             ->where('status', 'true')
             ->where('name', '!=', 'BRAND')
+            ->where('name', '!=', 'DIAMONDS')
+            ->where('name', '!=', 'GEMSTONES')
             ->get();
 
         $data['carats'] = Carat::orderBy('id', 'desc')
