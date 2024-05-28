@@ -19,8 +19,9 @@ class MenuController extends Controller
         $output['msg'] = 'data retrieved successfully';
 
         $cacheKey = 'menu_list';
-        $menu_list = Cache::get($cacheKey);
-        if (!$menu_list) {
+        // $menu_list = Cache::get($cacheKey);
+        $menu_list = Cache::forget($cacheKey);
+        // if (!$menu_list) {
             $menus = Menu::orderBy('order_number', 'asc')->where('status', 'true')->get();
             foreach ($menus as $menu) {
                 $cat = Category::orderBy('order_number', 'asc')->where('status', 'true')->where('menu', $menu->id)->get();
@@ -47,11 +48,11 @@ class MenuController extends Controller
             $output['data'] = $menus;
             $output['from'] = 'db';
             return response()->json($output, 200);
-        } else {
-            $output['data'] = $menu_list;
-            $output['from'] = 'cache';
-            return response()->json($output, 200);
-        }
+        // } else {
+        //     $output['data'] = $menu_list;
+        //     $output['from'] = 'cache';
+        //     return response()->json($output, 200);
+        // }
     }
 
     // public function index()
