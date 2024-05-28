@@ -27,14 +27,14 @@
 			</div>
 		</div>
 		<!-- Container-fluid Ends-->
-		
+
 		<!-- Container-fluid starts-->
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							
+
 							<a href="{{ route('admin.creatsubcategory') }}" class="btn btn-primary mt-md-0 mt-2">Create Subcategory</a>
 
 							<form method="GET" style="display:flex">
@@ -42,7 +42,7 @@
 								<button class="btn btn-primary" type="search">Search</button>
 							</form>
 						</div>
-						
+
 						<div class="card-body">
 							<div class="table-responsive table-desi">
 							<table class="all-package coupon-table table table-striped">
@@ -53,16 +53,16 @@
 												class="badge badge-primary add-row delete_all"><i class="fa fa-trash"></i></span>
 											</th>
 											<th>Name</th>
-											<th>slug</th>
+											{{-- <th>slug</th> --}}
 											<th>Menu</th>
 											<th>Category</th>
 											<th>Status</th>
-											<th>Created On</th>
-											<th>Options</th>
-											
+											{{-- <th>Created On</th> --}}
+											<th>sStatus/Options</th>
+
 										</tr>
 									</thead>
-									
+
 									<tbody>
 									<tr><input type="hidden" value="{{ url('deletesubcat') }}" name="url" id="url"></tr>
 										@foreach($subcategories as $item)
@@ -71,26 +71,26 @@
 												<input class="checkbox_animated check-it" type="checkbox"
 												value="" id="flexCheckDefault" data-id="{{ $item->id }}">
 											</td>
-											
-											<td>{{ $item->name }}</td>
+
+											{{-- <td>{{ $item->name }}</td> --}}
 											<td>{{ $item->slug }}</td>
 											<td>{{ $item->menu_name }}</td>
 											<td>{{ $item->catname }}</td>
-											
+
 											<td >
 												<span class="badge badge-{{ ($item->status =='true')?'success':'primary' }}">{{ ($item->status =='true')?'Active':'Inactive' }}</span>
 											</td>
-											
-											<td class="list-date">{{ $item->created_at }}</td>
+
+											{{-- <td class="list-date">{{ $item->created_at }}</td> --}}
 											<td class="list-date">
 											    <a href="{{ route('admin.editsubcat', ['id' => $item->id]) }}">
 													<i class="fa fa-edit" title="Edit"></i>
-												</a>	
+												</a>
 											</td>
 										</tr>
 										@endforeach
 									</tbody>
-							</table> 
+							</table>
 								<div class="dataTables_paginate paging_simple_numbers d-flex justify-content-between align-items-center">
 									<div>
 										Showing {{ $subcategories->firstItem() }} to {{ $subcategories->lastItem() }} of total {{$subcategories->total()}} entries
@@ -108,4 +108,3 @@
 		<!-- Container-fluid Ends-->
 	</div>
 	@endsection
-	

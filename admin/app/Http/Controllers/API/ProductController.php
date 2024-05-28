@@ -176,7 +176,7 @@ class ProductController extends Controller
 				$product['white_gold_price'] = $priceData['price'] ?? 0;
 				$product['yellow_gold_price'] = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Yellow')->where('diamond_type', 'natural')->first()['price'] ?? 0;
 				$product['rose_gold_price'] = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Pink')->where('diamond_type', 'natural')->first()['price'] ?? 0;
-				$product['platinum_price'] = ProductPrice::where('product_sku', $product['sku'])->where('metalType', 'Platinum')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
+				$product['platinum_price'] = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
 				$product['diamond_type'] = 'natural';
 				$product['diamondQuality'] = $priceData['diamondQuality']??0;
 				$product['metalType'] = '18KT Gold';
@@ -266,7 +266,7 @@ class ProductController extends Controller
 						->orWhere('metalWeight', 'like', "%$q%")
 						->orWhere('finishLevel', 'like', "%$q%");
 				})
-				->select('name', 'slug', 'default_image_url', 'white_gold_price')
+				->select('name', 'slug', 'default_image_url', 'white_gold_price','sku')
 				->limit(5)
 				->get();
 			$searched_product = [];
@@ -277,6 +277,7 @@ class ProductController extends Controller
 				$product->videos = json_decode($product->videos);
 				$name = strtolower($product->name);
 				$product->name = ucwords($name);
+				$product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
 				array_push($searched_product, $product);
 			}
 		} else {
@@ -348,6 +349,7 @@ class ProductController extends Controller
 				$product->videos = json_decode($product->videos);
 				$name = strtolower($product->name);
 				$product->name = ucwords($name);
+				$product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
 				array_push($searched_product, $product);
 			}
 		} else {
