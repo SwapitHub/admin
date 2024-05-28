@@ -103,9 +103,9 @@ class MenuController extends Controller
         $menu_brand = Cache::get($cacheKey);
         if (!$menu_brand) {
             $brand = Widget::where('name', 'BRAND')->first();
-            $output['data'] = $brand['description'];
+            $output['data'] = $brand;
             $output['from'] = 'db';
-            Cache::put($cacheKey, $menu_brand, $minutes = 120);
+            Cache::put($cacheKey, $brand, $minutes = 120);
             return response()->json($output, 200);
         } else {
             $output['data'] = $menu_brand;
