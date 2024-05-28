@@ -327,6 +327,11 @@
                                             <i class="fa fa-circle"></i>Carat
 										</a>
 									</li>
+                                    <li>
+										<a href="{{ route('admin.centerstone.list') }}">
+                                            <i class="fa fa-circle"></i>Center Stone
+										</a>
+									</li>
 
 								</ul>
 							</li>

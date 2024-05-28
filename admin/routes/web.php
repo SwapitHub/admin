@@ -131,12 +131,23 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/ringprong/edit/{id}', [App\Http\Controllers\RingProngController::class, 'editProng'])->name('admin.editringprong');
 	Route::post('/ringprong/update/{id}', [App\Http\Controllers\RingProngController::class, 'postEditProng'])->name('admin.updateringprong');
 	Route::get('/deleteprong/{id}', [App\Http\Controllers\RingProngController::class, 'deleteProng']);
+
+    ## carat
 	Route::get('/carat', [App\Http\Controllers\CaratController::class, 'index'])->name('admin.carat');
 	Route::get('/carat/add', [App\Http\Controllers\CaratController::class, 'addCarat'])->name('admin.addcarat');
 	Route::post('/carat/add', [App\Http\Controllers\CaratController::class, 'postAddCarat'])->name('admin.caratadd');
 	Route::get('/carat/edit/{id}', [App\Http\Controllers\CaratController::class, 'editCarat'])->name('admin.editcarat');
 	Route::post('/carat/update/{id}', [App\Http\Controllers\CaratController::class, 'PostEditCarat'])->name('admin.updatecarat');
 	Route::get('/carat/delete/{id}', [App\Http\Controllers\CaratController::class, 'deleteCarat'])->name('admin.updatecarat');
+
+    ## center stone
+    Route::get('/centerstone', [App\Http\Controllers\CenterStoneController::class, 'index'])->name('admin.centerstone.list');
+	Route::get('/centerstone/add', [App\Http\Controllers\CenterStoneController::class, 'addCenterStone'])->name('admin.centerstone.add');
+	Route::post('/centerstone/add', [App\Http\Controllers\CenterStoneController::class, 'postAddCenterStone'])->name('admin.centerstone.postadd');
+	Route::get('/centerstone/edit/{id}', [App\Http\Controllers\CenterStoneController::class, 'editCenterStone'])->name('admin.centerstone.edit');
+	Route::post('/centerstone/update/{id}', [App\Http\Controllers\CenterStoneController::class, 'PostEditCenterStone'])->name('admin.centerstone.update');
+	Route::get('/centerstone/delete/{id}', [App\Http\Controllers\CenterStoneController::class, 'deleteCenterStone'])->name('admin.centerstone.delete');
+
 
 	Route::get('/diamondcut', [App\Http\Controllers\DiamonCutController::class, 'index'])->name('admin.cut');
 	Route::get('/diamondcut/add', [App\Http\Controllers\DiamonCutController::class, 'addCut'])->name('admin.addcut');

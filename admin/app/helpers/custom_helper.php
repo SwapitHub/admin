@@ -8,8 +8,17 @@ use App\Models\Subcategory;
 use App\Models\OrderItem;
 use App\Models\MetalColor;
 use App\Models\RingMetal;
+use App\Models\CenterStone;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
+
+if (!function_exists('getCenterStoneValues')) {
+    function getCenterStoneValues($id)
+    {
+        $menu =  CenterStone::find($id);
+        return $menu ?? '';
+    }
+}
 
 if (!function_exists('getMenu')) {
     function getMenu($menu_id)
@@ -18,6 +27,7 @@ if (!function_exists('getMenu')) {
         return $menu->name ?? '';
     }
 }
+
 
 if (!function_exists('getCategories')) {
     function getCategories($cat_ids)

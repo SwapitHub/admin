@@ -11,6 +11,7 @@ use App\Models\RingMetal;
 use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\Carat;
+use App\Models\CenterStone;
 use App\Models\DiamondShape;
 use App\Imports\ProductImport;
 use App\Exports\ProductExport;
@@ -271,13 +272,13 @@ class ProductController extends Controller
     public function updateProduct(Request $request, $id)
     {
         // dd($request->all());
-        $this->validate($request, [
+        $val = $this->validate($request, [
             'name' => 'required',
-            'product_browse_pg_name' => 'required',
+            // 'product_browse_pg_name' => 'required',
             'menu' => 'required',
-            'catagory' => 'required',
-            'metalType_id' => 'required',
-            'metalColor_id' => 'required',
+            // 'catagory' => 'required',
+            'metalType' => 'required',
+            'metalColor' => 'required',
             'metalWeight' => 'required',
             'diamond_quality' => 'required',
             'NoOfGemstones1' => 'required',
@@ -286,31 +287,36 @@ class ProductController extends Controller
 
         ], [
             'name.required' => 'The Product name field is required.',
-            'product_browse_pg_name.required' => 'The Product browse name field is required.',
+            // 'product_browse_pg_name.required' => 'The Product browse name field is required.',
             'menu.required' => 'The menu field is required.',
-            'catagory.required' => 'The catagory field is required.',
-            'metalType_id.required' => 'The metalType field is required.',
-            'metalColor_id.required' => 'The metalColor field is required.',
+            // 'catagory.required' => 'The catagory field is required.',
+            'metalType.required' => 'The metalType field is required.',
+            'metalColor.required' => 'The metalColor field is required.',
             'metalWeight.required' => 'The metalWeight field is required.',
             'diamond_quality.required' => 'The diamond_quality field is required.',
             'NoOfGemstones1.required' => 'The NoOfGemstones field is required.',
             'center_shape.required' => 'The center shape field is required.',
             'finger_size.required' => 'The fingersize field is required.',
         ]);
+
         $product = ProductModel::find($id);
+        $centerstones = implode(',',$request->center_stone);
         $product->name = $request->name;
         $product->product_browse_pg_name = $request->product_browse_pg_name;
         $product->menu = $request->menu;
-        $product->catagory = $request->catagory;
+        // $product->category = $request->category;
         $product->metalType_id = $request->metalType_id;
         $product->metalType = getMetalTypeByID($request->metalType_id);
         $product->metalColor_id = $request->metalColor_id;
         $product->metalColor = getMetalColorByID($request->metalColor_id);
         $product->metalWeight = $request->metalWeight;
-        $product->diamond_quality = $request->diamond_quality;
+        $product->diamondQuality = $request->diamond_quality;
         $product->NoOfGemstones1 = $request->NoOfGemstones1;
-        $product->center_shape = $request->center_shape;
-        $product->finger_size = $request->finger_size;
+        $product->CenterShape = $request->center_shape;
+        ##center stone name and value
+        $product->center_stones = $centerstones;
+        ##center stone name and value
+        $product->FingerSize = $request->finger_size;
         $product->save();
         return redirect()->back()->with('success', 'Product added successfully');
     }
@@ -323,6 +329,7 @@ class ProductController extends Controller
         $product = ProductModel::find($id);
         $category = $product['category'];
         $subcategory = $product['sub_category'];
+        $centerStone = CenterStone::orderBy('id', 'desc')->get();
 
         $similar_products = $product['similar_products'];
         if (!empty($similar_products)) {
@@ -373,6 +380,7 @@ class ProductController extends Controller
             'metalType' => RingMetal::where('status', 'true')->get(),
             'metalColor' => MetalColor::where('status', 'true')->get(),
             'similar_products' => $similar_collection,
+            'centerstones' => $centerStone,
             'categories' => $catdata,
             'sub_categories' => $subcatdata,
         ];

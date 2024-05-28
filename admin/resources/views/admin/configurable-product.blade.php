@@ -30,7 +30,8 @@
 
         <!-- Container-fluid starts-->
         <div class="container-fluid">
-            <form action="{{ route('admin.product.postupdate',['id'=>$product['id']]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.product.postupdate', ['id' => $product['id']]) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="row product-adding">
                     <div class="col-xl-6">
@@ -45,14 +46,19 @@
                                             Name</label>
                                         <input class="form-control" name="name" id="validationCustom01" type="text"
                                             value="{{ old('name', $product['name']) }}" required="">
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
+                                        <label for="validationCustom01" class="col-form-label pt-0">
                                             Product Browse PG Name</label>
                                         <input class="form-control" name="product_browse_pg_name" id="validationCustom01"
                                             type="text"
-                                            value="{{ old('product_browse_pg_name', $product['product_browse_pg_name']) }}"
-                                            required="">
+                                            value="{{ old('product_browse_pg_name', $product['product_browse_pg_name']) }}">
+                                        @error('product_browse_pg_name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustomtitle" class="col-form-label pt-0"><span>*</span>
@@ -60,12 +66,15 @@
                                         <input class="form-control" id="validationCustomtitle"
                                             value="{{ old('internal_sku', $product['internal_sku']) }}" type="text"
                                             required="">
+                                        @error('sku')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustomtitle" class="col-form-label pt-0"> Slug</label>
                                         <input class="form-control" id="validationCustomtitle" type="text"
                                             placeholder="{{ $product['slug'] }}">
-                                        <small>Leavle blank if you want system generated</small>
+                                        <small>Leave blank if you want system generated</small>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
@@ -74,15 +83,19 @@
                                             <option value="">--Select--</option>
                                             @foreach ($Menus as $menu)
                                                 <option value="{{ $menu['id'] }}"
-                                                    {{ $menu['id'] == $product['menu'] ? 'selected' : '' }}>{{ $menu['name'] }}
+                                                    {{ $menu['id'] == $product['menu'] ? 'selected' : '' }}>
+                                                    {{ $menu['name'] }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @error('menu')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
                                             Categories</label>
-                                        <select class="custom-select form-control" name="catagory" >
+                                        <select class="custom-select form-control" name="category">
                                             <option value="">--Select--</option>
                                             @if (!empty($categories))
                                                 @foreach ($categories as $category)
@@ -92,11 +105,14 @@
                                                 @endforeach
                                             @endif;
                                         </select>
+                                        @error('catagory')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
                                             Sub Categories</label>
-                                        <select class="custom-select form-control" name="subcatagory" required="">
+                                        <select class="custom-select form-control" name="subcatagory">
                                             <option value="">--Select--</option>
                                             @if (!empty($sub_categories))
                                                 @foreach ($sub_categories as $sub_category)
@@ -106,6 +122,9 @@
                                                 @endforeach
                                             @endif
                                         </select>
+                                        @error('subcatagory')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
@@ -118,6 +137,9 @@
                                                     {{ $metaltype['metal'] }}</option>
                                             @endforeach
                                         </select>
+                                        @error('metalType')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
@@ -130,6 +152,9 @@
                                                     {{ $color['name'] }}</option>
                                             @endforeach
                                         </select>
+                                        @error('metalColor')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
@@ -137,6 +162,9 @@
                                         <input class="form-control" id="validationCustom02" name="metalWeight"
                                             type="text" required=""
                                             value="{{ old('metalWeight', $product->metalWeight) }}">
+                                        @error('metalWeight')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
@@ -144,6 +172,9 @@
                                         <input class="form-control" id="validationCustom02" name="diamond_quality"
                                             type="text" required=""
                                             value="{{ old('diamond_quality', $product->diamondQuality) }}">
+                                        @error('diamond_quality')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
@@ -151,6 +182,33 @@
                                         <input class="form-control" id="validationCustom02" name="NoOfGemstones1"
                                             type="text" required=""
                                             value="{{ old('NoOfGemstones1', $product->NoOfGemstones1) }}">
+                                        @error('NoOfGemstones1')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="validationCustom02" class="col-form-label"><span></span>
+                                            Center stone</label>
+
+                                        @if (!empty($product->center_stones))
+                                            @php
+                                                $center_stone = explode(',', $product->center_stones);
+                                            @endphp
+                                        @else
+                                            @php
+                                                $center_stone = [];
+                                            @endphp
+                                        @endif
+
+                                        <select name="center_stone[]" id="center_stone"
+                                            class="custom-select form-control multichoose" multiple>
+                                            <option selected disabled>--select--</option>
+                                            @foreach ($centerstones as $centerstone)
+                                                <option value="{{ $centerstone['id'] }}"
+                                                    {{ in_array($centerstone['id'], $center_stone) ? 'selected' : '' }}>
+                                                    {{ $centerstone['name'] }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
@@ -167,6 +225,9 @@
                                                     {{ strtoupper($center_shape->shape) }}</option>
                                             @endforeach
                                         </select>
+                                        @error('center_shape')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     {{-- <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
@@ -182,129 +243,170 @@
                                             <option value="Stock" "selected="selected&quot;">Stock</option>
                                             <option value="3" {{ $product->FingerSize == '3' ? 'selected' : '' }}>3
                                             </option>
-                                            <option value="3 1/4" {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>3
+                                            <option value="3 1/4"
+                                                {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>3
                                                 1/4</option>
-                                            <option value="3 1/2" {{ $product->FingerSize == '3 1/2' ? 'selected' : '' }}>3
+                                            <option value="3 1/2"
+                                                {{ $product->FingerSize == '3 1/2' ? 'selected' : '' }}>3
                                                 1/2</option>
-                                            <option value="3 3/4" {{ $product->FingerSize == '3 3/4' ? 'selected' : '' }}>3
+                                            <option value="3 3/4"
+                                                {{ $product->FingerSize == '3 3/4' ? 'selected' : '' }}>3
                                                 3/4</option>
 
                                             <option value="4" {{ $product->FingerSize == '4' ? 'selected' : '' }}>4
                                             </option>
-                                            <option value="4 1/4" {{ $product->FingerSize == '4 1/4' ? 'selected' : '' }}>4
+                                            <option value="4 1/4"
+                                                {{ $product->FingerSize == '4 1/4' ? 'selected' : '' }}>4
                                                 1/4</option>
-                                            <option value="4 1/2" {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>4
+                                            <option value="4 1/2"
+                                                {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>4
                                                 1/2</option>
-                                            <option value="4 3/4" {{ $product->FingerSize == '4 3/4' ? 'selected' : '' }}>4
+                                            <option value="4 3/4"
+                                                {{ $product->FingerSize == '4 3/4' ? 'selected' : '' }}>4
                                                 3/4</option>
 
                                             <option value="5" {{ $product->FingerSize == '5' ? 'selected' : '' }}>5
                                             </option>
-                                            <option value="5 1/4" {{ $product->FingerSize == '5 1/4' ? 'selected' : '' }}>5
+                                            <option value="5 1/4"
+                                                {{ $product->FingerSize == '5 1/4' ? 'selected' : '' }}>5
                                                 1/4</option>
-                                            <option value="5 1/2" {{ $product->FingerSize == '5 1/2' ? 'selected' : '' }}>5
+                                            <option value="5 1/2"
+                                                {{ $product->FingerSize == '5 1/2' ? 'selected' : '' }}>5
                                                 1/2</option>
-                                            <option value="5 3/4" {{ $product->FingerSize == '5 3/4' ? 'selected' : '' }}>5
+                                            <option value="5 3/4"
+                                                {{ $product->FingerSize == '5 3/4' ? 'selected' : '' }}>5
                                                 3/4</option>
 
                                             <option value="6" {{ $product->FingerSize == '6' ? 'selected' : '' }}>6
                                             </option>
-                                            <option value="6 1/4" {{ $product->FingerSize == '6 1/4' ? 'selected' : '' }}>6
+                                            <option value="6 1/4"
+                                                {{ $product->FingerSize == '6 1/4' ? 'selected' : '' }}>6
                                                 1/4</option>
-                                            <option value="6 1/2" {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>6
+                                            <option value="6 1/2"
+                                                {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>6
                                                 1/2</option>
-                                            <option value="6 3/4" {{ $product->FingerSize == '6 3/4' ? 'selected' : '' }}>6
+                                            <option value="6 3/4"
+                                                {{ $product->FingerSize == '6 3/4' ? 'selected' : '' }}>6
                                                 3/4</option>
 
                                             <option value="7" {{ $product->FingerSize == '7' ? 'selected' : '' }}>7
                                             </option>
-                                            <option value="7 1/4" {{ $product->FingerSize == '7 1/4' ? 'selected' : '' }}>7
+                                            <option value="7 1/4"
+                                                {{ $product->FingerSize == '7 1/4' ? 'selected' : '' }}>7
                                                 1/4</option>
-                                            <option value="7 1/2" {{ $product->FingerSize == '7 1/2' ? 'selected' : '' }}>7
+                                            <option value="7 1/2"
+                                                {{ $product->FingerSize == '7 1/2' ? 'selected' : '' }}>7
                                                 1/2</option>
-                                            <option value="7 3/4" {{ $product->FingerSize == '7 3/4' ? 'selected' : '' }}>7
+                                            <option value="7 3/4"
+                                                {{ $product->FingerSize == '7 3/4' ? 'selected' : '' }}>7
                                                 3/4</option>
 
                                             <option value="8" {{ $product->FingerSize == '8' ? 'selected' : '' }}>8
                                             </option>
-                                            <option value="8 1/4" {{ $product->FingerSize == '8 1/4' ? 'selected' : '' }}>8
+                                            <option value="8 1/4"
+                                                {{ $product->FingerSize == '8 1/4' ? 'selected' : '' }}>8
                                                 1/4</option>
-                                            <option value="8 1/2" {{ $product->FingerSize == '8 1/2' ? 'selected' : '' }}>8
+                                            <option value="8 1/2"
+                                                {{ $product->FingerSize == '8 1/2' ? 'selected' : '' }}>8
                                                 1/2</option>
-                                            <option value="8 3/4" {{ $product->FingerSize == '8 3/4' ? 'selected' : '' }}>8
+                                            <option value="8 3/4"
+                                                {{ $product->FingerSize == '8 3/4' ? 'selected' : '' }}>8
                                                 3/4</option>
 
                                             <option value="9" {{ $product->FingerSize == '9' ? 'selected' : '' }}>9
                                             </option>
-                                            <option value="9 1/4" {{ $product->FingerSize == '9 1/2' ? 'selected' : '' }}>9
+                                            <option value="9 1/4"
+                                                {{ $product->FingerSize == '9 1/2' ? 'selected' : '' }}>9
                                                 1/4</option>
-                                            <option value="9 1/2" {{ $product->FingerSize == '9 1/2' ? 'selected' : '' }}>9
+                                            <option value="9 1/2"
+                                                {{ $product->FingerSize == '9 1/2' ? 'selected' : '' }}>9
                                                 1/2</option>
                                             <option value="9 3/4" {{ $product->FingerSize == '10' ? 'selected' : '' }}>9
                                                 3/4</option>
 
                                             <option value="10" {{ $product->FingerSize == '10' ? 'selected' : '' }}>10
                                             </option>
-                                            <option value="10 1/4" {{ $product->FingerSize == '10 3/4' ? 'selected' : '' }}>
+                                            <option value="10 1/4"
+                                                {{ $product->FingerSize == '10 3/4' ? 'selected' : '' }}>
                                                 10 1/4</option>
-                                            <option value="10 1/2" {{ $product->FingerSize == '10 3/4' ? 'selected' : '' }}>
+                                            <option value="10 1/2"
+                                                {{ $product->FingerSize == '10 3/4' ? 'selected' : '' }}>
                                                 10 1/2</option>
-                                            <option value="10 3/4" {{ $product->FingerSize == '10 3/4' ? 'selected' : '' }}>
+                                            <option value="10 3/4"
+                                                {{ $product->FingerSize == '10 3/4' ? 'selected' : '' }}>
                                                 10 3/4</option>
 
-                                            <option value="11" {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>
+                                            <option value="11"
+                                                {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>
                                                 11</option>
-                                            <option value="11 1/4" {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>
+                                            <option value="11 1/4"
+                                                {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>
                                                 11 1/4</option>
-                                            <option value="11 1/2" {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>
+                                            <option value="11 1/2"
+                                                {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>
                                                 11 1/2</option>
-                                            <option value="11 3/4" {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>
+                                            <option value="11 3/4"
+                                                {{ $product->FingerSize == '3 1/4' ? 'selected' : '' }}>
                                                 11 3/4</option>
 
                                             <option value="12" {{ $product->FingerSize == '12' ? 'selected' : '' }}>12
                                             </option>
-                                            <option value="12 1/4" {{ $product->FingerSize == '12 3/4' ? 'selected' : '' }}>
+                                            <option value="12 1/4"
+                                                {{ $product->FingerSize == '12 3/4' ? 'selected' : '' }}>
                                                 12 1/4</option>
-                                            <option value="12 1/2" {{ $product->FingerSize == '12 3/4' ? 'selected' : '' }}>
+                                            <option value="12 1/2"
+                                                {{ $product->FingerSize == '12 3/4' ? 'selected' : '' }}>
                                                 12 1/2</option>
-                                            <option value="12 3/4" {{ $product->FingerSize == '12 3/4' ? 'selected' : '' }}>
+                                            <option value="12 3/4"
+                                                {{ $product->FingerSize == '12 3/4' ? 'selected' : '' }}>
                                                 12 3/4</option>
 
                                             <option value="13" {{ $product->FingerSize == '13' ? 'selected' : '' }}>13
                                             </option>
-                                            <option value="13 1/4" {{ $product->FingerSize == '13 1/4' ? 'selected' : '' }}>
+                                            <option value="13 1/4"
+                                                {{ $product->FingerSize == '13 1/4' ? 'selected' : '' }}>
                                                 13 1/4</option>
-                                            <option value="13 1/2" {{ $product->FingerSize == '13 1/2' ? 'selected' : '' }}>
+                                            <option value="13 1/2"
+                                                {{ $product->FingerSize == '13 1/2' ? 'selected' : '' }}>
                                                 13 1/2</option>
                                             <option value="13 3/4" {{ $product->FingerSize == '14' ? 'selected' : '' }}>13
                                                 3/4</option>
 
                                             <option value="14" {{ $product->FingerSize == '14' ? 'selected' : '' }}>14
                                             </option>
-                                            <option value="14 1/4" {{ $product->FingerSize == '14 1/4' ? 'selected' : '' }}>
+                                            <option value="14 1/4"
+                                                {{ $product->FingerSize == '14 1/4' ? 'selected' : '' }}>
                                                 14 1/4</option>
-                                            <option value="14 1/2" {{ $product->FingerSize == '14 1/2' ? 'selected' : '' }}>
+                                            <option value="14 1/2"
+                                                {{ $product->FingerSize == '14 1/2' ? 'selected' : '' }}>
                                                 14 1/2</option>
-                                            <option value="14 3/4" {{ $product->FingerSize == '14 3/4' ? 'selected' : '' }}>
+                                            <option value="14 3/4"
+                                                {{ $product->FingerSize == '14 3/4' ? 'selected' : '' }}>
                                                 14 3/4</option>
 
                                             <option value="15" {{ $product->FingerSize == '15' ? 'selected' : '' }}>15
                                             </option>
-                                            <option value="15 1/4" {{ $product->FingerSize == '15 1/4' ? 'selected' : '' }}>
+                                            <option value="15 1/4"
+                                                {{ $product->FingerSize == '15 1/4' ? 'selected' : '' }}>
                                                 15 1/4</option>
-                                            <option value="15 1/2" {{ $product->FingerSize == '15 1/2' ? 'selected' : '' }}>
+                                            <option value="15 1/2"
+                                                {{ $product->FingerSize == '15 1/2' ? 'selected' : '' }}>
                                                 15 1/2</option>
-                                            <option value="15 3/4" {{ $product->FingerSize == '15 3/4' ? 'selected' : '' }}>
+                                            <option value="15 3/4"
+                                                {{ $product->FingerSize == '15 3/4' ? 'selected' : '' }}>
                                                 15 3/4</option>
 
 
                                         </select>
+                                        @error('finger_size')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             Default Image</label>
                                         <input class="form-control" id="validationCustom02" type="file"
-                                            name="default_image_url" >
+                                            name="default_image_url">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label"><span>*</span> Product Mark As</label>
@@ -400,7 +502,8 @@
                                             <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete">
                                                 <div class="dz-image"><img data-dz-thumbnail=""
                                                         alt="pngtree-vector-user-young-boy-avatar-icon-png-image_1538408.jpg"
-                                                        src="{{ $pro_img }}" style="height:121px;width:121px"></div>
+                                                        src="{{ $pro_img }}" style="height:121px;width:121px">
+                                                </div>
                                             </div>
                                         @endforeach
 
