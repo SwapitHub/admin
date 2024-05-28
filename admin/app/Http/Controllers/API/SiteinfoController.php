@@ -37,6 +37,8 @@ class SiteinfoController extends Controller
         $output['msg'] = 'data retrieved successfully';
         $cacheKey = 'site_info';
         $siteinfo = Cache::get($cacheKey);
+        $siteinfo = Cache::forget($cacheKey);
+        exit;
         if (!$siteinfo) {
         $collection = [];
         $section1 =  HomeSection1::first();
