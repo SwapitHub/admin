@@ -27,6 +27,7 @@
 		Route::get('banners',[App\Http\Controllers\API\BannerController::class,'index']);
 		Route::get('siteinfo',[App\Http\Controllers\API\SiteinfoController::class,'index']);
 		Route::get('menu',[App\Http\Controllers\API\MenuController::class,'index']);
+		Route::get('brand',[App\Http\Controllers\API\MenuController::class,'brand']);
 		Route::get('get-menu/{slug}',[App\Http\Controllers\API\MenuController::class,'getMenuName']);
 		Route::get('rings',[App\Http\Controllers\API\MenuController::class,'rings']);
 		Route::get('products',[App\Http\Controllers\API\ProductController::class,'index']);
