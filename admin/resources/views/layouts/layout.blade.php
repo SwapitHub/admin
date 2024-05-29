@@ -458,11 +458,6 @@
 									<i class="fa fa-circle"></i>Contact messages
 								</a>
 							</li>
-							<li>
-								<a href="{{ route('admin.bannerlist') }}">
-									<i class="fa fa-circle"></i>Banner List
-								</a>
-							</li>
 						</ul>
 					</li>
 					<li>
@@ -510,7 +505,7 @@
 						</ul>
 					</li>
 
-					<li>
+					{{-- <li>
 						<a class="sidebar-header" href="javascript:void(0)">
 							<i data-feather="tool"></i>
 							<span>Config Manager</span>
@@ -562,7 +557,7 @@
 								</ul>
 							</li>
 						</ul>
-					</li>
+					</li> --}}
 					<li>
 						<a class="sidebar-header" href="javascript:void(0)">
 							<i data-feather="cpu"></i>

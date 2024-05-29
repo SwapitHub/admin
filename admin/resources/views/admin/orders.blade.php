@@ -1,5 +1,14 @@
 @extends('layouts.layout')
 @section('content')
+    <style>
+        .card .card-header form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            width: 100%;
+        }
+    </style>
     <div class="page-body">
         <!-- Container-fluid starts-->
         <div class="container-fluid">
@@ -34,6 +43,23 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-header">
+                            <form method="GET">
+                                <div class="form-group">
+                                    <input type="text" name="search" class="form-control"
+                                        placeholder="Search by OrderId , Email ,">
+                                </div>
+                                <div class="form-group">
+                                    <select name="orderStatus" class="form-control">
+                                        <option value="All">All</option>
+                                        <option value="Success">Success</option>
+                                        <option value="Processing">Processing</option>
+                                        <option value="Cancel">Cancel</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-outline-primary">Search</button>
+                                </div>
+                            </form>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-desi ">
@@ -55,7 +81,7 @@
                                                 $orderItem = getOrderItem($order->order_id);
                                                 $redirect_url = route('sale.orders.detail', ['id' => $order->id]);
                                             @endphp
-                                           <tr onclick=window.location="{{ $redirect_url }}">
+                                            <tr onclick=window.location="{{ $redirect_url }}">
                                                 <td>{{ $index + 1 }}</td>
                                                 <td class="text-start">
                                                     #{{ $order->order_id }}
@@ -73,22 +99,22 @@
                                                 <td class="d-flex">
                                                     @foreach ($orderItem as $orderItem)
                                                         <?php
-                                                            $products = json_decode($orderItem->order_data);
-                                                            $ringImage = null;
-                                                            $diamondImage = null;
-                                                            $gemstoneImage = null;
-                                                
-                                                            if (!empty($products->ring_id) && !empty($products->diamond_id)) {
-                                                                $ringImage = getProductImages($products->ring_id, $products->ring_color);
-                                                                $diamondImage = getDiamondImages($products->diamond_id);
-                                                            } elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
-                                                                $ringImage = getProductImages($products->ring_id, $products->ring_color);
-                                                                $gemstoneImage = getGemStoneImages($products->gemstone_id);
-                                                            } elseif (!empty($products->diamond_id)) {
-                                                                $diamondImage = getDiamondImages($products->diamond_id);
-                                                            } elseif (!empty($products->gemstone_id)) {
-                                                                $gemstoneImage = getGemStoneImages($products->gemstone_id);
-                                                            }
+                                                        $products = json_decode($orderItem->order_data);
+                                                        $ringImage = null;
+                                                        $diamondImage = null;
+                                                        $gemstoneImage = null;
+
+                                                        if (!empty($products->ring_id) && !empty($products->diamond_id)) {
+                                                            $ringImage = getProductImages($products->ring_id, $products->ring_color);
+                                                            $diamondImage = getDiamondImages($products->diamond_id);
+                                                        } elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
+                                                            $ringImage = getProductImages($products->ring_id, $products->ring_color);
+                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                        } elseif (!empty($products->diamond_id)) {
+                                                            $diamondImage = getDiamondImages($products->diamond_id);
+                                                        } elseif (!empty($products->gemstone_id)) {
+                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                        }
                                                         ?>
                                                         <div class="d-flex border p-2">
                                                             @if ($ringImage)
@@ -103,10 +129,10 @@
                                                         </div>
                                                     @endforeach
                                                 </td>
-                                                
-                                                
 
-                                          
+
+
+
 
                                                 <td>
                                                     <a href="{{ route('sale.orders.detail', ['id' => $order->id]) }}">
@@ -119,9 +145,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                             <div class="dataTables_paginate paging_simple_numbers d-flex justify-content-between align-items-center">
+                            <div
+                                class="dataTables_paginate paging_simple_numbers d-flex justify-content-between align-items-center">
                                 <div>
-                                    Showing {{ $orders->firstItem() }} to {{ $orders->lastItem() }} of total {{$orders->total()}} entries
+                                    Showing {{ $orders->firstItem() }} to {{ $orders->lastItem() }} of total
+                                    {{ $orders->total() }} entries
                                 </div>
                                 <div class="float-end">
                                     <p>{{ $orders->links() }}</p>

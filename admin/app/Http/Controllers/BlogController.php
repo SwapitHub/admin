@@ -57,6 +57,9 @@
             'sub_title' => 'required',
             'content' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048', // Adjust mime types and max size as needed
+            'meta_title' => 'required',
+            'meta_keyword' => 'required',
+            'meta_description' => 'required',
 			], [
             'category.required' => 'The Category field is required.',
             'type.required' => 'The Type field is required.',
@@ -67,6 +70,9 @@
             'image.image' => 'The uploaded file must be an image.',
             'image.mimes' => 'The image must be a JPEG, PNG, JPG, WEBP or GIF file.',
             'image.max' => 'The image size must not exceed 5 MB.',
+            'meta_title.required' => 'The Blog meta title field is required.',
+            'meta_keyword.required' => 'The Blog meta keyword field is required.',
+            'meta_description.required' => 'The Blog meta description field is required.',
 			]);
 
 			if ($request->file('image') != NULL) {
@@ -86,7 +92,10 @@
 			$blog->content = $request->content;
 			$blog->order_number = $request->order_number;
 			$blog->image = $imagepath;
-			$blog->status = $request->status ?? 'false';
+			$blog->status = $request->status;
+			$blog->meta_title = $request->meta_title;
+			$blog->meta_keyword = $request->meta_keyword;
+			$blog->meta_description = $request->meta_description;
 			$blog->save();
 			return redirect()->back()->with('success', 'Blog added successfully');
 		}
@@ -118,12 +127,18 @@
             'title' => 'required',
             'sub_title' => 'required',
             'content' => 'required',
+            'meta_title' => 'required',
+            'meta_keyword' => 'required',
+            'meta_description' => 'required',
 			], [
             'category.required' => 'The Category field is required.',
             'type.required' => 'The Type field is required.',
             'title.required' => 'The Title field is required.',
             'sub_title.required' => 'The Sub title field is required.',
             'content.required' => 'The Blog content field is required.',
+            'meta_title.required' => 'The Blog meta title field is required.',
+            'meta_keyword.required' => 'The Blog meta keyword field is required.',
+            'meta_description.required' => 'The Blog meta description field is required.',
 			]);
 			if ($request->file('image') != NULL) {
 				$oldImagePath = 'public/' . $obj->icon; // Replace with the actual path
@@ -158,6 +173,9 @@
 			$obj->order_number = $request->order_number;
 			$obj->image = $imagepath;
 			$obj->status = $request->status ?? 'false';
+            $obj->meta_title = $request->meta_title;
+			$obj->meta_keyword = $request->meta_keyword;
+			$obj->meta_description = $request->meta_description;
 			$obj->save();
 			return redirect()->back()->with('success', 'Blog updated successfully');
 		}

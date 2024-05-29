@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="page-header-left">
-						<h3>{{ $title }} 
+						<h3>{{ $title }}
 							<small>Dimond Admin panel</small>
 						</h3>
 					</div>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -49,7 +49,7 @@
 										<label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Category</label>
 										<div class="col-xl-8 col-md-7">
 										  <select name="category" class="form-control">
-											  <option selected disabled>select</option>  
+											  <option selected disabled>select</option>
 											  @foreach($categories as $category)
 											     <option value="{{ $category['id'] }}" <?= (old('category',isset($obj['category'])) == $category['id']) ?'selected':'' ?> > {{ $category['name'] }}</option>
 											  @endforeach;
@@ -123,7 +123,7 @@
 											<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
@@ -131,7 +131,31 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="order_number" value="{!! old()?old('order_number'):$obj['order_number']??'0' !!}" class="form-control">
 										</div>
-										
+
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom4" class="col-xl-3 col-md-4">
+										Meta Title</label>
+										<div class="col-xl-8 col-md-7">
+											<input type="text" name="meta_title" value="{!! old()?old('meta_title'):$obj['meta_title']??'' !!}" class="form-control">
+										</div>
+
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom4" class="col-xl-3 col-md-4">
+										Meta Keyword</label>
+										<div class="col-xl-8 col-md-7">
+											<input type="text" name="meta_keyword" value="{!! old()?old('meta_keyword'):$obj['meta_keyword']??'' !!}" class="form-control">
+										</div>
+
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom4" class="col-xl-3 col-md-4">
+										Meta Description</label>
+										<div class="col-xl-8 col-md-7">
+											<input type="text" name="meta_description" value="{!! old()?old('meta_description'):$obj['meta_description']??'' !!}" class="form-control">
+										</div>
+
 									</div>
 									<div class="form-group row">
 										<label class="col-xl-3 col-md-4">Status</label>
@@ -148,7 +172,7 @@
 										class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
 									</div>
 								</form>
-								
+
 							</div>
 						</div>
 					</div>
@@ -159,4 +183,3 @@
 	<!-- Container-fluid Ends-->
 										</div>
 										@endsection
-																				
