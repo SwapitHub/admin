@@ -167,7 +167,9 @@ class ProductController extends Controller
 		$cacheKey = 'product_detail';
         $product_id = Cache::get($entity_id);
         $product_detail = Cache::get($cacheKey);
-		if(!$product_id){
+//         $product_detail = Cache::forget($cacheKey);
+// exit;
+		// if(!$product_id){
 			if (!is_null($entity_id)) {
 				$product =  ProductModel::where('entity_id', $entity_id)->orWhere('slug', $entity_id)->first();
 				$product['name'] = ucfirst(strtolower(!empty($product['product_browse_pg_name'])?$product['product_browse_pg_name']:$product['name']));
@@ -185,19 +187,16 @@ class ProductController extends Controller
 
                 ## check if center stone exist then get the value
                 $cenyterStoneArr = [];
-                $centerStone = $product->center_stones;
-                if($centerStone= null || !empty($centerStone))
+                $centerStone =  explode(',',$product->center_stones);
+
+                if(!is_null($centerStone))
                 {
-                   $center_stones =  explode(',',$centerStone);
-                   foreach($center_stones as $s_stone)
+                   foreach($centerStone as $index=>$s_stone)
                    {
                         $s_values = CenterStone::find($s_stone);
                         $cenyterStoneArr[] = $s_values;
                    }
 
-                }else
-                {
-                    $cenyterStoneArr = null;
                 }
                 $product['center_stones'] = $cenyterStoneArr;
 				if (!is_null($product['similar_products'])) {
@@ -246,18 +245,18 @@ class ProductController extends Controller
 					$product['variants'] = $vardata;
 				}
 			}
-			Cache::put($cacheKey, $product, $minutes = 60);
-			Cache::put($entity_id, $product, $minutes = 60);
+			// Cache::put($cacheKey, $product, $minutes = 60);
+			// Cache::put($entity_id, $product, $minutes = 60);
 			$output['from'] = 'db';
 			$output['data'] = $product;
 			return response()->json($output, 200);
 
-		}else
-		{
-			$output['from'] = 'cache';
-			$output['data'] = $product_detail;
-			return response()->json($output, 200);
-		}
+		// }else
+		// {
+		// 	$output['from'] = 'cache';
+		// 	$output['data'] = $product_detail;
+		// 	return response()->json($output, 200);
+		// }
 
 
 	}
