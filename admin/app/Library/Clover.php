@@ -88,7 +88,7 @@ class Clover
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;
+            return ['res'=>'error','msg'=>'cURL Error #'.$err ,'token'=>[]];
         } else {
             $json_data = json_decode($response,true);
             if(isset($json_data['error']))
