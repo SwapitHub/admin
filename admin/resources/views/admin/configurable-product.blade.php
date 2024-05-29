@@ -37,7 +37,7 @@
                     <div class="col-xl-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5>General</h5>
+                                <h5>Product Type : {{ ($product['type'] == 'parent_product'?'Base Product':'Child product') }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="digital-add needs-validation">
@@ -64,7 +64,7 @@
                                         <label for="validationCustomtitle" class="col-form-label pt-0"><span>*</span>
                                             SKU</label>
                                         <input class="form-control" id="validationCustomtitle"
-                                            value="{{ old('internal_sku', $product['internal_sku']) }}" type="text"
+                                            value="{{ old('internal_sku', $product['sku']) }}" type="text"
                                             required="">
                                         @error('sku')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -126,6 +126,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
                                             Metal Type</label>
@@ -169,10 +170,25 @@
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             Diamond Quality</label>
-                                        <input class="form-control" id="validationCustom02" name="diamond_quality"
+                                            <select name="diamond_quality" class="form-control">
+                                                <option selected disabled>--Select--</option>
+                                                <option value="SI1-SI2, G-H">SI1-SI2, G-H</option>
+                                                <option value="SI1, G">SI1, G</option>
+                                            </select>
+                                        {{-- <input class="form-control" id="validationCustom02" name="diamond_quality"
                                             type="text" required=""
-                                            value="{{ old('diamond_quality', $product->diamondQuality) }}">
+                                            value="{{ old('diamond_quality', $product->diamondQuality) }}"> --}}
                                         @error('diamond_quality')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                            SideDiamondNumber</label>
+                                        <input class="form-control" id="validationCustom02" name="SideDiamondNumber"
+                                            type="number" required=""
+                                            value="{{ old('SideDiamondNumber', $product->SideDiamondNumber) }}">
+                                        @error('SideDiamondNumber')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -229,12 +245,6 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                            Product Price</label>
-                                        <input class="form-control" id="validationCustom02" type="text"
-                                            required="">
-                                    </div> --}}
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             Finger Size </label>
@@ -408,6 +418,12 @@
                                         <input class="form-control" id="validationCustom02" type="file"
                                             name="default_image_url">
                                     </div>
+                                     <div class="form-group">
+                                        <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                            shippingDay</label>
+                                        <input class="form-control" name="shippingDay" id="validationCustom02" type="number"
+                                            required="">
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-form-label"><span>*</span> Product Mark As</label>
                                         <div class="m-checkbox-inline mb-0 custom-radio-ml d-flex radio-animated">
@@ -494,19 +510,20 @@
                                 <div class="form-group">
                                     <label class="col-form-label pt-0"> Product Image Upload</label>
                                     <div class="dropzone digits" id="singleFileUpload" style="padding:0;">
-
-                                        @php
-                                            $product_images = json_decode($product->images);
-                                        @endphp
-                                        @foreach ($product_images as $pro_img)
-                                            <div class="dz-preview dz-processing dz-image-preview dz-error dz-complete">
-                                                <div class="dz-image"><img data-dz-thumbnail=""
-                                                        alt="pngtree-vector-user-young-boy-avatar-icon-png-image_1538408.jpg"
-                                                        src="{{ $pro_img }}" style="height:121px;width:121px">
+                                        @if (!empty($product_images))
+                                            @php
+                                                $product_images = json_decode($product->images);
+                                            @endphp
+                                            @foreach ($product_images as $pro_img)
+                                                <div
+                                                    class="dz-preview dz-processing dz-image-preview dz-error dz-complete">
+                                                    <div class="dz-image"><img data-dz-thumbnail=""
+                                                            alt="pngtree-vector-user-young-boy-avatar-icon-png-image_1538408.jpg"
+                                                            src="{{ $pro_img }}" style="height:121px;width:121px">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
-
+                                            @endforeach
+                                        @endif
 
 
 
@@ -515,6 +532,33 @@
 												<h4 class="mb-0 f-w-600">Drop files here or click to upload.</h4>
 											</div> --}}
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                       Product Video (white) </label>
+                                    <input class="form-control" id="validationCustom02" name="metalWeight"
+                                        type="file" value="">
+                                    @error('metalWeight')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                       Product Video (yellow) </label>
+                                    <input class="form-control" id="validationCustom02" name="metalWeight"
+                                        type="file" value="">
+                                    @error('metalWeight')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                       Product Video (rose) </label>
+                                    <input class="form-control" id="validationCustom02" name="metalWeight"
+                                        type="file" value="">
+                                    @error('metalWeight')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                             </div>

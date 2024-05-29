@@ -196,19 +196,23 @@ class ProductController extends Controller
             return response()->json($output, 200);
         } else {
             if ($request->type == 'Configurable') {
+                $type = 'parent_product';
                 // $this->addConfigurableProduct();
                 // create this product parent product and others child
                 $output['res'] = 'success';
                 $output['msg'] = 'load_model';
                 $output['sku'] = $request->sku;
-                $output['its_type'] = $request->type;
+                $output['internal_sku'] = $request->sku;
+                $output['its_type'] = $type;
                 $output['is_redirect'] = 'false';
                 $output['redirect_to'] = '';
                 return response()->json($output, 200);
             } else {
+                $type = 'child_product';
                 $postData = [
-                    'type' => $request->type,
+                    'type' => $type,
                     'sku' => $request->sku,
+                    'internal_sku' => $request->sku,
                 ];
                 $redirect_to =    $this->addSimpleProduct($postData);
                 // add product into db and redirect to edit it
@@ -258,10 +262,10 @@ class ProductController extends Controller
         if ($product->save()) {
             foreach ($skuCaratMap as $carat => $childSku) {
                 $childProduct = new ProductModel;
-                $childProduct->type = 'Simple';
+                $childProduct->type = 'child_product';
                 $childProduct->sku = $childSku;
                 $childProduct->parent_sku = $request->parent_sku;;
-                $childProduct->carat = $carat . " CT";
+                $childProduct->fractionsemimount = $carat . " ct tw";
                 $childProduct->save();
             }
             $insertedId = $product->id;
@@ -274,7 +278,7 @@ class ProductController extends Controller
         // dd($request->all());
         $val = $this->validate($request, [
             'name' => 'required',
-            // 'product_browse_pg_name' => 'required',
+            // 'product_br owse_pg_name' => 'required',
             'menu' => 'required',
             // 'catagory' => 'required',
             'metalType' => 'required',
@@ -300,15 +304,15 @@ class ProductController extends Controller
         ]);
 
         $product = ProductModel::find($id);
-        $centerstones = implode(',',$request->center_stone);
+        $centerstones = implode(',', $request->center_stone);
         $product->name = $request->name;
         $product->product_browse_pg_name = $request->product_browse_pg_name;
         $product->menu = $request->menu;
         // $product->category = $request->category;
-        $product->metalType_id = $request->metalType_id;
-        $product->metalType = getMetalTypeByID($request->metalType_id);
-        $product->metalColor_id = $request->metalColor_id;
-        $product->metalColor = getMetalColorByID($request->metalColor_id);
+        $product->metalType_id = $request->metalType;
+        $product->metalType = getMetalTypeByID($request->metalType);
+        $product->metalColor_id = $request->metalColor;
+        $product->metalColor = getMetalColorByID($request->metalColor);
         $product->metalWeight = $request->metalWeight;
         $product->diamondQuality = $request->diamond_quality;
         $product->NoOfGemstones1 = $request->NoOfGemstones1;
@@ -317,7 +321,36 @@ class ProductController extends Controller
         $product->center_stones = $centerstones;
         ##center stone name and value
         $product->FingerSize = $request->finger_size;
-        $product->save();
+        if( $product->save()){
+            ## check if product variation exist then update them also
+            $query = ProductModel::orderBy('id', 'asc')->where('status', 'true')->where('parent_sku', $product['sku']);
+            $variations = $query->exists();
+            if ($variations) {
+                $variation = $query->get();
+                foreach ($variation as $var) {
+                    //  var_dump($var->id);
+                    $child_product = ProductModel::find($var->id);
+                    $centerstones = implode(',', $request->center_stone);
+                    $child_product->name = $request->name;
+                    $child_product->product_browse_pg_name = $request->product_browse_pg_name;
+                    $child_product->menu = $request->menu;
+                    // $product->category = $request->category;
+                    $child_product->metalType_id = $request->metalType_id;
+                    $child_product->metalType = getMetalTypeByID($request->metalType_id);
+                    $child_product->metalColor_id = $request->metalColor_id;
+                    $child_product->metalColor = getMetalColorByID($request->metalColor_id);
+                    $child_product->metalWeight = $request->metalWeight;
+                    $child_product->diamondQuality = $request->diamond_quality;
+                    $child_product->NoOfGemstones1 = $request->NoOfGemstones1;
+                    $child_product->CenterShape = $request->center_shape;
+                    ##center stone name and value
+                    $child_product->center_stones = $centerstones;
+                    ##center stone name and value
+                    $child_product->FingerSize = $request->finger_size;
+                    $child_product->save();
+                }
+            }
+        }
         return redirect()->back()->with('success', 'Product added successfully');
     }
 

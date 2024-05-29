@@ -20,6 +20,33 @@ class Clover
         $this->authorizationKey = env('CLOVER_PRIVATE_KEY');
     }
     // generate card token
+    // public function tokenizeCard($cardData)
+    // {
+    //     $expiry =  explode('/', $cardData['exp_date']);
+    //     $number =  $cardData['card_no'];
+    //     $exp_month = $expiry[0];
+    //     $exp_year = $expiry[1];
+    //     $cvv = $cardData['cvv'];
+    //     $first6 = substr($number, 0, 6);
+    //     $last4 = substr($number, -4);
+    //     try {
+    //         $client = new \GuzzleHttp\Client();
+    //         $response = $client->request('POST', 'https://token-sandbox.dev.clover.com/v1/tokens', [
+    //             'body' => '{"card":{ "number":"' . $number . '","exp_month":"' . $exp_month . '","exp_year":"' . $exp_year . '","cvv":"' . $cvv . '","last4":"' . $last4 . '","first6":"' . $first6 . '"}}',
+    //             'headers' => [
+    //                 'accept' => 'application/json',
+    //                 'content-type' => 'application/json',
+    //                 'apikey' => $this->apiKey,
+    //             ],
+    //         ]);
+    //         $body = json_decode($response->getBody());
+    //         return $body->id ?? NULL;
+    //     } catch (Throwable $e) {
+    //         report($e);
+    //         return false;
+    //     }
+    // }
+
     public function tokenizeCard($cardData)
     {
         $expiry =  explode('/', $cardData['exp_date']);
@@ -29,21 +56,50 @@ class Clover
         $cvv = $cardData['cvv'];
         $first6 = substr($number, 0, 6);
         $last4 = substr($number, -4);
-        try {
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request('POST', 'https://token-sandbox.dev.clover.com/v1/tokens', [
-                'body' => '{"card":{ "number":"' . $number . '","exp_month":"' . $exp_month . '","exp_year":"' . $exp_year . '","cvv":"' . $cvv . '","last4":"' . $last4 . '","first6":"' . $first6 . '"}}',
-                'headers' => [
-                    'accept' => 'application/json',
-                    'content-type' => 'application/json',
-                    'apikey' => $this->apiKey,
-                ],
-            ]);
-            $body = json_decode($response->getBody());
-            return $body->id ?? NULL;
-        } catch (Throwable $e) {
-            report($e);
-            return false;
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://token-sandbox.dev.clover.com/v1/tokens",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode([
+                'card' => [
+                    'number' => $number,
+                    'exp_month' => $exp_month,
+                    'exp_year' => $exp_year,
+                    'cvv' => $cvv,
+                    'last4' => $last4 ,
+                    'first6' => $first6
+                ]
+            ]),
+            CURLOPT_HTTPHEADER => [
+                "accept: application/json",
+                "apikey: $this->apiKey",
+                "content-type: application/json"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $json_data = json_decode($response,true);
+            if(isset($json_data['error']))
+            {
+                $errmsg = $json_data['error'];
+                return ['res'=>'error','msg'=>$errmsg['message'],'token'=>[]];
+            }
+            else
+            {
+                return ['res'=>'success','msg'=>'Token retrieved successfully.','token'=>$json_data['id']];
+            }
         }
     }
 
@@ -120,15 +176,14 @@ class Clover
 
         if ($err) {
             // echo "cURL Error #:" . $err;
-            return ['res'=>'error','type' => 'cURL Error.', 'message' => $err];
+            return ['res' => 'error', 'type' => 'cURL Error.', 'message' => $err];
         } else {
             $json_data = json_decode($response, true);
             if (isset($json_data['error'])) {
-               $erormsg = $json_data['error'];
-                return ['res' => 'error', 'code' => $erormsg['code'],'message'=>$erormsg['message']];
-            }else
-            {
-                return ['res' => 'success', 'message' => 'charge created','data'=>$json_data];
+                $erormsg = $json_data['error'];
+                return ['res' => 'error', 'code' => $erormsg['code'], 'message' => $erormsg['message']];
+            } else {
+                return ['res' => 'success', 'message' => 'charge created', 'data' => $json_data];
             }
         }
     }
