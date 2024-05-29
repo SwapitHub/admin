@@ -95,6 +95,8 @@ class CheckOutController extends Controller
             'order_data.required' => 'Order data is required.',
             'card_token.required' => 'Card token is required.',
         ];
+
+        $clientIp = $request->ip();
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
@@ -119,6 +121,7 @@ class CheckOutController extends Controller
                 $order_data = json_decode($request->order_data);
                 $total_amount = 0;
                 $stat = 'true';
+
                 foreach ($order_data as $item) {
                     ## fetch data from cart and add into cart item db
                     $cart_data =  Cart::find($item);
@@ -149,6 +152,7 @@ class CheckOutController extends Controller
                         'amount' => $total_amount,
                         'card_token' => $request->card_token,
                         'paymanet_method' => "CARD PAYMENT",
+                        'clientIp'=>$clientIp
                     ];
                     $transaction = $this->callPaymentGateway($order_data);
                     if ($transaction['res'] == 'success') {
@@ -175,6 +179,7 @@ class CheckOutController extends Controller
             'amount'=>$orderData['amount'],
             'card_token'=>$orderData['card_token'],
             'email'=>$userEmail,
+            'clientIp'=>$orderData['clientIp']
         ];
         $response =  $this->createCharge($chargeData);
 
@@ -185,9 +190,12 @@ class CheckOutController extends Controller
         }
         else
         {
+            var_dump($response);
+            exit;
             $orderData['status'] = 'FAILED';
         }
         unset($orderData['card_token']);
+        unset($orderData['clientIp']);
         $transaction = TransactionModel::create($orderData);
         if ($transaction) {
             return ['res'=>'success','order_status'=>$orderData['status']];

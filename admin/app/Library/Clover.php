@@ -62,6 +62,7 @@ class Clover
                     'accept' => 'application/json',
                     'authorization' => $authorization,
                     'content-type' => 'application/json',
+                    'x-forwarded-for' => $chargeData['clientIp']
                 ],
             ]);
             if ($response->getBody()) {
@@ -80,4 +81,5 @@ class Clover
             return ['res'=>'error','type' => 'General error', 'message' => $e->getMessage()];
         }
     }
+
 }
