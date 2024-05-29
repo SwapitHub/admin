@@ -8,9 +8,11 @@ use App\Models\ProductModel;
 use App\Models\Subcategory;
 use App\Models\DiamondShape;
 use App\Models\ProductPrice;
+use App\Models\CenterStone;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use PhpParser\Node\Stmt\Else_;
 
 class ProductController extends Controller
 {
@@ -181,6 +183,23 @@ class ProductController extends Controller
 				$product['diamondQuality'] = $priceData['diamondQuality']??0;
 				$product['metalType'] = '18KT Gold';
 
+                ## check if center stone exist then get the value
+                $cenyterStoneArr = [];
+                $centerStone = $product->center_stones;
+                if($centerStone= null || !empty($centerStone))
+                {
+                   $center_stones =  explode(',',$centerStone);
+                   foreach($center_stones as $s_stone)
+                   {
+                        $s_values = CenterStone::find($s_stone);
+                        $cenyterStoneArr[] = $s_values;
+                   }
+
+                }else
+                {
+                    $cenyterStoneArr = null;
+                }
+                $product['center_stones'] = $cenyterStoneArr;
 				if (!is_null($product['similar_products'])) {
 					$product['similar_products'] = json_encode($this->getSimilarProducts($product['similar_products']));
 				}

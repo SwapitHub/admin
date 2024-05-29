@@ -65,7 +65,7 @@
                                             SKU</label>
                                         <input class="form-control" id="validationCustomtitle"
                                             value="{{ old('internal_sku', $product['sku']) }}" type="text"
-                                            required="">
+                                            required="" >
                                         @error('sku')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -172,12 +172,9 @@
                                             Diamond Quality</label>
                                             <select name="diamond_quality" class="form-control">
                                                 <option selected disabled>--Select--</option>
-                                                <option value="SI1-SI2, G-H">SI1-SI2, G-H</option>
-                                                <option value="SI1, G">SI1, G</option>
+                                                <option value="SI1-SI2, G-H" {{ $product->diamondQuality =='SI1-SI2, G-H'?'selected':''; }}>SI1-SI2, G-H</option>
+                                                <option value="SI1, G" {{ $product->diamondQuality =='SI1, G'?'selected':''; }}>SI1, G</option>
                                             </select>
-                                        {{-- <input class="form-control" id="validationCustom02" name="diamond_quality"
-                                            type="text" required=""
-                                            value="{{ old('diamond_quality', $product->diamondQuality) }}"> --}}
                                         @error('diamond_quality')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -422,7 +419,7 @@
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             shippingDay</label>
                                         <input class="form-control" name="shippingDay" id="validationCustom02" type="number"
-                                            required="">
+                                            required="" value="{{ old('shippingDay',$product->shippingDay) }}">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label"><span>*</span> Product Mark As</label>
