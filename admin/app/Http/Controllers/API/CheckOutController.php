@@ -182,7 +182,6 @@ class CheckOutController extends Controller
             'clientIp'=>$orderData['clientIp']
         ];
         $response =  $this->createCharge($chargeData);
-
         if($response['res'] =='success')
         {
             $orderData['ref_num'] = $response['data']['id'];
@@ -190,8 +189,7 @@ class CheckOutController extends Controller
         }
         else
         {
-            var_dump($response);
-            exit;
+
             $orderData['status'] = 'FAILED';
         }
         unset($orderData['card_token']);
@@ -219,22 +217,22 @@ class CheckOutController extends Controller
     }
 
 
-    public function testCharge()
-    {
-        // $data['card_token'] = 'clv_1TSTSwF6SyRBEu27BkSjfbnJ';
-        // $data['amount'] = '2000';
-        // $data['currency'] = 'usd';
-        // $data['email'] = 'user@gmail.com';
-        // $clover = new Clover();
-        // $charge = $clover->createCharge($data);
-        // if($charge['res'] =='error')
-        // {
-        //     echo $charge['message'];
-        // }else
-        // {
-        //     var_dump($charge['data']);
-        // }
-    }
+    // public function testCharge()
+    // {
+    //     $data['card_token'] = 'clv_1TSTSEktk6bP6YtMu8TR4Con';
+    //     $data['amount'] = '2000';
+    //     $data['currency'] = 'usd';
+    //     $data['email'] = 'user@gmail.com';
+    //     $clover = new Clover();
+    //     $charge = $clover->createCharge($data);
+    //     if($charge['res'] =='error')
+    //     {
+    //         echo $charge['message'];
+    //     }else
+    //     {
+    //         var_dump($charge['data']);
+    //     }
+    // }
 
 
 }
