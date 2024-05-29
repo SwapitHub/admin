@@ -167,6 +167,8 @@ class ProductController extends Controller
 		$cacheKey = 'product_detail';
         $product_id = Cache::get($entity_id);
         $product_detail = Cache::get($cacheKey);
+        $product_detail = Cache::forget($cacheKey);
+        exit;
 		if(!$product_id){
 			if (!is_null($entity_id)) {
 				$product =  ProductModel::where('entity_id', $entity_id)->orWhere('slug', $entity_id)->first();
