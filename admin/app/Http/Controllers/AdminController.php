@@ -32,6 +32,7 @@ class AdminController extends Controller
         $this->users = User::count();
         $this->orders = OrderModel::count();
         $this->trnsactions = TransactionModel::count();
+        $this->latest_order = OrderModel::latest()->take(5)->get();
     }
 
     public function dashboard()
@@ -43,6 +44,7 @@ class AdminController extends Controller
             'users'=>  $this->users,
             'orders'=>$this->orders,
             'trnsactions'=>$this->trnsactions,
+            'latest_orders'=>$this->latest_order,
         ];
         return view('admin.dashboard',$data);
     }

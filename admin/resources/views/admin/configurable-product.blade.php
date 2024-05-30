@@ -91,8 +91,9 @@
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
                                             Menu</label>
-                                        <select class="custom-select form-control" name="menu" required="">
-                                            <option value="">--Select--</option>
+                                        <select class="custom-select form-control" name="menu" id="product-menu"
+                                            required="">
+                                            <option selected disabled>--Select--</option>
                                             @foreach ($Menus as $menu)
                                                 <option value="{{ $menu['id'] }}"
                                                     {{ $menu['id'] == $product['menu'] ? 'selected' : '' }}>
@@ -107,12 +108,12 @@
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
                                             Categories</label>
-                                        <select class="custom-select form-control" name="category">
-                                            <option value="">--Select--</option>
+                                        <select class="custom-select form-control" name="category" id="product-category">
+                                            <option selected disabled>--Select--</option>
                                             @if (!empty($categories))
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category['id'] }}"
-                                                        {{ $category['id'] == $product['menu'] ? 'selected' : '' }}>
+                                                        {{ $category['id'] == $product['category'] ? 'selected' : '' }}>
                                                         {{ $category['name'] }}</option>
                                                 @endforeach
                                             @endif;
@@ -124,8 +125,9 @@
                                     <div class="form-group">
                                         <label class="col-form-label categories-basic"><span>*</span>
                                             Sub Categories</label>
-                                        <select class="custom-select form-control" name="subcatagory">
-                                            <option value="">--Select--</option>
+                                        <select class="custom-select form-control" name="subcatagory"
+                                            id="product-subcatagory">
+                                            <option selected disabled>--Select--</option>
                                             @if (!empty($sub_categories))
                                                 @foreach ($sub_categories as $sub_category)
                                                     <option value="{{ $sub_category['id'] }}"
@@ -923,6 +925,23 @@
                     $("#vid-spiner").hide();
                 }
             }
+            // added new script for change manu category and subcategory
+            $("#product-menu").change(function() {
+                var menuid = $("#product-menu").val();
+                var baseUrl = "{{ url('/') }}";
+                var url = baseUrl + '/filter-category/' + menuid;
+                $("#product-category").load(url);
+            });
+
+            $("#product-category").change(function() {
+                var menuid = $("#product-menu").val();
+                var catid = $("#product-category").val();
+                var baseUrl = "{{ url('/') }}";
+                var url = baseUrl + '/filter-subcategory/' + menuid + "/" + catid;
+                $("#product-subcatagory").load(url);
+                var sub_category_id = ''
+                getProductBasedOnValues(menuid, catid, sub_category_id);
+            });
         </script>
     @endpush
 @endsection

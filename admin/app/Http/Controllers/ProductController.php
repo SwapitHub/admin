@@ -280,7 +280,8 @@ class ProductController extends Controller
             'name' => 'required',
             // 'product_br owse_pg_name' => 'required',
             'menu' => 'required',
-            // 'catagory' => 'required',
+            'category' => 'required',
+            'subcatagory' => 'required',
             'metalType' => 'required',
             'metalColor' => 'required',
             'metalWeight' => 'required',
@@ -293,7 +294,8 @@ class ProductController extends Controller
             'name.required' => 'The Product name field is required.',
             // 'product_browse_pg_name.required' => 'The Product browse name field is required.',
             'menu.required' => 'The menu field is required.',
-            // 'catagory.required' => 'The catagory field is required.',
+            'catagory.required' => 'The catagory field is required.',
+            'subcatagory.required' => 'The subcatagory field is required.',
             'metalType.required' => 'The metalType field is required.',
             'metalColor.required' => 'The metalColor field is required.',
             'metalWeight.required' => 'The metalWeight field is required.',
@@ -319,7 +321,8 @@ class ProductController extends Controller
         $product->menu = $request->menu;
         $product->slug = $slug;
         $product->description = $request->description;
-        // $product->category = $request->category;
+        $product->category = $request->category;
+        $product->sub_category = $request->subcatagory;
         $product->metalType_id = $request->metalType;
         $product->metalType = getMetalTypeByID($request->metalType);
         $product->metalColor_id = $request->metalColor;
@@ -334,6 +337,9 @@ class ProductController extends Controller
         $product->center_stones = $centerstones;
         ##center stone name and value
         $product->FingerSize = $request->finger_size;
+        $product->meta_title = $request->meta_title;
+        $product->meta_keyword = $request->meta_keyword;
+        $product->meta_description = $request->meta_description;
         if ($product->save()) {
             ## check if product variation exist then update them also
             $query = ProductModel::orderBy('id', 'asc')->where('status', 'true')->where('parent_sku', $product['sku']);
@@ -415,7 +421,10 @@ class ProductController extends Controller
         if (!empty($product->menu)) {
             $catdata = Category::orderBy('id', 'desc')->where('menu', $product->menu)->where('status', 'true')->get();
         } else {
-            $catdata = [];
+            // $catdata = [];
+            $catdata = Category::orderBy('id', 'desc')->where('status', 'true')->get();
+            //added new one
+
         }
 
         // if menu and category exist then return cat data with menu
@@ -429,7 +438,9 @@ class ProductController extends Controller
                 })
                 ->get();
         } else {
-            $subcatdata = [];
+            // $subcatdata = [];
+            // added new one here
+            $subcatdata = Subcategory::orderBy('id', 'desc')->where('status', 'true')->get();
         }
         $data = [
             'action_url' => route('admin.product.update', ['id' => $id]),
