@@ -254,6 +254,7 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/permissions/edit/{id}', [App\Http\Controllers\PermissionController::class, 'editPermission'])->name('admin.edit.permission');
 	Route::post('/permissions/{id}', [App\Http\Controllers\PermissionController::class, 'postEditPermission'])->name('admin.update.permission');
 
+	Route::get('/orders/export', [App\Http\Controllers\OrderController::class, 'ordersExport'])->name('sale.orders.export');
 	Route::get('/orders', [App\Http\Controllers\OrderController::class, 'orders'])->name('sale.orders');
 	Route::get('/orders/invoice/{order_id}', [App\Http\Controllers\OrderController::class, 'makeInvoice'])->name('order.invoice');
 	Route::get('/invoice/{order_id}',[App\Http\Controllers\InvoiceController::class, 'invoicePdf'])->name('sale.orders.invoice.download');

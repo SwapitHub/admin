@@ -1,5 +1,14 @@
 @extends('layouts.layout')
 @section('content')
+<style>
+    .card .card-header form {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        width: 100%;
+    }
+</style>
 <div class="page-body">
     <!-- Container-fluid starts-->
     <div class="container-fluid">
@@ -34,6 +43,32 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
+                        <form method="GET">
+                                <div class="form-group">
+                                    <input type="text" name="search" class="form-control"
+                                        placeholder="Search by OrderId , Transaction Id  , Reference No." value="{{ request('search') }}">
+                                </div>
+                                <div class="form-group">
+                                    <select name="txnstatus" class="form-control">
+                                        <option value="All" {{ request('txnstatus') == 'All' ? 'selected' : '' }}>All</option>
+                                        <option value="Success" {{ request('txnstatus') == 'Success' ? 'selected' : '' }}>Success</option>
+                                        <option value="Failed" {{ request('txnstatus') == 'Failed' ? 'selected' : '' }}>Failed</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="date" name="from_date" class="form-control" value="{{ request('from_date') }}">
+                                    <small>( From date )</small>
+                                </div>
+                                <div class="form-group">
+                                    <input type="date" name="to_date" class="form-control" value="{{ request('to_date') }}">
+                                    <small>( To date )</small>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-outline-primary">Search</button>
+                                    <a href="{{ route('sale.transactions') }}" class="btn btn-outline-secondary">clear</a>
+                                </div>
+                            </form>
+                        </form>
                     </div>
 
                     <div class="card-body">

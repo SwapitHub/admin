@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="page-header-left">
-						<h3>{{ $title }} 
+						<h3>{{ $title }}
 							<small>Dimond Admin panel</small>
 						</h3>
 					</div>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -63,8 +63,8 @@
 											  $img = '';
 											  if(!empty($obj->image))
 											  {
-												$img = asset('storage/app/public') .'/'. $obj->image;
-											  }	
+												$img = env('AWS_URL') .'public/storage/'. $obj->image;
+											  }
 											?>
 											<input class="dropify" id="image" name="image" type="file" data-default-file="<?= $img ?>">
 											@error('image')
@@ -72,8 +72,8 @@
 											@enderror
 										</div>
 									</div>
-									
-		
+
+
 									<div class="form-group row">
 										<label class="col-xl-3 col-md-4">Status</label>
 										<div class="col-md-7">
@@ -89,7 +89,7 @@
 										class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
 									</div>
 								</form>
-								
+
 							</div>
 						</div>
 					</div>

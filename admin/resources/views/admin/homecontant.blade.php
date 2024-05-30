@@ -267,6 +267,16 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                image alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image_alt" class="form-control" value="{{ old('image_alt',$sectionList['section1']->image_alt) }}">
+                                                @error('image_alt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
@@ -336,6 +346,16 @@
                                             <div class="col-xl-8 col-md-7">
                                                 <input type="file" name="image" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section2']->image }}">
                                                 @error('image')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                image alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image_alt" class="form-control" value="{{ old('image_alt',$sectionList['section2']->image_alt) }}">
+                                                @error('image_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -415,6 +435,16 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                image alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image_alt" class="form-control" value="{{ old('image_alt',$sectionList['section3']->image_alt) }}">
+                                                @error('image_alt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
@@ -489,11 +519,31 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                image alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image1_alt" class="form-control" value="{{ old('image1_alt',$sectionList['section3']->image1_alt) }}">
+                                                @error('image1_alt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
                                                 image</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input type="file" name="image2" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section4']->image2 }}">
                                                 @error('image2')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                image alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image2_alt" class="form-control" value="{{ old('image2_alt',$sectionList['section4']->image2_alt) }}">
+                                                @error('image2_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -575,11 +625,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 image (desktop)</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input type="file" name="image_desktop" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_desktop }}">
                                                 @error('image_desktop')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                Image desktop alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image_desktop_alt" class="form-control" value="{{ old('image_desktop_alt',$sectionList['section5']->image_desktop_alt) }}">
+                                                @error('image_desktop_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -590,6 +650,16 @@
                                             <div class="col-xl-8 col-md-7">
                                                 <input type="file" name="image_mobile" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_mobile }}">
                                                 @error('image_mobile')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                Image mobile alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image_mobile_alt" class="form-control" value="{{ old('image_mobile_alt',$sectionList['section5']->image_mobile_alt) }}">
+                                                @error('image_mobile_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>

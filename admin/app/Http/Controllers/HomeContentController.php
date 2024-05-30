@@ -259,6 +259,7 @@ class HomeContentController extends Controller
             'btn_name' => $request->btn_name,
             'link' => $request->link,
             'image' => $bannerpath,
+            'image_alt' => $request->image_alt,
             'status' => $request->status ?? 'false',
         ];
         HomeSection1::updateOrInsert($conditions, $values);
@@ -306,6 +307,7 @@ class HomeContentController extends Controller
             'btn_name' => $request->btn_name,
             'link' => $request->link,
             'image' => $bannerpath,
+            'image_alt' => $request->image_alt,
             'status' => $request->status ?? 'false',
         ];
         HomeSection2::updateOrInsert($conditions, $values);
@@ -353,6 +355,7 @@ class HomeContentController extends Controller
             'btn_name' => $request->btn_name,
             'link' => $request->link,
             'image' => $bannerpath,
+            'image_alt' => $request->image_alt,
             'status' => $request->status ?? 'false',
         ];
         HomeSection3::updateOrInsert($conditions, $values);
@@ -424,7 +427,9 @@ class HomeContentController extends Controller
             'btn_name' => $request->btn_name,
             'link' => $request->link,
             'image1' => $bannerpath1,
+            'image1_alt' => $request->image1_alt,
             'image2' => $bannerpath2,
+            'image2_alt' => $request->image2_alt,
             'status' => $request->status ?? 'false',
         ];
         HomeSection4::updateOrInsert($conditions, $values);
@@ -499,7 +504,9 @@ class HomeContentController extends Controller
             'btn_name' => $request->btn_name,
             'link' => $request->link,
             'image_desktop' => $bannerpath1,
+            'image_desktop_alt' => $request->image_desktop_alt,
             'image_mobile' => $bannerpath2,
+            'image_mobile_alt' => $request->image_mobile_alt,
             'status' => $request->status ?? 'false',
         ];
         HomeSection5::updateOrInsert($conditions, $values);

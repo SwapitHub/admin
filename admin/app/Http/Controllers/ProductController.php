@@ -359,9 +359,9 @@ class ProductController extends Controller
                     $child_product->slug = $slug;
                     // $product->category = $request->category;
                     $child_product->metalType_id = $request->metalType_id;
-                    $child_product->metalType = getMetalTypeByID($request->metalType_id);
+                    $child_product->metalType = getMetalTypeByID($request->metalType);
                     $child_product->metalColor_id = $request->metalColor_id;
-                    $child_product->metalColor = getMetalColorByID($request->metalColor_id);
+                    $child_product->metalColor = getMetalColorByID($request->metalColor);
                     $child_product->metalWeight = $request->metalWeight;
                     $child_product->diamondQuality = $request->diamond_quality;
                     $child_product->NoOfGemstones1 = $request->NoOfGemstones1;

@@ -65,7 +65,7 @@
 											</td>
 
 											<td>{{ $item->name }}</td>
-											<td><img src="{{ env('AWS_URL') }}.'public/'{{ $item->image }}"></td>
+											<td><img src="{{ env('AWS_URL') }}public/storage/{{ $item->image }}"></td>
 
 											<td >
 												<span class="badge badge-{{ ($item->status =='true')?'success':'primary' }}">{{ ($item->status =='true')?'Active':'Inactive' }}</span>

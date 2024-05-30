@@ -1,5 +1,16 @@
 @extends('layouts.layout')
 @section('content')
+    <style>
+        .form-group-inner-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        input#validationCustom02 {
+            width: 85%;
+        }
+    </style>
     <div class="page-body">
         <!-- Container-fluid starts-->
         <div class="container-fluid">
@@ -37,7 +48,8 @@
                     <div class="col-xl-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Product Type : {{ ($product['type'] == 'parent_product'?'Base Product':'Child product') }}</h5>
+                                <h5>Product Type :
+                                    {{ $product['type'] == 'parent_product' ? 'Base Product' : 'Child product' }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="digital-add needs-validation">
@@ -65,7 +77,7 @@
                                             SKU</label>
                                         <input class="form-control" id="validationCustomtitle"
                                             value="{{ old('internal_sku', $product['sku']) }}" type="text"
-                                            required="" >
+                                            required="">
                                         @error('sku')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -170,11 +182,16 @@
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             Diamond Quality</label>
-                                            <select name="diamond_quality" class="form-control">
-                                                <option selected disabled>--Select--</option>
-                                                <option value="SI1-SI2, G-H" {{ $product->diamondQuality =='SI1-SI2, G-H'?'selected':''; }}>SI1-SI2, G-H</option>
-                                                <option value="SI1, G" {{ $product->diamondQuality =='SI1, G'?'selected':''; }}>SI1, G</option>
-                                            </select>
+                                        <select name="diamond_quality" class="form-control">
+                                            <option selected disabled>--Select--</option>
+                                            <option value="SI1-SI2, G-H"
+                                                {{ $product->diamondQuality == 'SI1-SI2, G-H' ? 'selected' : '' }}>SI1-SI2,
+                                                G-H
+                                            </option>
+                                            <option value="SI1, G"
+                                                {{ $product->diamondQuality == 'SI1, G' ? 'selected' : '' }}>SI1, G
+                                            </option>
+                                        </select>
                                         @error('diamond_quality')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -415,11 +432,12 @@
                                         <input class="form-control" id="validationCustom02" type="file"
                                             name="default_image_url">
                                     </div>
-                                     <div class="form-group">
+                                    <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             shippingDay</label>
-                                        <input class="form-control" name="shippingDay" id="validationCustom02" type="number"
-                                            required="" value="{{ old('shippingDay',$product->shippingDay) }}">
+                                        <input class="form-control" name="shippingDay" id="validationCustom02"
+                                            type="number" required=""
+                                            value="{{ old('shippingDay', $product->shippingDay) }}">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label"><span>*</span> Product Mark As</label>
@@ -530,32 +548,55 @@
 											</div> --}}
                                     </div>
                                 </div>
+                                @php
+                                    $vid = json_decode($product->videos);
+                                @endphp
                                 <div class="form-group">
                                     <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                       Product Video (white) </label>
-                                    <input class="form-control" id="validationCustom02" name="metalWeight"
-                                        type="file" value="">
-                                    @error('metalWeight')
+                                        Product Video (white) </label>
+                                    <div class="form-group-inner-main">
+                                        <input class="form-control" id="validationCustom02" name="product_video_white"
+                                            type="file">
+                                        <button class="btn btn-primary"
+                                            onclick="showVideo('{{ !empty($vid->white) && isset($vid) ? $vid->white : 'NA' }}')"
+                                            title="View Video" type="button" style="padding: 11px 16px"><i
+                                                class="fa fa-eye"></i></button>
+                                    </div>
+                                    <span>{{ !empty($vid->white) && isset($vid) ? $vid->white : 'NA' }}</span>
+                                    @error('product_video_white')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
+
                                 </div>
                                 <div class="form-group">
                                     <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                       Product Video (yellow) </label>
-                                    <input class="form-control" id="validationCustom02" name="metalWeight"
-                                        type="file" value="">
-                                    @error('metalWeight')
+                                        Product Video (yellow) </label>
+                                    <div class="form-group-inner-main">
+                                        <input class="form-control" id="validationCustom02" name="product_video_yellow"
+                                            type="file">
+                                        <button class="btn btn-primary" title="View Video" type="button"
+                                            onclick="showVideo('{{ !empty($vid->yellow) && isset($vid) ? $vid->yellow : 'NA' }}')"
+                                            style="padding: 11px 16px"><i class="fa fa-eye"></i></button>
+                                    </div>
+                                    @error('product_video_yellow')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
+                                    <span>{{ !empty($vid->yellow) && isset($vid) ? $vid->yellow : 'NA' }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="validationCustom02" class="col-form-label"><span>*</span>
-                                       Product Video (rose) </label>
-                                    <input class="form-control" id="validationCustom02" name="metalWeight"
-                                        type="file" value="">
-                                    @error('metalWeight')
+                                        Product Video (rose) </label>
+                                    <div class="form-group-inner-main">
+                                        <input class="form-control" id="validationCustom02" name="product_video_rose"
+                                            type="file">
+                                        <button class="btn btn-primary" title="View Video" type="button"
+                                            onclick="showVideo('{{ !empty($vid->rose) && isset($vid) ? $vid->rose : 'NA' }}')"
+                                            style="padding: 11px 16px"><i class="fa fa-eye"></i></button>
+                                    </div>
+                                    @error('product_video_rose')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
+                                    <span>{{ !empty($vid->rose) && isset($vid) ? $vid->rose : 'NA' }}</span>
                                 </div>
 
                             </div>
@@ -726,6 +767,27 @@
             </form>
         </div>
     </div>
+
+    <!-- Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoModalLabel">Video</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div>
+                <div class="modal-body" id="videoModal">
+                    <i class="fa fa-spinner fa-2x fa-spin" id="vid-spiner"></i>
+                    <iframe width="100%" id="vid" height="345" src="">
+                    </iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
         <script>
             $("#similar-menu").change(function() {
@@ -853,6 +915,14 @@
                     });
                 }
             });
+
+            function showVideo(video) {
+                if (video != 'NA') {
+                    $("#videoModal").modal('show');
+                    $("#vid").attr('src', video);
+                    $("#vid-spiner").hide();
+                }
+            }
         </script>
     @endpush
 @endsection

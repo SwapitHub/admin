@@ -27,17 +27,17 @@
 			</div>
 		</div>
 		<!-- Container-fluid Ends-->
-		
+
 		<!-- Container-fluid starts-->
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							
+
 							<a href="{{ route($viewurl) }}" class="btn btn-primary mt-md-0 mt-2">Add new</a>
 						</div>
-						
+
 						<div class="card-body">
 							<div class="table-responsive table-desi">
 								<table class="all-package coupon-table table table-striped">
@@ -51,10 +51,10 @@
 											<th>Image</th>
 											<th>Status</th>
 											<th>Options</th>
-											
+
 										</tr>
 									</thead>
-									
+
 									 <tbody>
 									<tr><input type="hidden" value="{{ url('gemstones/delete') }}" name="url" id="url"></tr>
 										@foreach($list as $item)
@@ -63,21 +63,22 @@
 												<input class="checkbox_animated check-it" type="checkbox"
 												value="" id="flexCheckDefault" data-id="{{ $item->id }}">
 											</td>
-											
+
 											<td>{{ $item->name }}</td>
-											<td><img src="{{ asset('storage/app/public') }}/{{ $item->image }}"></td>
-											
+											{{-- <td><img src="{{ asset('storage/app/public') }}/{{ $item->image }}"></td> --}}
+											<td><img src="{{ env('AWS_URL') }}public/storage/{{ $item->image }}"></td>
+
 											<td >
 												<span class="badge badge-{{ ($item->status =='true')?'success':'primary' }}">{{ ($item->status =='true')?'Active':'Inactive' }}</span>
 											</td>
 											<td class="list-date">
 											    <a href="{{ route($editurl, ['id' => $item->id]) }}">
 													<i class="fa fa-edit" title="Edit"></i>
-												</a>	
+												</a>
 											</td>
 										</tr>
 										@endforeach
-									</tbody> 
+									</tbody>
 								</table>
 							</div>
 						</div>
@@ -88,4 +89,3 @@
 		<!-- Container-fluid Ends-->
 	</div>
 	@endsection
-	

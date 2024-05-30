@@ -46,20 +46,22 @@
                             <form method="GET">
                                 <div class="form-group">
                                     <input type="text" name="search" class="form-control"
-                                        placeholder="Search by OrderId , Email ,">
+                                        placeholder="Search by OrderId , Email ," value="{{ request('search') }}">
                                 </div>
                                 <div class="form-group">
                                     <select name="orderStatus" class="form-control">
-                                        <option value="All">All</option>
-                                        <option value="Success">Success</option>
-                                        <option value="Processing">Processing</option>
-                                        <option value="Cancel">Cancel</option>
+                                        <option value="All" {{ request('orderStatus') == 'All' ? 'selected' : '' }}>All</option>
+                                        <option value="Success" {{ request('orderStatus') == 'Success' ? 'selected' : '' }}>Success</option>
+                                        <option value="Processing" {{ request('orderStatus') == 'Processing' ? 'selected' : '' }}>Processing</option>
+                                        <option value="Cancel" {{ request('orderStatus') == 'Cancel' ? 'selected' : '' }}>Cancel</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-outline-primary">Search</button>
                                 </div>
                             </form>
+                            &ensp;
+                                <a href="{{ route('sale.orders.export') }}" class="btn btn-outline-success mb-3">Export </a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-desi ">
@@ -152,7 +154,8 @@
                                     {{ $orders->total() }} entries
                                 </div>
                                 <div class="float-end">
-                                    <p>{{ $orders->links() }}</p>
+                                    {{-- <p>{{ $orders->links() }}</p> --}}
+                                    <p>{{ $orders->appends(request()->query())->links() }}</p>
                                 </div>
                             </div>
                         </div>

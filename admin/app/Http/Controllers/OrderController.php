@@ -12,6 +12,8 @@ use App\Models\AddresModel;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Cache;
+use App\Exports\OrderExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Http\Request;
 
@@ -34,24 +36,57 @@ class OrderController extends Controller
         }
     }
 
-
-    public function orders()
+    public function ordersExport()
     {
+        return Excel::download(new OrderExport, 'orders.csv');
+    }
 
-        $cacheKey = 'orders_data';
-        $orders = Cache::get($cacheKey);
-        // Cache::forget($cacheKey);
-        // exit;
-        // if (!$orders) {
-        $orders = DB::table('orders')
-            ->orderBy('orders.id', 'desc')
+
+    // public function orders(Request $request)
+    // {
+    //     $order_data = $request->search;
+    //     $order_data = $request->orderStatus;
+    //     $orders = DB::table('orders')
+    //         ->orderBy('orders.id', 'desc')
+    //         ->join('users', 'orders.user_id', '=', 'users.id')
+    //         ->select('users.first_name', 'users.last_name', 'users.email', 'orders.*')
+    //         ->paginate(10);
+    //     return view('admin.orders', ['orders' => $orders]);
+    // }
+    public function orders(Request $request)
+    {
+        // Retrieve search and order status from the request
+        $order_data = $request->input('search');
+        $order_status = $request->input('orderStatus');
+
+        // Start building the query
+        $query = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->select('users.first_name', 'users.last_name', 'users.email', 'orders.*')
-            ->paginate(10);
-        // Cache::put($cacheKey, $orders, $minutes = 60);
-        // }
+            ->orderBy('orders.id', 'desc');
+
+        // Add filter for order status if provided
+        if (!empty($order_status)) {
+            if($order_status !='All')
+            {
+                $query->where('orders.status', '=', $order_status);
+            }else{
+                $query->orderBy('orders.id', 'desc');
+            }
+        }
+        // Add filter for order data if provided
+        if (!empty($order_data)) {
+            $query->where(function ($q) use ($order_data) {
+                $q->where('orders.order_id', 'LIKE', "%{$order_data}%")
+                    ->orWhere('users.email', 'LIKE', "%{$order_data}%");
+            });
+        }
+        // Paginate the results
+        $orders = $query->paginate(10);
+        // Return the view with the filtered orders
         return view('admin.orders', ['orders' => $orders]);
     }
+
 
 
     public function ordersDetail($id)

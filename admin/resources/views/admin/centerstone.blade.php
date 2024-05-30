@@ -48,7 +48,7 @@
 									@csrf
 
 									<div class="form-group row">
-										<label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Carat</label>
+										<label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Name</label>
 										<div class="col-xl-8 col-md-7">
 											<div class="input-group mb-3">
 												<input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Carat" value="{!! old()?old('name'):$obj['name']??'' !!}" aria-label="name" aria-describedby="basic-addon1">
