@@ -98,6 +98,42 @@
 											<textarea name="address" id="" cols="30" rows="10" class="summernote">{{ $siteinfo->address }}</textarea>
 										</div>
 									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">City</label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="city" value="{{ old('city',$siteinfo->city)  }}"  name="city" type="text">
+											@error('city')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">State</label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="state" value="{{ old('state',$siteinfo->state)  }}"  name="state" type="text">
+											@error('state')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">Zip code</label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="zip" value="{{ old('zip',$siteinfo->zip)  }}"  name="zip" type="text">
+											@error('zip')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">Country</label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="country" value="{{ old('country',$siteinfo->country)  }}"  name="country" type="text">
+											@error('country')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
 										Copyright</label>

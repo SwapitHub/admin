@@ -46,15 +46,15 @@
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-contact" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 1</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Bridal Jewelry</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section2" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 2</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Celebrate Love with Timeless Elegance</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section3" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 3</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Celebrate Love with Timeless Elegance</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section4" role="tab" aria-controls="top-contact"
@@ -62,7 +62,7 @@
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section5" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Section 5</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Love’s Brilliance</a>
                                 </li>
                             </ul>
 

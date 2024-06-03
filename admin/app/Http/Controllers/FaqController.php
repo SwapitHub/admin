@@ -1,5 +1,5 @@
 <?php
-	
+
 	namespace App\Http\Controllers;
 	use Illuminate\Http\Request;
 	use Illuminate\Support\Facades\DB;
@@ -7,13 +7,13 @@
 	use App\Models\FaqCategory;
 	use App\Models\Faq;
 	use App\Models\Widget;
-	
+
 	class FaqController extends Controller
 	{
-		
+
 	    public function index()
 		{
-			
+
 			$faqWithCategory = DB::table('faq')
 			->join('faq_categories', 'faq.faq_category', '=', 'faq_categories.id')
 			->orderBy('faq.id', 'desc')
@@ -51,7 +51,7 @@
 			];
 			return view('admin.faqcategory',$data);
 		}
-		
+
 		public function addCategory()
 		{
 			$data = [
@@ -60,9 +60,9 @@
 			'title'=>'Add Faq Category',
 			"obj"=>'',
 			];
-			return view('admin.addfaq_category',$data);	
+			return view('admin.addfaq_category',$data);
 		}
-		
+
 		public function postAddCategory(Request $request)
 		{
 			$this->validate($request, [
@@ -77,7 +77,7 @@
 			$cat->save();
 			return redirect()->back()->with('success', 'Faq caytegory added successfully');
 		}
-		
+
 		public function editCategory($id)
 		{
 			$editdata = FaqCategory::find($id);
@@ -93,7 +93,7 @@
 			];
 			return view('admin.addfaq_category',$data);
 		}
-		
+
 		public function updateCategory(Request $request ,$id)
 		{
 			$obj = FaqCategory::find($id);
@@ -108,7 +108,7 @@
 			$obj->save();
 			return redirect()->back()->with('success', 'Category updated successfully');
 		}
-		
+
 		public function deleteCategory($id)
 		{
 			if ($id) {
@@ -123,7 +123,7 @@
 			echo json_encode($output);
 		}
 		/*  ### faq categorey end ### */
-		
+
 	    public function create()
 		{
 			$data = [
@@ -133,9 +133,9 @@
 			'title'=>'Add Faq',
 			"obj"=>'',
 			];
-			return view('admin.addfaq',$data);	
+			return view('admin.addfaq',$data);
 		}
-		
+
 		public function postAddFaq(Request $request)
 		{
 			$this->validate($request, [
@@ -156,7 +156,7 @@
 			$faq->save();
 			return redirect()->back()->with('success', 'Faq added successfully');
 		}
-		
+
 		public function editFaq($id)
 		{
 			$editdata = Faq::find($id);
@@ -173,7 +173,7 @@
 			];
 			return view('admin.addfaq',$data);
 		}
-		
+
 		public function updateFaq(Request $request,$id)
 		{
 			$faq = Faq::find($id);
@@ -194,7 +194,7 @@
 			$faq->save();
 			return redirect()->back()->with('success', 'Faq updated successfully');
 		}
-		
+
 		public function deleteFaq($id)
 		{
 			if ($id) {
@@ -228,16 +228,17 @@
 				'title'=>'Add Widgt',
 				"obj"=>'',
 				];
-				return view('admin.addwidget',$data);	
+				return view('admin.addwidget',$data);
 		}
 
 		public function postCreatewidget(Request $request)
 		{
 			$this->validate($request, [
-				'name' => 'required',
+				'name' => 'required|unique:widget',
 				'content' => 'required',
 				], [
 				'name.required' => 'The Name field is required.',
+                'name.unique' => 'The Name has already been taken.',
 				'content.required' => 'The Contant  field is required.',
 				]);
 				$Widget = new Widget;

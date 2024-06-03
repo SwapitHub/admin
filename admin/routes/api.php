@@ -62,6 +62,7 @@
 		Route::get('order-detail',[App\Http\Controllers\API\OrdersController::class,'historyDetail']);
 		Route::any('tokenize-card',[App\Http\Controllers\API\CheckOutController::class,'tokenizeCard']);
 		Route::post('create-charge',[App\Http\Controllers\API\CheckOutController::class,'testCharge']);
+		Route::get('widget/{name}',[App\Http\Controllers\API\PageController::class,'widgetCallByName']);
 
 	});
 

@@ -68,6 +68,10 @@ class SiteinfoController extends Controller
         $siteinfo->logo = $logopath;
         $siteinfo->favicon = $faviconpath;
         $siteinfo->address = $request->address;
+        $siteinfo->city = $request->city;
+        $siteinfo->state = $request->state;
+        $siteinfo->zip = $request->zip;
+        $siteinfo->country = $request->country;
         $siteinfo->copyright = $request->copyright;
         $siteinfo->save();
         return redirect()->back()->with('success', 'Site information updated successfully.');

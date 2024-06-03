@@ -15,6 +15,7 @@ use App\Models\TransactionModel;
 use App\Models\Widget;
 use App\Models\ContactUs;
 use App\Models\User;
+use App\Library\UpsShipping;
 
 class AdminController extends Controller
 {
@@ -144,5 +145,11 @@ class AdminController extends Controller
         $admin->save();
         $output['res'] = 'success';
         echo json_encode($output);
+    }
+
+    public function shipping()
+    {
+        $shipping = new UpsShipping();
+        $shipping->authorization();
     }
 }
