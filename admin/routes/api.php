@@ -15,7 +15,6 @@
 	Route::get('/csrf-token', function () {
 		return response()->json(['csrf_token' => csrf_token()]);
 	});
-
 	Route::prefix('v1')->group(function () {
 		Route::any('newsletter',[App\Http\Controllers\API\NewsletterController::class,'index']);
 		Route::get('token', [App\Http\Controllers\API\SiteinfoController::class, 'getCsrfToken']);
