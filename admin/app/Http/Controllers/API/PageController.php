@@ -42,7 +42,7 @@
                 $output['res'] = 'success';
                 $output['msg'] = 'data retrieved successfully';
                 $widgetx =  Widget::where('name',$name);
-                if($widget->exists())
+                if($widgetx->exists())
                 {
                     $output['data'] = $widgetx->first();
                 }else
