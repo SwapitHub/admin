@@ -41,10 +41,10 @@
             {
                 $output['res'] = 'success';
                 $output['msg'] = 'data retrieved successfully';
-                $widget =  Widget::where('name',$name)->exists();
-                if($widget)
+                $widgetx =  Widget::where('name',$name);
+                if($widget->exists())
                 {
-                    $output['data'] = $widget->first();
+                    $output['data'] = $widgetx->first();
                 }else
                 {
                     $output['res'] = 'error';
