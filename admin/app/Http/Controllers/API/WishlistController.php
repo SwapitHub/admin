@@ -13,7 +13,7 @@ class WishlistController extends Controller
 {
     public function index(Request $request)
     {
-        
+
         $rules = [
             'user_id' => 'required',
             'product_type' => 'required',
@@ -57,6 +57,7 @@ class WishlistController extends Controller
             $wishlist->img_sku = $request->img_sku;
             $wishlist->carat_price = $request->carat_price;
             $wishlist->diamond_id = $request->diamond_id;
+            $wishlist->diamond_type = $request->diamond_type;
             $wishlist->diamond_stock_no = $request->diamond_stock_no;
             $wishlist->diamond_price = $request->diamond_price;
             $wishlist->gemstone_id = $request->gemstone_id;
@@ -64,7 +65,7 @@ class WishlistController extends Controller
             $wishlist->gemstone_price = $request->gemstone_price;
             $wishlist->status = 'true';
             $wishlist->save();
-            $output['res'] = 'success';  
+            $output['res'] = 'success';
             $output['msg'] = 'product added in wishlist';
             $output['data'] = Wishlist::latest()->first();
             return response()->json($output, 200);
@@ -102,7 +103,7 @@ class WishlistController extends Controller
     //         return response()->json($output, 200);
     //     }
 
-      
+
     // }
 
 
@@ -130,7 +131,7 @@ class WishlistController extends Controller
 
           $cart_collection = [];
             foreach ($cart as $cartitems) {
-                $item_data = []; 
+                $item_data = [];
                 $item_data['id'] = $cartitems->id;
                 $item_data['product_type'] = $cartitems->product_type;
                 $item_data['user_id'] = $cartitems->user_id;
@@ -143,6 +144,7 @@ class WishlistController extends Controller
                 $item_data['ring_price'] = $cartitems->ring_price;
                 $item_data['img_sku'] = $cartitems->img_sku;
                 $item_data['diamond_id'] = $cartitems->diamond_id;
+                $item_data['diamond_type'] = $cartitems->diamond_type;
                 $item_data['diamond_stock_no'] = $cartitems->diamond_stock_no;
                 $item_data['diamond_price'] = $cartitems->diamond_price;
                 $item_data['gemstone_id'] = $cartitems->gemstone_id;
@@ -150,19 +152,19 @@ class WishlistController extends Controller
                 $item_data['gemstone_price'] = $cartitems->gemstone_price;
 
                 if (!empty($cartitems->ring_id)) {
-                    // fetch ring data here 
+                    // fetch ring data here
                     $ring_data = ProductModel::where('id', $cartitems->ring_id)->first();
-                    $item_data['ring'] = $ring_data; 
+                    $item_data['ring'] = $ring_data;
                 }else
                 {
                     $item_data['ring'] = [];
                 }
 
                 if (!empty($cartitems->diamond_id)) {
-                    // fetch diamond data here 
-                    $diamond_data = ''; 
+                    // fetch diamond data here
+                    $diamond_data = '';
                     $encodedDiamondId = urlencode($cartitems->diamond_id);
-                    $url = "https://apiservices.vdbapp.com/v2/diamonds?type=Diamond&stock_num=$encodedDiamondId";
+                    $url = "https://apiservices.vdbapp.com/v2/diamonds?type=$cartitems->diamond_type&stock_num=$encodedDiamondId";
                     $curl = curl_init();
 
                     curl_setopt_array($curl, array(
@@ -197,18 +199,18 @@ class WishlistController extends Controller
                             $item_data['diamond'] = [];
                         }
                     }
-                    
+
                     // $diamond_data = $resp->response->body->diamonds;
-                    // $item_data['diamond'] = $diamond_data; 
+                    // $item_data['diamond'] = $diamond_data;
 
                 }else
                 {
-                    $item_data['diamond'] = []; 
+                    $item_data['diamond'] = [];
                 }
 
                 if (!empty($cartitems->gemstone_id) || !is_null($cartitems->gemstone_id)) {
-                    // fetch gemstone data here 
-                    $gemstone_data = ''; 
+                    // fetch gemstone data here
+                    $gemstone_data = '';
                     $url = "https://apiservices.vdbapp.com/v2/gemstones?stock_num=$cartitems->gemstone_id";
                     $curl = curl_init();
 
@@ -233,7 +235,7 @@ class WishlistController extends Controller
                 }
                 else
                 {
-                    $item_data['gemstone'] = []; 
+                    $item_data['gemstone'] = [];
                 }
                 $cart_collection[] = $item_data;
             }
@@ -252,13 +254,13 @@ class WishlistController extends Controller
             $Item = $obj->delete();
             if($Item)
             {
-                    $output['res'] = 'success';  
+                    $output['res'] = 'success';
                     $output['msg'] = 'Item removed from wishlist';
                     $output['data'] = '';
                     return response()->json($output, 200);
             }else
             {
-                    $output['res'] = 'error';  
+                    $output['res'] = 'error';
                     $output['msg'] = 'something went wrong while deleting';
                     $output['data'] = '';
                     return response()->json($output, 201);
@@ -266,7 +268,7 @@ class WishlistController extends Controller
         }
         else
         {
-                $output['res'] = 'error';  
+                $output['res'] = 'error';
                 $output['msg'] = 'Item not available for this ID.';
                 $output['data'] = '';
                 return response()->json($output, 201);
