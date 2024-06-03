@@ -68,6 +68,7 @@ class CartController extends Controller
 			$cart->metalColor = $metalColor;
 			$cart->img_sku = $request->img_sku;
 			$cart->diamond_id = $request->diamond_id;
+            $cart->diamond_type = $request->diamond_type;
 			$cart->diamond_stock_no = $request->diamond_stock_no;
 			$cart->diamond_price = $request->diamond_price;
 			$cart->gemstone_id = $request->gemstone_id;
@@ -116,6 +117,7 @@ class CartController extends Controller
 				$item_data['diamond_stock_no'] = $cartitems->diamond_stock_no;
 				$item_data['diamond_price'] = $cartitems->diamond_price;
 				$item_data['gemstone_id'] = $cartitems->gemstone_id;
+                $item_data['diamond_type'] = $cartitems->diamond_type;
 				$item_data['gemstone_stock_no'] = $cartitems->gemstone_stock_no;
 				$item_data['gemstone_price'] = $cartitems->gemstone_price;
 
@@ -131,7 +133,7 @@ class CartController extends Controller
 					// fetch diamond data here 
 					$diamond_data = '';
 					$encodedDiamondId = urlencode($cartitems->diamond_id);
-					$url = "https://apiservices.vdbapp.com/v2/diamonds?type=Diamond&stock_num=$encodedDiamondId";
+					$url = "https://apiservices.vdbapp.com/v2/diamonds?type=$cartitems->diamond_type&stock_num=$encodedDiamondId";
 					$curl = curl_init();
 
 					curl_setopt_array($curl, array(
