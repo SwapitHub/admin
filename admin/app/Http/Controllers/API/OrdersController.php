@@ -146,7 +146,7 @@ class OrdersController extends Controller
                 'order_method' => $initial_order->method,
                 'total_amount' => $initial_order->amount,
                 'shipping_address' => $shipping_address,
-                'shipping_address' => $shipping_address,
+                'billing_address' => $billing_address,
             ];
 
             $output['res'] = 'success';
