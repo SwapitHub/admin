@@ -90,7 +90,7 @@ if (!function_exists('getProductImages')) {
 
 
 if (!function_exists('getDiamondImages')) {
-    function getDiamondImages($stock_number)
+    function getDiamondImages($stock_number,$type)
     {
         if ($stock_number != null) {
             try {
