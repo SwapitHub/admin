@@ -94,6 +94,7 @@
                                                 );
                                                 $diamondImages[$orderItem->id] = getDiamondImages(
                                                 $products->diamond_id,
+                                                $products->diamond_type,
                                                 );
                                                 } elseif (
                                                 !empty($products->ring_id) &&
@@ -109,6 +110,7 @@
                                                 } elseif (!empty($products->diamond_id)) {
                                                 $diamondImages[$orderItem->id] = getDiamondImages(
                                                 $products->diamond_id,
+                                                $products->diamond_type,
                                                 );
                                                 } elseif (!empty($products->gemstone_id)) {
                                                 $gemstoneImages[$orderItem->id] = getGemStoneImages(
@@ -128,7 +130,7 @@
                                                     $gemstoneImage = isset($gemstoneImages[$orderItem->id])
                                                     ? $gemstoneImages[$orderItem->id]
                                                     : null;
-                                                    @endphp 
+                                                    @endphp
                                                     <td>
                                                         <div class="d-flex ">
                                                             @if ($ringImage)
@@ -233,12 +235,12 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                       
+
                                     @if(!empty($address))
                                         @foreach ($address as $add)
                                         <div class="col-12">
                                             <div class="order-success bg-white">
-                                                <h4>  
+                                                <h4>
                                                     @if ($add->address_type =='shipping_address')
                                                        Shipping address
                                                     @elseif ($add->address_type =='billing_address')
@@ -258,12 +260,12 @@
                                                     </li>
                                                     <br>
                                                     @if ($add->address_type =='both')
-                                                    
+
                                                         <h5>  Billing address is same as shipping address.</h5>
-                                                   
+
                                                     @endif
 
-                                                  
+
 
                                                 </ul>
                                             </div>

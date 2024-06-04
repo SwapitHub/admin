@@ -105,15 +105,14 @@
                                                         $ringImage = null;
                                                         $diamondImage = null;
                                                         $gemstoneImage = null;
-
                                                         if (!empty($products->ring_id) && !empty($products->diamond_id)) {
                                                             $ringImage = getProductImages($products->ring_id, $products->ring_color);
-                                                            $diamondImage = getDiamondImages($products->diamond_id);
+                                                            $diamondImage = getDiamondImages($products->diamond_id,$products->diamond_type);
                                                         } elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
                                                             $ringImage = getProductImages($products->ring_id, $products->ring_color);
                                                             $gemstoneImage = getGemStoneImages($products->gemstone_id);
                                                         } elseif (!empty($products->diamond_id)) {
-                                                            $diamondImage = getDiamondImages($products->diamond_id);
+                                                            $diamondImage = getDiamondImages($products->diamond_id,$products->diamond_type);
                                                         } elseif (!empty($products->gemstone_id)) {
                                                             $gemstoneImage = getGemStoneImages($products->gemstone_id);
                                                         }

@@ -78,19 +78,19 @@
                                                             $diamondImages = [];
                                                             $gemstoneImages = [];
                                                        @endphp
-                                                        @foreach ($orderItems as $orderItem) 
+                                                        @foreach ($orderItems as $orderItem)
                                                             @php
                                                                 $products = json_decode($orderItem->order_data);
                                                                 if (!empty($products->ring_id) &&!empty($products->diamond_id))
                                                                 {
                                                                     $ringImages[$orderItem->id] = getProductImages($products->ring_id,$products->ring_color);
-                                                                    $diamondImages[$orderItem->id] = getDiamondImages($products->diamond_id);
+                                                                    $diamondImages[$orderItem->id] = getDiamondImages($products->diamond_id,$products->diamond_type);
                                                                 }
                                                                 elseif (!empty($products->ring_id) &&!empty($products->gemstone_id)) {
                                                                     $ringImages[$orderItem->id] = getProductImages($products->ring_id,$products->ring_color);
                                                                     $gemstoneImages[$orderItem->id] = getGemStoneImages($products->gemstone_id);
                                                                 } elseif (!empty($products->diamond_id)) {
-                                                                    $diamondImages[$orderItem->id] = getDiamondImages($products->diamond_id);
+                                                                    $diamondImages[$orderItem->id] = getDiamondImages($products->diamond_id,$products->diamond_type);
                                                                 } elseif (!empty($products->gemstone_id)) {
                                                                     $gemstoneImages[$orderItem->id] = getGemStoneImages($products->gemstone_id);
                                                                 }
@@ -153,8 +153,8 @@
                                                             </td>
                                                         </tr>
                                                         @endforeach
-                                                        
-                                                   
+
+
                                                 </tbody>
 
                                                 <tfoot>
@@ -218,7 +218,7 @@
                                             @foreach ($address as $add)
                                             <div class="col-12">
                                                 <div class="order-success bg-white">
-                                                    <h4>  
+                                                    <h4>
                                                         @if ($add->address_type =='shipping_address')
                                                            Shipping address
                                                         @elseif ($add->address_type =='billing_address')
@@ -238,13 +238,13 @@
                                                         </li>
                                                         <br>
                                                         @if ($add->address_type =='both')
-                                                        
+
                                                             <h5>  Billing address is same as shipping address.</h5>
-                                                       
+
                                                         @endif
-    
-                                                      
-    
+
+
+
                                                     </ul>
                                                 </div>
                                             </div>
