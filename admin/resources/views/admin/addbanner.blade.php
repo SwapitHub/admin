@@ -76,6 +76,41 @@
 											<select name="type" id="type" onchange="showTerm(this.value)" class="form-control">
 												<option value="general" {{ (old('type') == 'general')?'selected':'' }} >General</option>
 												<option value="promotional" {{ (old('type') =='promotional') }} >Promotional</option>
+												<option value="ribbon" {{ (old('type') =='ribbon') }} >Ribbon</option>
+											</select>
+										</div>
+									</div>
+                                    <div id="termsec">
+										<div class="form-group row">
+											<label for="validationCustom4" class="col-xl-3 col-md-4">
+											Term and condition</label>
+											<div class="col-xl-8 col-md-7">
+												<textarea name="termcondition" id="termcondition" cols="30" rows="10" placeholder="Term and condition" class="summernote">{{ old('termcondition') }}</textarea>
+												@error('termcondition')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+											</div>
+										</div>
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">Page</label>
+										<div class="col-xl-8 col-md-7">
+											<select name="page" id="page" class="form-control">
+												<option selected disabled>--select--</option>
+												@foreach ($pages as $page)
+                                                    <option value="{{ $page->id }}">{{ $page->name }}</option>
+                                                @endforeach
+											</select>
+										</div>
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">Position</label>
+										<div class="col-xl-8 col-md-7">
+											<select name="position" id="position" class="form-control">
+												<option selected disabled>--select--</option>
+												<option value="top">Top</option>
+                                                <option value="middle">Middle</option>
+                                                <option value="bottom">Bottom</option>
 											</select>
 										</div>
 									</div>

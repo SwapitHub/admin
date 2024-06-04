@@ -7,6 +7,7 @@
 	use Illuminate\Support\Facades\Storage;
 	use Illuminate\Support\Facades\Validator;
 	use App\Models\Banner;
+    use App\Models\Cmscategory;
 
 	class BannerController extends Controller
 	{
@@ -20,7 +21,8 @@
 		}
 		public function addbanner()
 		{
-			return view('admin.addbanner');
+            $data['pages'] = Cmscategory::where('status','true')->get();
+			return view('admin.addbanner',$data);
 		}
 
 		public function postAddBanner(Request $request)
@@ -55,6 +57,8 @@
 			$banner->btn_name = $request->btn_name;
 			$banner->banner = $bannerpath;
 			$banner->description = $request->description;
+			$banner->page = $request->page;
+			$banner->position = $request->position;
 			$banner->status = $request->status ?? 'false';
 			$banner->save();
 			return redirect()->back()->with('success', 'Banner added successfully');
@@ -120,6 +124,8 @@
             $bannerdata->btn_name = $request->btn_name;
 			$bannerdata->banner = $bannerpath;
 			$bannerdata->description = $request->description;
+			$bannerdata->page = $request->page;
+			$bannerdata->position = $request->position;
 			$bannerdata->status = $request->status ?? 'false';
 			$bannerdata->save();
 			return redirect()->back()->with('success', 'Banner updated successfully');

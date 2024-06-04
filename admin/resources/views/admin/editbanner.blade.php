@@ -79,10 +79,11 @@
 												<option value="general" {{ ($bannerdata->type == 'general')?'selected':'' }}>General</option>
 												<option value="promotional" {{ ($bannerdata->type == 'promotional')?'selected':'' }}>Promotional</option>
 												<option value="Home" {{ ($bannerdata->type == 'Home')?'selected':'' }}>Home</option>
+												<option value="ribbon" {{ ($bannerdata->type == 'ribbon')?'selected':'' }} >Ribbon</option>
 											</select>
 										</div>
 									</div>
-									<div id="termsec">
+                                    <div id="termsec">
 										<div class="form-group row">
 											<label for="validationCustom4" class="col-xl-3 col-md-4">
 											Term and condition</label>
@@ -94,6 +95,29 @@
 											</div>
 										</div>
 									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">Page</label>
+										<div class="col-xl-8 col-md-7">
+											<select name="page" id="page" class="form-control">
+												<option selected disabled>--select--</option>
+												@foreach ($pages as $page)
+                                                    <option value="{{ $page->id }}" {{ ($bannerdata->page == $page->id )?'selected':'' }}>{{ $page->name }}</option>
+                                                @endforeach
+											</select>
+										</div>
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">Position</label>
+										<div class="col-xl-8 col-md-7">
+											<select name="position" id="position" class="form-control">
+												<option selected disabled>--select--</option>
+												<option value="top" {{ ($bannerdata->position == 'top')?'selected':'' }}>Top</option>
+                                                <option value="middle" {{ ($bannerdata->position == 'middle')?'selected':'' }}>Middle</option>
+                                                <option value="bottom" {{ ($bannerdata->position == 'bottom')?'selected':'' }}>Bottom</option>
+											</select>
+										</div>
+									</div>
+
 									<div class="form-group row">
 										<label for="validationCustom2" class="col-xl-3 col-md-4">Link</label>
 										<div class="col-xl-8 col-md-7">
