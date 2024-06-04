@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="page-header-left">
-                            <h3>{{ $title }} 
+                            <h3>{{ $title }}
                                 <small>Dimond Admin panel</small>
                             </h3>
                         </div>
@@ -50,7 +50,7 @@
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                                                     value="{!! old()?old('name'):$obj['name']??'' !!}" type="text" placeholder="Name">
-                                                  
+
                                                 @error('name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -66,7 +66,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group row">
                                             <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>content</label>
                                             <div class="col-xl-8 col-md-7">
@@ -86,14 +86,14 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        {{-- <div class="form-group row">
                                             <label for="validationCustom4" class="col-xl-3 col-md-4">
                                                 Order</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input type="text" name="order_number" value="0" class="form-control">
                                             </div>
 
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-md-4">Status</label>
                                             <div class="col-md-7">
