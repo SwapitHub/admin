@@ -124,15 +124,15 @@ class OrdersController extends Controller
             $billing_address = '';
             foreach ($address_ as $adr) {
                 $adr = AddresModel::where('id', $adr)->first();
-                if ($adr->type == 'both') {
+                if ($adr->address_type == 'both') {
                     $billing_address = $adr;
                     $shipping_address = $adr;
                 }
-                if($adr->type == 'billing_address')
+                if($adr->address_type == 'billing_address')
                 {
                     $billing_address = $adr;
                 }
-                if($adr->type == 'shipping_address')
+                if($adr->address_type == 'shipping_address')
                 {
                     $shipping_address = $adr;
                 }
