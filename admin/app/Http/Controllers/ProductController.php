@@ -14,6 +14,7 @@ use App\Models\Carat;
 use App\Models\CenterStone;
 use App\Models\DiamondShape;
 use App\Imports\ProductImport;
+use App\Imports\ProductImport1;
 use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -386,9 +387,6 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product added successfully');
     }
 
-
-
-
     public function editProduct($id)
     {
         $product = ProductModel::find($id);
@@ -513,25 +511,18 @@ class ProductController extends Controller
 
         //modifyed code
         if (!empty($request->menu)) {
-            $productImport = new ProductImport($request->menu);
-            $res = Excel::import($productImport, $request->file('excel_file'));
-            // Get the imported data from the ProductImport instance
-            // Get the imported data and import status
-            // $importedData = $productImport->getImportedData();
-            // $importStatus = $productImport->getImportStatus();
-            // var_dump($importStatus);
-            // if($importStatus['is_updated'] =='true'){
-            // return redirect()->route('admin.product.dblist')->with('success', 'Product imported successfully');
-            // }
-            // return redirect()->route('admin.product.dblist')->with('error', 'Something went wrong');
-            // if($res == 'true')
-            // {
-            // return redirect()->route('admin.product.dblist')->with('success', 'Product imported successfully');
-            // }
-            // else
-            // {
-            // return redirect()->route('admin.product.dblist')->with('error', 'Something went wrong');
-            // }
+            if($request->menu == 'ENGAGEMENT RINGS')
+            {
+                $productImport = new ProductImport($request->menu);
+                $res = Excel::import($productImport, $request->file('excel_file'));
+            }
+            else
+            {
+                $productImport1 = new ProductImport1($request->menu);
+                $res = Excel::import($productImport1, $request->file('excel_file'));
+
+            }
+
         } else {
             return "choose menu";
         }
