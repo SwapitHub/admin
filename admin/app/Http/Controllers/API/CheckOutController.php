@@ -10,6 +10,7 @@ use App\Models\OrderModel;
 use App\Models\TransactionModel;
 use App\Models\User;
 use App\Library\Clover;
+use App\Library\UpsShipping;
 use Validator;
 
 class CheckOutController extends Controller
@@ -193,6 +194,7 @@ class CheckOutController extends Controller
         unset($orderData['clientIp']);
         $transaction = TransactionModel::create($orderData);
         if ($transaction) {
+            ## if order success then make order shippment
             return ['res' => 'success', 'order_status' => $orderData['status']];
         }
     }
@@ -211,6 +213,23 @@ class CheckOutController extends Controller
         $clover = new Clover();
         $chargeData = $clover->createCharge($charge);
         return $chargeData;
+    }
+
+    ## create shippment after order getting success
+    public function createShippment($orderAddress)
+    {
+      $shipping = new UpsShipping();
+      $response = $shipping->createQuote($orderAddress);
+      if($response)
+      {
+        $quoteId = $response;
+         if($quoteId)
+         {
+            $shipping_created =  $shipping->createShipping($quoteId);
+             var_dump($shipping_created);
+         }
+      }
+
     }
 
 
