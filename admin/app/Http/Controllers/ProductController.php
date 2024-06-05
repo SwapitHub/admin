@@ -522,6 +522,23 @@ class ProductController extends Controller
                 $res = Excel::import($productImport1, $request->file('excel_file'));
 
             }
+             // Get the imported data from the ProductImport instance
+            // Get the imported data and import status
+            // $importedData = $productImport->getImportedData();
+            // $importStatus = $productImport->getImportStatus();
+            // var_dump($importStatus);
+            // if($importStatus['is_updated'] =='true'){
+            // return redirect()->route('admin.product.dblist')->with('success', 'Product imported successfully');
+            // }
+            // return redirect()->route('admin.product.dblist')->with('error', 'Something went wrong');
+            // if($res == 'true')
+            // {
+            // return redirect()->route('admin.product.dblist')->with('success', 'Product imported successfully');
+            // }
+            // else
+            // {
+            // return redirect()->route('admin.product.dblist')->with('error', 'Something went wrong');
+            // }
 
         } else {
             return "choose menu";
