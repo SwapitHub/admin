@@ -137,7 +137,14 @@ class ProductImport1 implements ToCollection, WithHeadingRow
            $response_cat = $this->createOrFetchCategory($category);
            if($response_cat)
            {
-              $response_subcat =  $this->createOrFetchSubCategory($response_cat,$subcategory);
+              if($subcategory != null)
+              {
+                $response_subcat =  $this->createOrFetchSubCategory($response_cat,$subcategory);
+              }else
+              {
+                $response_subcat = null;
+              }
+
            }
            return $retuen_arr = [
             'category'=>$response_cat,
