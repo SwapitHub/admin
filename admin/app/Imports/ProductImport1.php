@@ -105,6 +105,7 @@ class ProductImport1 implements ToCollection, WithHeadingRow
             $metalColor = new MetalColor();
             $metalColor->name = $name;
             $metalColor->status = 'false';
+            $metalColor->order_number = 0;
             $metalColor->save();
             return $metalColor->id;
         }
