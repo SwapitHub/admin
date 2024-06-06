@@ -64,7 +64,6 @@ class ProductImport1 implements ToCollection, WithHeadingRow
                 } else {
                     $values =  $this->fetchCategoryValue($input['newsubcategory']);
                 }
-
                 $input['menu'] = $this->menu_id;
                 $input['category'] = $values['category'];
                 $input['sub_category'] = $values['sub_category'];;
