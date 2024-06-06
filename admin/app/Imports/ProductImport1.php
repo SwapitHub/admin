@@ -51,21 +51,25 @@ class ProductImport1 implements ToCollection, WithHeadingRow
                 }
                 ## added product type
                 if ($input['parent_sku'] == NULL || $input['parent_sku'] == '#N/A') {
-					$input['type'] = 'parent_product';
+                    $input['type'] = 'parent_product';
                     $input['parent_sku'] = NULL;
-				} else {
-					$input['type'] = 'child_product';
-				}
+                } else {
+                    $input['type'] = 'child_product';
+                }
 
 
                 $input['slug'] = $product->generateUniqueSlug($input['name']);
+                if ($input['newsubcategory'] != '#N/A' || $input['newsubcategory'] != 'null' || !empty($input['newsubcategory'])) {
+                    $values =  $this->fetchCategoryValue($input['categoryvalue']);
+                } else {
+                    $values =  $this->fetchCategoryValue($input['newsubcategory']);
+                }
 
-                $values =  $this->fetchCategoryValue($input['categoryvalue']);
                 $input['menu'] = $this->menu_id;
                 $input['category'] = $values['category'];
                 $input['sub_category'] = $values['sub_category'];;
-                $input['videos'] = ($input['videos'] != null)?$product->sortVideos($input['videos']):null;
-                $input['images'] = json_encode(explode(',',$input['images']));
+                $input['videos'] = ($input['videos'] != null) ? $product->sortVideos($input['videos']) : null;
+                $input['images'] = json_encode(explode(',', $input['images']));
                 $input['metalType_id'] = $this->getMetalTypeIdByName('18 Kt');
                 $input['metalColor_id'] = $this->getMetalColorIdByName($input['metalcolor']);
                 $input['status'] = 'true';
@@ -75,22 +79,17 @@ class ProductImport1 implements ToCollection, WithHeadingRow
                 unset($input['newdescription']);
 
                 $matchData = [
-                    'sku'=>$input['sku'],
+                    'sku' => $input['sku'],
                 ];
-                if(!ProductModel::updateOrCreate($matchData, $input))
-                {
+                if (!ProductModel::updateOrCreate($matchData, $input)) {
                     $stat = 'false';
                 }
-
             }
-            if($stat =='true')
-			{
-				echo "success";
-			}
-			else
-			{
-				echo "error";
-			}
+            if ($stat == 'true') {
+                echo "success";
+            } else {
+                echo "error";
+            }
         }
     }
 
@@ -130,42 +129,35 @@ class ProductImport1 implements ToCollection, WithHeadingRow
     ## get product category and subcategories
     public function fetchCategoryValue($categoryvalue)
     {
-           $catvalue = explode(',',$categoryvalue);
-           $catval = $catvalue[0];
-           $values = explode('/',$catval);
-           $category = isset($values[0]) ? $values[0] : null;
-           $subcategory = isset($values[1]) ? $values[1] : null;
-           $response_cat = $this->createOrFetchCategory($category);
-           if($response_cat)
-           {
-              if($subcategory != null)
-              {
-                $response_subcat =  $this->createOrFetchSubCategory($response_cat,$subcategory);
-              }else
-              {
+        $catvalue = explode(',', $categoryvalue);
+        $catval = $catvalue[0];
+        $values = explode('/', $catval);
+        $category = isset($values[0]) ? $values[0] : null;
+        $subcategory = isset($values[1]) ? $values[1] : null;
+        $response_cat = $this->createOrFetchCategory($category);
+        if ($response_cat) {
+            if ($subcategory != null) {
+                $response_subcat =  $this->createOrFetchSubCategory($response_cat, $subcategory);
+            } else {
                 $response_subcat = null;
-              }
-
-           }
-           return $retuen_arr = [
-            'category'=>$response_cat,
-            'sub_category'=>$response_subcat
-           ];
+            }
+        }
+        return $retuen_arr = [
+            'category' => $response_cat,
+            'sub_category' => $response_subcat
+        ];
     }
 
     ## check if these category and subcategory are exist in db then get the ids otherwise added them in db and get id
     public function createOrFetchCategory($category)
     {
         $query = Category::where('menu', $this->menu_id)
-                           ->whereRaw('LOWER(name) = ?', [strtolower($category)]);
+            ->whereRaw('LOWER(name) = ?', [strtolower($category)]);
 
-        if($query->exists())
-        {
+        if ($query->exists()) {
             $res = $query->first();
             return $res['id'];
-        }
-        else
-        {
+        } else {
             $cat = new Category();
             $cat->menu = $this->menu_id;
             $cat->name = $category;
@@ -174,23 +166,19 @@ class ProductImport1 implements ToCollection, WithHeadingRow
             $cat->save();
             return  $cat->id;
         }
-
     }
 
     ## check if these category and subcategory are exist in db then get the ids otherwise added them in db and get id
-    public function createOrFetchSubCategory($category,$subcategory)
+    public function createOrFetchSubCategory($category, $subcategory)
     {
         $query = Subcategory::where('menu_id', $this->menu_id)
-                           ->where('category_id',$category)
-                           ->whereRaw('LOWER(name) = ?', [strtolower($subcategory)]);
+            ->where('category_id', $category)
+            ->whereRaw('LOWER(name) = ?', [strtolower($subcategory)]);
 
-        if($query->exists())
-        {
+        if ($query->exists()) {
             $res = $query->first();
             return $res['id'];
-        }
-        else
-        {
+        } else {
             $subcat = new Subcategory();
             $subcat->menu_id = $this->menu_id;
             $subcat->category_id = $category;
@@ -204,9 +192,5 @@ class ProductImport1 implements ToCollection, WithHeadingRow
             $subcat->save();
             return  $subcat->id;
         }
-
     }
-
-
-
 }
