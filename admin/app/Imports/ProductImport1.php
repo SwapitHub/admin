@@ -37,13 +37,14 @@ class ProductImport1 implements ToCollection, WithHeadingRow
 
     public function collection(Collection $collection)
     {
+
         $product = new ProductModel;
         $stat = 'true';
         foreach ($collection as $row) {
             if ($row->filter()->isNotEmpty()) {
                 $input = $row->toArray();
                 $input['internal_sku'] = $input['sku'];
-                if ($input['newname'] != '#N/A') {
+                if ($input['newname'] != '#N/A' || !empty($input['newname'])) {
                     $input['name'] = $input['newname'];
                 }
                 if ($input['newdescription'] != '#N/A') {
