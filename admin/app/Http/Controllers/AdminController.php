@@ -149,7 +149,19 @@ class AdminController extends Controller
 
     public function shipping()
     {
-        $shipping = new UpsShipping();
-        $shipping->authorization();
+        $accessKey = env('UPS_ACCESS_KEY');
+        $baseUrl = env('UPS_BASE_URL');
+        $username = env('UPS_USERNAME');
+        $password = env('UPS_PASSWORD');
+
+        // You can now use these variables as needed in your logic
+        // For example, making a request to the UPS API
+
+        return response()->json([
+            'accessKey' => $accessKey,
+            'baseUrl' => $baseUrl,
+            'username' => $username,
+            'password' => $password
+        ]);
     }
 }
