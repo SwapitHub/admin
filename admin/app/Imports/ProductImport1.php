@@ -50,8 +50,6 @@ class ProductImport1 implements ToCollection, WithHeadingRow
                {
                 $input['name'] = $input['name'];
                }
-
-                dd($input);
                 $input['internal_sku'] = $input['sku'];
                 if ($input['newname'] != '#N/A' || !empty($input['newname'])) {
                     $input['name'] = $input['newname'];
