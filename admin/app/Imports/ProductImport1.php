@@ -71,14 +71,19 @@ class ProductImport1 implements ToCollection, WithHeadingRow
 
 
                 $input['slug'] = $product->generateUniqueSlug($input['name']);
-                if ($input['newsubcategory'] != '#N/A' || $input['newsubcategory'] != 'null' || !empty($input['newsubcategory'])) {
-                    $values =  $this->fetchCategoryValue($input['categoryvalue']);
+                if ($input['newsubcategory'] == '#N/A' || $input['newsubcategory'] == 'null' || empty($input['newsubcategory'])) {
+                    // $values =  $this->fetchCategoryValue($input['newsubcategory']);
+                    ## if newcatvalue == NA then leave it
+                    $catvalue = $input['categoryvalue'];
                 } else {
-                    $values =  $this->fetchCategoryValue($input['newsubcategory']);
+                    ## if new category not NA than add this one
+                    $catvalue = $input['newsubcategory'];
+                    // $values =  $this->fetchCategoryValue($input['categoryvalue']);
                 }
+                $values =  $this->fetchCategoryValue($catvalue);
                 $input['menu'] = $this->menu_id;
-                $input['category'] = $values['category'];
-                $input['sub_category'] = $values['sub_category'];;
+                $input['category'] = $values['category']??null;
+                $input['sub_category'] = $values['sub_category']??null;
                 $input['videos'] = ($input['videos'] != null) ? $product->sortVideos($input['videos']) : null;
                 $input['images'] = (!empty($input['images']))?json_encode(explode(',', $input['images'])):null;
                 $input['metalType_id'] = $this->getMetalTypeIdByName('18 Kt');
