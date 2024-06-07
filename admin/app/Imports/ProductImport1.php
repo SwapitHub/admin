@@ -43,18 +43,22 @@ class ProductImport1 implements ToCollection, WithHeadingRow
         foreach ($collection as $row) {
             if ($row->filter()->isNotEmpty()) {
                 $input = $row->toArray();
-                if ($input['newname'] != '#N/A') {
-                    $input['name'] = $input['newname'];
-                }
-               else
-               {
-                $input['name'] = $input['name'];
-               }
+
                 $input['internal_sku'] = $input['sku'];
-                if ($input['newname'] != '#N/A' || !empty($input['newname'])) {
-                    $input['name'] = $input['newname'];
+                if($input['newname'] == '#N/A')
+                {
+                  $input['name'] = $input['name'];
                 }
-                if ($input['newdescription'] != '#N/A') {
+                else
+                {
+                  $input['name'] = $input['newname'];
+                }
+
+                if ($input['newdescription'] == '#N/A') {
+                    $input['description'] = $input['description'];
+                }
+                else
+                {
                     $input['description'] = $input['newdescription'];
                 }
                 ## added product type
@@ -76,7 +80,7 @@ class ProductImport1 implements ToCollection, WithHeadingRow
                 $input['category'] = $values['category'];
                 $input['sub_category'] = $values['sub_category'];;
                 $input['videos'] = ($input['videos'] != null) ? $product->sortVideos($input['videos']) : null;
-                $input['images'] = json_encode(explode(',', $input['images']));
+                $input['images'] = (!empty($input['images']))?json_encode(explode(',', $input['images'])):null;
                 $input['metalType_id'] = $this->getMetalTypeIdByName('18 Kt');
                 $input['metalColor_id'] = $this->getMetalColorIdByName($input['metalcolor']);
                 $input['status'] = 'true';
@@ -84,7 +88,6 @@ class ProductImport1 implements ToCollection, WithHeadingRow
                 unset($input['newsubcategory']);
                 unset($input['newname']);
                 unset($input['newdescription']);
-
                 $matchData = [
                     'sku' => $input['sku'],
                 ];
