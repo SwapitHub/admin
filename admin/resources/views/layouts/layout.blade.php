@@ -249,10 +249,10 @@
 						<a href="{{ route('admin.widget.list') }}" class="sidebar-header"><i
 						data-feather="list"></i><span>Widget</span></a>
 					</li>
-					<li>
+                    <li>
 						<a class="sidebar-header" href="javascript:void(0)">
-							<i data-feather="layers"></i>
-							<span>Sales Management</span>
+							<i data-feather="shopping-bag"></i>
+							<span>Order Management</span>
 							<i class="fa fa-angle-right pull-right"></i>
 						</a>
 						<ul class="sidebar-submenu">
@@ -261,6 +261,26 @@
 									<i class="fa fa-circle"></i>Orders
 								</a>
 							</li>
+							<li>
+								<a href="{{ route('sale.transactions') }}">
+									<i class="fa fa-circle"></i> Transactions
+								</a>
+							</li>
+
+						</ul>
+					</li>
+					<li>
+						<a class="sidebar-header" href="javascript:void(0)">
+							<i data-feather="layers"></i>
+							<span>Sales Management</span>
+							<i class="fa fa-angle-right pull-right"></i>
+						</a>
+						<ul class="sidebar-submenu">
+							{{-- <li>
+								<a href="{{ route('sale.orders') }}">
+									<i class="fa fa-circle"></i>Orders
+								</a>
+							</li> --}}
 							<li>
 								<a href="{{ route('sale.shipments') }}">
 									<i class="fa fa-circle"></i> Shipments
@@ -272,11 +292,11 @@
 								</a>
 							</li>
 
-							<li>
+							{{-- <li>
 								<a href="{{ route('sale.transactions') }}">
 									<i class="fa fa-circle"></i> Transactions
 								</a>
-							</li>
+							</li> --}}
 							<li>
 								<a href="{{ route('sale.report') }}">
 									<i class="fa fa-circle"></i> Report
