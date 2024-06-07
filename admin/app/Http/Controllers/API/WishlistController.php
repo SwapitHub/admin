@@ -15,7 +15,7 @@ class WishlistController extends Controller
     {
 
         $rules = [
-            'user_id' => 'required',
+            'user_id' => 'required|numeric',
             'product_type' => 'required',
             'ring_id' => 'required_without_all:diamond_id,gemstone_id',
 			'ring_type' => 'required_with:ring_id|required_without_all:diamond_id,gemstone_id',
@@ -27,6 +27,7 @@ class WishlistController extends Controller
         ];
         $messages = [
             'user_id.required' => 'User id is required.',
+            'user_id.numeric' => 'User id must be a numeric value.',
             'product_type.required' => 'Product type id is required.',
             'ring_id.required_without_all' => 'Ring id is required if no diamond id or gemstone id is provided.',
             'diamond_id.required_without_all' => 'Diamond id is required if no ring id or gemstone id is provided.',

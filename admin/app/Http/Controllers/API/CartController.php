@@ -13,7 +13,7 @@ class CartController extends Controller
 	public function index(Request $request)
 	{
 		$rules = [
-			'user_id' => 'required',
+			'user_id' => 'required|numeric',
 			// 'product_type' => 'required',
 			// 'ring_id' => 'required_without_all:diamond_id,gemstone_id',
 			// 'ring_type' => 'required_with:ring_id|required_without_all:diamond_id,gemstone_id',
@@ -25,6 +25,7 @@ class CartController extends Controller
 		];
 		$messages = [
 			'user_id.required' => 'User id is required.',
+            'user_id.numeric' => 'User id must be a numeric value.',
 			// 'product_type.required' => 'Product type id is required.',
 			// 'ring_id.required_without_all' => 'Ring id is required if no diamond id or gemstone id is provided.',
 			// 'diamond_id.required_without_all' => 'Diamond id is required if no ring id or gemstone id is provided.',
@@ -122,7 +123,7 @@ class CartController extends Controller
 				$item_data['gemstone_price'] = $cartitems->gemstone_price;
 
 				if (!empty($cartitems->ring_id)) {
-					// fetch ring data here 
+					// fetch ring data here
 					$ring_data = ProductModel::where('id', $cartitems->ring_id)->first();
 					$item_data['ring'] = $ring_data;
 				} else {
@@ -130,7 +131,7 @@ class CartController extends Controller
 				}
 
 				if (!empty($cartitems->diamond_id)) {
-					// fetch diamond data here 
+					// fetch diamond data here
 					$diamond_data = '';
 					$encodedDiamondId = urlencode($cartitems->diamond_id);
 					$url = "https://apiservices.vdbapp.com/v2/diamonds?type=$cartitems->diamond_type&stock_num=$encodedDiamondId";
@@ -170,14 +171,14 @@ class CartController extends Controller
 					}
 
 					// $diamond_data = $resp->response->body->diamonds;
-					// $item_data['diamond'] = $diamond_data; 
+					// $item_data['diamond'] = $diamond_data;
 
 				} else {
 					$item_data['diamond'] = [];
 				}
 
 				if (!empty($cartitems->gemstone_id) || !is_null($cartitems->gemstone_id)) {
-					// fetch gemstone data here 
+					// fetch gemstone data here
 					$gemstone_data = '';
 					$url = "https://apiservices.vdbapp.com/v2/gemstones?stock_num=$cartitems->gemstone_id";
 					$curl = curl_init();
