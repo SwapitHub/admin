@@ -43,6 +43,15 @@ class ProductImport1 implements ToCollection, WithHeadingRow
         foreach ($collection as $row) {
             if ($row->filter()->isNotEmpty()) {
                 $input = $row->toArray();
+                if ($input['newname'] != '#N/A') {
+                    $input['name'] = $input['newname'];
+                }
+               else
+               {
+                $input['name'] = $input['name'];
+               }
+
+                dd($input);
                 $input['internal_sku'] = $input['sku'];
                 if ($input['newname'] != '#N/A' || !empty($input['newname'])) {
                     $input['name'] = $input['newname'];
