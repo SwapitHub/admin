@@ -209,7 +209,6 @@
 						@else
 					<img class="img-60" src="{{ asset('public') }}/user_icon.jpg" alt="{{ Auth::user()->name }}"></a>
 					@endif
-
 					<div>
 						<h6 class="f-14">{{ Auth::user()->name }}</h6>
 						<p>{{ Auth::user()->designation }} </p>
@@ -266,6 +265,21 @@
 									<i class="fa fa-circle"></i> Transactions
 								</a>
 							</li>
+                            <li>
+								<a href="{{ route('sale.shipments') }}">
+									<i class="fa fa-circle"></i> Shipments
+								</a>
+							</li>
+                            <li>
+								<a href="{{ route('sale.invoices') }}">
+									<i class="fa fa-circle"></i> Invoices
+								</a>
+							</li>
+                            <li>
+								<a href="{{ route('sale.invoices') }}">
+									<i class="fa fa-circle"></i> Returns
+								</a>
+							</li>
 
 						</ul>
 					</li>
@@ -276,27 +290,6 @@
 							<i class="fa fa-angle-right pull-right"></i>
 						</a>
 						<ul class="sidebar-submenu">
-							{{-- <li>
-								<a href="{{ route('sale.orders') }}">
-									<i class="fa fa-circle"></i>Orders
-								</a>
-							</li> --}}
-							<li>
-								<a href="{{ route('sale.shipments') }}">
-									<i class="fa fa-circle"></i> Shipments
-								</a>
-							</li>
-							<li>
-								<a href="{{ route('sale.invoices') }}">
-									<i class="fa fa-circle"></i> Invoices
-								</a>
-							</li>
-
-							{{-- <li>
-								<a href="{{ route('sale.transactions') }}">
-									<i class="fa fa-circle"></i> Transactions
-								</a>
-							</li> --}}
 							<li>
 								<a href="{{ route('sale.report') }}">
 									<i class="fa fa-circle"></i> Report
