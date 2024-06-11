@@ -9,6 +9,7 @@ use App\Models\InvoiceModel;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\AddresModel;
+use App\Models\OrderStatus;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Cache;
@@ -19,6 +20,78 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
+    ## order status list
+    public function orderStatus()
+    {
+
+
+        $data = [
+            "title" => 'Order status list ',
+            "viewurl" => 'order.status.add',
+            "editurl" => 'order.status.edit',
+            'list' => OrderStatus::orderBy('id', 'desc')->where('status', 'true')->get(),
+        ];
+        return view('admin.order_status', $data);
+    }
+
+
+    public function addOrderStatus(Request $request)
+    {
+        $data = [
+            'url_action' => route('order.status.postadd'),
+            'backtrack' => 'order.status',
+            'title' => 'Add Order Status',
+            "obj" => '',
+        ];
+        return view('admin.orderStatus', $data);
+    }
+
+    public function postAddOrderStatus(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+        ], [
+            'name.required' => 'The name field is required.',
+        ]);
+        $status = new OrderStatus();
+        $status->name = $request->name;
+        $status->status = $request->status ?? 'false';
+        $status->save();
+        return redirect()->back()->with('success', 'Order status added successfully');
+    }
+
+    public function editOrderStatus($id)
+    {
+        $editdata = OrderStatus::find($id);
+        if ($editdata == null) {
+            return 'no data';
+        }
+        $data = [
+            'url_action' => route('order.status.update', ['id' => $editdata['id']]),
+            'backtrack' => 'order.status',
+            'title' => 'Edit Order Status',
+            'obj' => $editdata,
+        ];
+        return view('admin.orderStatus', $data);
+    }
+
+    public function updateOrderStatus(Request $request, $id)
+    {
+        $obj = OrderStatus::find($id);
+        $this->validate($request, [
+            'name' => 'required',
+        ], [
+            'name.required' => 'The Name field is required.',
+        ]);
+
+        $obj->name = $request->name;
+        $obj->status = $request->status ?? 'false';
+        $obj->save();
+        return redirect()->back()->with('success', 'Order status updated successfully');
+    }
+
+
 
     public function makeInvoice($order_id)
     {
@@ -67,10 +140,9 @@ class OrderController extends Controller
 
         // Add filter for order status if provided
         if (!empty($order_status)) {
-            if($order_status !='All')
-            {
+            if ($order_status != 'All') {
                 $query->where('orders.status', '=', $order_status);
-            }else{
+            } else {
                 $query->orderBy('orders.id', 'desc');
             }
         }

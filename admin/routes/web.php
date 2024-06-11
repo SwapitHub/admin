@@ -259,6 +259,13 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/orders/invoice/{order_id}', [App\Http\Controllers\OrderController::class, 'makeInvoice'])->name('order.invoice');
 	Route::get('/invoice/{order_id}',[App\Http\Controllers\InvoiceController::class, 'invoicePdf'])->name('sale.orders.invoice.download');
 	Route::get('/order-detail/{id}', [App\Http\Controllers\OrderController::class, 'ordersDetail'])->name('sale.orders.detail');
+
+    Route::get('/order-status',[App\Http\Controllers\OrderController::class, 'orderStatus'])->name('order.status');
+    Route::get('/order-status/add',[App\Http\Controllers\OrderController::class, 'addOrderStatus'])->name('order.status.add');
+    Route::post('/order-status/add',[App\Http\Controllers\OrderController::class, 'postAddOrderStatus'])->name('order.status.postadd');
+    Route::get('/order-status/edit/{id}',[App\Http\Controllers\OrderController::class, 'editOrderStatus'])->name('order.status.edit');
+    Route::post('/order-status/update/{id}',[App\Http\Controllers\OrderController::class, 'updateOrderStatus'])->name('order.status.update');
+
 	Route::get('/shipments', [App\Http\Controllers\SaleController::class, 'shipments'])->name('sale.shipments');
 	Route::get('/invoices', [App\Http\Controllers\InvoiceController::class, 'index'])->name('sale.invoices');
 	Route::get('/invoices/view/{order_id}', [App\Http\Controllers\InvoiceController::class, 'viewInvoice'])->name('order.invoices.view');
@@ -323,7 +330,8 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
     Route::post('/section5',[App\Http\Controllers\HomeContentController::class, 'section5'])->name('home.section5');
 
 
-    Route::get('/shipping',[App\Http\Controllers\AdminController::class, 'shipping']);
+
+    Route::post('/shipping/{order_id}',[App\Http\Controllers\ShippingController::class, 'index'])->name('shipping.create');
 
 });
 
