@@ -39,7 +39,6 @@ class SiteinfoController extends Controller
         $cacheKey = 'site_info';
         $siteinfo = Cache::get($cacheKey);
         // $siteinfo = Cache::forget($cacheKey);
-        exit;
         if (!$siteinfo) {
         $collection = [];
         $section1 =  HomeSection1::first();
