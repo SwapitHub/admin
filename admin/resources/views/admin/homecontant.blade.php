@@ -54,7 +54,7 @@
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section3" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Celebrate Love with Timeless Elegance</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Discover Matching Sets</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section4" role="tab" aria-controls="top-contact"

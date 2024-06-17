@@ -240,10 +240,29 @@
 							</li>
 						</ul>
 					</li>
-					<li>
+                    <li>
+						<a class="sidebar-header" href="javascript:void(0)">
+							<i data-feather="sliders"></i>
+							<span>Home content</span>
+							<i class="fa fa-angle-right pull-right"></i>
+						</a>
+						<ul class="sidebar-submenu">
+							<li>
+								<a href="{{ route('admin.homecontent') }}">
+									<i class="fa fa-circle"></i>Home page contant
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('admin.createmenu') }}">
+									<i class="fa fa-circle"></i>Shop by Category
+								</a>
+							</li>
+						</ul>
+					</li>
+					{{-- <li>
 						<a href="{{ route('admin.homecontent') }}" class="sidebar-header"><i
 						data-feather="sliders"></i><span>Home content</span></a>
-					</li>
+					</li> --}}
 					<li>
 						<a href="{{ route('admin.widget.list') }}" class="sidebar-header"><i
 						data-feather="list"></i><span>Widget</span></a>

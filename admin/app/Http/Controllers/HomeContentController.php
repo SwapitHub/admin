@@ -13,6 +13,7 @@ use App\Models\HomeSection2;
 use App\Models\HomeSection3;
 use App\Models\HomeSection4;
 use App\Models\HomeSection5;
+use App\Models\ShopByCategoryHomePage;
 
 class HomeContentController extends Controller
 {
