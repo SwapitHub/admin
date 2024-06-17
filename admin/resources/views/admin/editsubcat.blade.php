@@ -114,7 +114,7 @@
 								Image</label>
 								<div class="col-md-8">
 									{{-- <input class="form-control dropify" id="image" data-default-file="{{ asset('storage/app/public') }}/{{ $subcat->image }}" name="image" type="file"> --}}
-									<input class="form-control dropify" id="image" data-default-file="{{ env('AWS_URL') }}public/{{ $subcat->image }}" name="image" type="file">
+									<input class="form-control dropify" id="image" data-default-file="{{ env('AWS_URL') }}public/storage/{{ $subcat->image }}" name="image" type="file">
 								</div>
 							</div>
 							<div class="form-group row">

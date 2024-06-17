@@ -118,11 +118,13 @@
 				$oldImagePath = $subcat->image; // Replace with the actual path
                 if ($oldImagePath) {
                     $oldImagePath = 'public/storage/'.$oldImagePath;
+                    // $oldImagePath = basename($oldImagePath);
                     Storage::disk('s3')->delete($oldImagePath);
 				}
 				$extension = $request->file('image')->getClientOriginalExtension();
 				$fileName = "subcat_" . time() . '.' . $extension;
-				$path = $request->file('image')->storeAs('public/images/subcategory', $fileName,'s3');
+				// $path = $request->file('image')->storeAs('public/images/subcategory', $fileName,'s3');
+				$path = $request->file('image')->storeAs('public/storage/images/subcategory', $fileName,'s3');
 				$subcatpath = 'images/subcategory/' . $fileName;
                 Storage::disk('s3')->setVisibility($path, 'public');
 			}
