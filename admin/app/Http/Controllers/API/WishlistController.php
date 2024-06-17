@@ -24,6 +24,8 @@ class WishlistController extends Controller
             'ring_color' => 'required_with:ring_id',
             'img_sku' => 'required_with:ring_id',
             'ring_price' => 'required_with:ring_id',
+            'engraving' => 'sometimes|required_with:font',
+            'font' => 'required_with:engraving',
         ];
         $messages = [
             'user_id.required' => 'User id is required.',
@@ -36,6 +38,8 @@ class WishlistController extends Controller
             'ring_color.required_with' => 'Ring color is required when ring id is provided.',
             'img_sku.required_with' => 'Image SKU is required when ring id is provided.',
             'ring_price.required_with' => 'Ring price is required when ring id is provided.',
+            'engraving.required_with' => 'Engraving is required when font is provided.',
+            'font.required_with' => 'Font is required when engraving is provided.',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
@@ -53,6 +57,8 @@ class WishlistController extends Controller
             $wishlist->ring_size = $request->ring_size;
             $wishlist->ring_type = $request->ring_type;
             $wishlist->ring_color = $request->ring_color;
+            $wishlist->engraving = $request->engraving;
+			$wishlist->font = $request->font;
             $wishlist->ring_price = $request->ring_price;
             $wishlist->ring_carat = $request->ring_carat;
             $wishlist->img_sku = $request->img_sku;
@@ -140,6 +146,8 @@ class WishlistController extends Controller
                 $item_data['ring_size'] = $cartitems->ring_size;
                 $item_data['ring_type'] = $cartitems->ring_type;
                 $item_data['active_color'] = $cartitems->ring_color;
+                $item_data['engraving'] = $cartitems->engraving;
+                $item_data['font'] = $cartitems->font;
                 $item_data['ring_carat'] = $cartitems->ring_carat;
                 $item_data['carat_price'] = $cartitems->carat_price;
                 $item_data['ring_price'] = $cartitems->ring_price;

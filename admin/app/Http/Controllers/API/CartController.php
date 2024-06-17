@@ -64,7 +64,9 @@ class CartController extends Controller
 			$cart->ring_size = $request->ring_size;
 			$cart->ring_type = $request->ring_type;
 			$cart->ring_color = $request->ring_color;
-			$cart->ring_price = $request->ring_price;
+			$cart->ring_color = $request->ring_color;
+			$cart->engraving = $request->engraving;
+			$cart->font = $request->font;
 			$cart->metalType = $request->metalType;
 			$cart->metalColor = $metalColor;
 			$cart->img_sku = $request->img_sku;
@@ -88,9 +90,13 @@ class CartController extends Controller
 	{
 		$rules = [
 			'user_id' => 'required',
+            'engraving' => 'sometimes|required_with:font',
+            'font' => 'required_with:engraving',
 		];
 		$messages = [
 			'user_id.required' => 'User id is required.',
+            'engraving.required_with' => 'Engraving is required when font is provided.',
+            'font.required_with' => 'Font is required when engraving is provided.',
 
 		];
 		$validator = Validator::make($request->all(), $rules, $messages);
@@ -112,6 +118,8 @@ class CartController extends Controller
 				$item_data['active_color'] = $cartitems->ring_color;
 				$item_data['metalType'] = $cartitems->metalType;
 				$item_data['metalColor'] = $cartitems->metalColor;
+				$item_data['engraving'] = $cartitems->engraving;
+				$item_data['font'] = $cartitems->font;
 				$item_data['ring_price'] = $cartitems->ring_price;
 				$item_data['img_sku'] = $cartitems->img_sku;
 				$item_data['diamond_id'] = $cartitems->diamond_id;
