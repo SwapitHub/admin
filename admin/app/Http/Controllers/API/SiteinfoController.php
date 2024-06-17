@@ -40,39 +40,47 @@ class SiteinfoController extends Controller
         $siteinfo = Cache::get($cacheKey);
         // $siteinfo = Cache::forget($cacheKey);
         if (!$siteinfo) {
-        $collection = [];
-        $section1 =  HomeSection1::first();
-        $section1['image'] =  env('AWS_URL') . 'public/' . $section1['image'];
-        $collection['section1'] = $section1;
+            $collection = [];
+            $section1 =  HomeSection1::first();
+            $section1['image'] =  env('AWS_URL') . 'public/' . $section1['image'];
+            $collection['section1'] = $section1;
 
-        $section2 =  HomeSection2::first();
-        $section2['image'] =  env('AWS_URL') . 'public/' . $section2['image'];
-        $collection['section2'] = $section2;
+            $section2 =  HomeSection2::first();
+            $section2['image'] =  env('AWS_URL') . 'public/' . $section2['image'];
+            $collection['section2'] = $section2;
 
-        $section3 =  HomeSection3::first();
-        $section3['image'] =  env('AWS_URL') . 'public/' . $section3['image'];
-        $collection['section3'] = $section3;
+            $section3 =  HomeSection3::first();
+            $section3['image'] =  env('AWS_URL') . 'public/' . $section3['image'];
+            $collection['section3'] = $section3;
 
 
-        $section4 =  HomeSection4::first();
-        $section4['image1'] =  env('AWS_URL') . 'public/' . $section4['image1'];
-        $section4['image2'] =  env('AWS_URL') . 'public/' . $section4['image2'];
-        $collection['section4'] = $section4;
+            $section4 =  HomeSection4::first();
+            $section4['image1'] =  env('AWS_URL') . 'public/' . $section4['image1'];
+            $section4['image2'] =  env('AWS_URL') . 'public/' . $section4['image2'];
+            $collection['section4'] = $section4;
 
-        $section5 =  HomeSection5::first();
-        $section5['image_desktop'] =  env('AWS_URL') . 'public/' . $section5['image_desktop'];
-        $section5['image_mobile'] =  env('AWS_URL') . 'public/' . $section5['image_mobile'];
-        $collection['section5'] = $section5;
+            $section5 =  HomeSection5::first();
+            $section5['image_desktop'] =  env('AWS_URL') . 'public/' . $section5['image_desktop'];
+            $section5['image_mobile'] =  env('AWS_URL') . 'public/' . $section5['image_mobile'];
+            $collection['section5'] = $section5;
 
-        $collection['shopbycategory'] = ShopByCategoryHomePage::orderBy('order_number','asc')->where('status','true')->get();
-        Cache::put($cacheKey, $collection, $minutes = 60);
-        // Add the data to output if needed
-        $output['data'] = $collection;
-        $output['check_from'] = 'from db';
+            $shopbycat = [];
+            $q = ShopByCategoryHomePage::orderBy('order_number', 'asc')->where('status', 'true');
+            if ($q->exists()) {
+                foreach ($q->get() as $sp) {
+                    $sp->image = env('AWS_URL') . 'public/' . $sp->image;
+                    $shopbycat[] = $sp;
+                }
+            }
+
+            $collection['shopbycategory'] =$shopbycat;
+                Cache::put($cacheKey, $collection, $minutes = 60);
+            // Add the data to output if needed
+            $output['data'] = $collection;
+            $output['check_from'] = 'from db';
         } else {
-        	$output['data'] = $siteinfo;
-        	$output['check_from'] = 'from cache';
-
+            $output['data'] = $siteinfo;
+            $output['check_from'] = 'from cache';
         }
         // Return JSON response with output
         return response()->json($output, 200);
