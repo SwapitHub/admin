@@ -38,7 +38,7 @@ class SiteinfoController extends Controller
         $output['msg'] = 'data retrieved successfully';
         $cacheKey = 'site_info';
         $siteinfo = Cache::get($cacheKey);
-        $siteinfo = Cache::forget($cacheKey);
+        // $siteinfo = Cache::forget($cacheKey);
         exit;
         if (!$siteinfo) {
         $collection = [];
@@ -66,7 +66,7 @@ class SiteinfoController extends Controller
         $collection['section5'] = $section5;
 
         $collection['shopbycategory'] = ShopByCategoryHomePage::orderBy('order_number','asc')->where('status','true')->get();
-        Cache::put($cacheKey, $collection, $minutes = 14400);
+        Cache::put($cacheKey, $collection, $minutes = 60);
         // Add the data to output if needed
         $output['data'] = $collection;
         $output['check_from'] = 'from db';
