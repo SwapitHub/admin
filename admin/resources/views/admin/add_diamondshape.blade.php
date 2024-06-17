@@ -65,7 +65,7 @@
 											@enderror
 										</div>
 									</div>
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
 										<label for="validationCustom0" class="col-xl-3 col-md-4">Redirect to </label>
 										<div class="col-xl-8 col-md-7">
 											<input class="form-control" id="redirect_to" name="redirect_to"
@@ -74,7 +74,7 @@
 											<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
 										</div>
-									</div>
+									</div> --}}
 									<div class="form-group row">
 										<label for="validationCustom1" class="col-xl-3 col-md-4">Extension</label>
 										<div class="col-xl-8 col-md-7">
