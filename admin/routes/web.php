@@ -223,7 +223,15 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::post('/metalcolor/update/{id}', [App\Http\Controllers\RingMetalController::class, 'postEditMetalColor'])->name('admin.update.metalcolor');
 	Route::get('/deletemetalcolor/{id}', [App\Http\Controllers\RingMetalController::class, 'deleteMetalColor']);
 	Route::get('/home-content', [App\Http\Controllers\HomeContentController::class, 'index'])->name('admin.homecontent');
-	Route::post('/home-content', [App\Http\Controllers\HomeContentController::class, 'update'])->name('admin.homecontent.update');
+	Route::post('/home-content', [App\Http\Controllers\HomeContentController::class, 'update'])->name('admin.shopbycat.list');
+
+    ## home page shop by category section
+    Route::get('/shopbycat', [App\Http\Controllers\HomeContentController::class, 'shopByCateList'])->name('admin.shopbycat.list');
+    Route::get('/shopbycat/add', [App\Http\Controllers\HomeContentController::class, 'shopBycatView'])->name('admin.shopbycat.view');
+    Route::post('/shopbycat/add', [App\Http\Controllers\HomeContentController::class, 'addShopByCat'])->name('admin.shopbycat.add');
+    Route::get('/shopbycat/edit/{id}', [App\Http\Controllers\HomeContentController::class, 'editShopByCat'])->name('admin.shopbycat.edit');
+    Route::post('/shopbycat/update/{id}', [App\Http\Controllers\HomeContentController::class, 'updateShopByCat'])->name('admin.shopbycat.update');
+
 
 	Route::get('/widget', [App\Http\Controllers\FaqController::class, 'widgetList'])->name('admin.widget.list');
 

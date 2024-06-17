@@ -14,6 +14,7 @@ use App\Models\HomeSection2;
 use App\Models\HomeSection3;
 use App\Models\HomeSection4;
 use App\Models\HomeSection5;
+use App\Models\ShopByCategoryHomePage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cache;
 
@@ -37,6 +38,8 @@ class SiteinfoController extends Controller
         $output['msg'] = 'data retrieved successfully';
         $cacheKey = 'site_info';
         $siteinfo = Cache::get($cacheKey);
+        $siteinfo = Cache::forget($cacheKey);
+        exit;
         if (!$siteinfo) {
         $collection = [];
         $section1 =  HomeSection1::first();
@@ -62,6 +65,7 @@ class SiteinfoController extends Controller
         $section5['image_mobile'] =  env('AWS_URL') . 'public/' . $section5['image_mobile'];
         $collection['section5'] = $section5;
 
+        $collection['shopbycategory'] = ShopByCategoryHomePage::orderBy('order_number','asc')->where('status','true')->get();
         Cache::put($cacheKey, $collection, $minutes = 14400);
         // Add the data to output if needed
         $output['data'] = $collection;

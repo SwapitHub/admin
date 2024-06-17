@@ -37,192 +37,6 @@ class HomeContentController extends Controller
         return view('admin.homecontant', $data);
     }
 
-    // public function update(Request $request)
-    // {
-    // 	// get all the images
-    // 	$homecontant = HomeContent::find(1);
-    // 	// main_banner
-    // 	if ($request->file('main_banner') != NULL) {
-    // 		$oldImagePath = $homecontant->main_banner; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('main_banner')->getClientOriginalExtension();
-    // 		$fileName = "main_banner_" . time() . '.' . $extension;
-    // 		$path = $request->file('main_banner')->storeAs('public/storage/images/homeContent', $fileName,'s3');
-
-    // 		$main_banner = 'images/homeContent/' . $fileName;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $main_banner = $homecontant->main_banner;
-    // 	}
-
-
-
-    // 	// sale banner
-    // 	if ($request->file('sale_banner') != NULL) {
-    // 		$oldImagePath = $homecontant->sale_banner; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('sale_banner')->getClientOriginalExtension();
-    // 		$fileName_sale = "sale_banner_" . time() . '.' . $extension;
-    // 		$path = $request->file('sale_banner')->storeAs('public/storage/images/homeContent', $fileName_sale,'s3');
-    // 		$sale_banner = 'images/homeContent/' . $fileName_sale;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $sale_banner = $homecontant->sale_banner;
-    // 	}
-
-    // 	// ring_promotion_banner_desktop_1
-    // 	if ($request->file('ring_promotion_banner_desktop_1') != NULL) {
-    // 		$oldImagePath = $homecontant->ring_promotion_banner_desktop_1; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('ring_promotion_banner_desktop_1')->getClientOriginalExtension();
-    // 		$fileName_ring_promotion_banner_desktop_1 = "ring_promotion_banner_desktop_1_" . time() . '.' . $extension;
-    // 		$path = $request->file('ring_promotion_banner_desktop_1')->storeAs('public/storage/images/homeContent', $fileName_ring_promotion_banner_desktop_1, 's3');
-    // 		$ring_promotion_banner_desktop_1 = 'images/homeContent/' . $fileName_ring_promotion_banner_desktop_1;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $ring_promotion_banner_desktop_1 = $homecontant->ring_promotion_banner_desktop_1;
-    // 	}
-
-
-    // 	// ring_promotion_banner_mobile_1
-    // 	if ($request->file('ring_promotion_banner_mobile_1') != NULL) {
-    // 		$oldImagePath = $homecontant->ring_promotion_banner_mobile_1; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('ring_promotion_banner_mobile_1')->getClientOriginalExtension();
-    // 		$fileName_ring_promotion_banner_mobile_1 = "ring_promotion_banner_mobile_1_" . time() . '.' . $extension;
-    // 		$path = $request->file('ring_promotion_banner_mobile_1')->storeAs('public/storage/images/homeContent', $fileName_ring_promotion_banner_mobile_1);
-    // 		$ring_promotion_banner_mobile_1 = 'images/homeContent/' . $fileName_ring_promotion_banner_mobile_1;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $ring_promotion_banner_mobile_1 = $homecontant->ring_promotion_banner_mobile_1;
-    // 	}
-
-    // 	//ring_promotion_banner_desktop_2
-    // 	if ($request->file('ring_promotion_banner_desktop_2') != NULL) {
-    // 		$oldImagePath = $homecontant->ring_promotion_banner_desktop_2; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('ring_promotion_banner_desktop_2')->getClientOriginalExtension();
-    // 		$fileName_ring_promotion_banner_desktop_2 = "ring_promotion_banner_desktop_2_" . time() . '.' . $extension;
-    // 		$path = $request->file('ring_promotion_banner_desktop_2')->storeAs('public/storage/images/homeContent', $fileName_ring_promotion_banner_desktop_2, 's3');
-    // 		$ring_promotion_banner_desktop_2 = 'images/homeContent/' . $fileName_ring_promotion_banner_desktop_2;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $ring_promotion_banner_desktop_2 = $homecontant->ring_promotion_banner_desktop_2;
-    // 	}
-
-    // 	//ring_promotion_banner_mobile_2
-    // 	if ($request->file('ring_promotion_banner_mobile_2') != NULL) {
-    // 		$oldImagePath = $homecontant->ring_promotion_banner_mobile_2; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('ring_promotion_banner_mobile_2')->getClientOriginalExtension();
-    // 		$fileName_ring_promotion_banner_mobile_2 = "ring_promotion_banner_mobile_2_" . time() . '.' . $extension;
-    // 		$path = $request->file('ring_promotion_banner_mobile_2')->storeAs('public/storage/images/homeContent', $fileName_ring_promotion_banner_mobile_2,'s3');
-    // 		$ring_promotion_banner_mobile_2 = 'images/homeContent/' . $fileName_ring_promotion_banner_mobile_2;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $ring_promotion_banner_mobile_2 = $homecontant->ring_promotion_banner_mobile_2;
-    // 	}
-
-    // 	// ring_promotion_banner_desktop_3
-    // 	if ($request->file('ring_promotion_banner_desktop_3') != NULL) {
-    // 		$oldImagePath = $homecontant->ring_promotion_banner_desktop_3; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('ring_promotion_banner_desktop_3')->getClientOriginalExtension();
-    // 		$fileName_ring_promotion_banner_desktop_3 = "ring_promotion_banner_desktop_3_" . time() . '.' . $extension;
-    // 		$path = $request->file('ring_promotion_banner_desktop_3')->storeAs('public/storage/images/homeContent', $fileName_ring_promotion_banner_desktop_3,'s3');
-    // 		$ring_promotion_banner_desktop_3 = 'images/homeContent/' . $fileName_ring_promotion_banner_desktop_3;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $ring_promotion_banner_desktop_3 = $homecontant->ring_promotion_banner_desktop_3;
-    // 	}
-
-    // 	//ring_promotion_banner_mobile_3
-    // 	if ($request->file('ring_promotion_banner_mobile_3') != NULL) {
-    // 		$oldImagePath =  $homecontant->ring_promotion_banner_mobile_3; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('ring_promotion_banner_mobile_3')->getClientOriginalExtension();
-    // 		$fileName_ring_promotion_banner_mobile_3 = "ring_promotion_banner_mobile_3_" . time() . '.' . $extension;
-    // 		$path = $request->file('ring_promotion_banner_mobile_3')->storeAs('public/storage/images/homeContent', $fileName_ring_promotion_banner_mobile_3,'s3');
-    // 		$ring_promotion_banner_mobile_3 = 'images/homeContent/' . $fileName_ring_promotion_banner_mobile_3;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $ring_promotion_banner_mobile_3 = $homecontant->ring_promotion_banner_mobile_3;
-    // 	}
-
-    // 	// ring_promotion_banner_last
-    // 	if ($request->file('ring_promotion_banner_last') != NULL) {
-    // 		$oldImagePath =  $homecontant->ring_promotion_banner_last; // Replace with the actual path
-    // 		if ($oldImagePath) {
-    //             $oldImagePath = 'public/storage/'.$oldImagePath;
-    //             Storage::disk('s3')->delete($oldImagePath);
-    // 		}
-    // 		$extension = $request->file('ring_promotion_banner_last')->getClientOriginalExtension();
-    // 		$fileName_ring_promotion_banner_last = "ring_promotion_banner_last_" . time() . '.' . $extension;
-    // 		$path = $request->file('ring_promotion_banner_last')->storeAs('public/storage/images/homeContent', $fileName_ring_promotion_banner_last, 's3');
-    // 		$ring_promotion_banner_last = 'images/homeContent/' . $fileName_ring_promotion_banner_last;
-    //         Storage::disk('s3')->setVisibility($path, 'public');
-    // 	}else{
-    // 	    $ring_promotion_banner_last = $homecontant->ring_promotion_banner_mobile_3;
-    // 	}
-
-    // 	$homecontant->main_banner = $main_banner;
-    // 	$homecontant->main_banner_title = $request->main_banner_title;
-    // 	$homecontant->main_banner_subtitle = $request->main_banner_subtitle;
-    // 	$homecontant->main_banner_links = $request->main_banner_links;
-    // 	$homecontant->sale_banner = $sale_banner;
-    // 	$homecontant->sale_banner_heading = $request->sale_banner_heading;
-    // 	$homecontant->sale_banner_link = $request->sale_banner_link;
-    // 	$homecontant->sale_banner_desc = $request->sale_banner_desc;
-    // 	$homecontant->sale_banner_alt = $request->sale_banner_alt;
-    // 	$homecontant->ring_promotion_banner_desktop_1 = $ring_promotion_banner_desktop_1;
-    // 	$homecontant->ring_promotion_banner_mobile_1 = $ring_promotion_banner_mobile_1;
-    // 	$homecontant->ring_promotion_banner_alt_1 = $request->ring_promotion_banner_alt_1;
-    // 	$homecontant->ring_promotion_banner_title_1 = $request->ring_promotion_banner_title_1;
-    // 	$homecontant->ring_promotion_banner_desc_1 = $request->ring_promotion_banner_desc_1;
-    // 	$homecontant->ring_promotion_banner_link_1 = $request->ring_promotion_banner_link_1;
-    // 	$homecontant->ring_promotion_banner_desktop_2 = $ring_promotion_banner_desktop_2;
-    // 	$homecontant->ring_promotion_banner_mobile_2 = $ring_promotion_banner_mobile_2;
-    // 	$homecontant->ring_promotion_banner_alt_2 = $request->ring_promotion_banner_alt_2;
-    // 	$homecontant->ring_promotion_banner_title_2 = $request->ring_promotion_banner_title_2;
-    // 	$homecontant->ring_promotion_banner_desc_2 = $request->ring_promotion_banner_desc_2;
-    // 	$homecontant->ring_promotion_banner_link_2 = $request->ring_promotion_banner_link_2;
-    // 	$homecontant->ring_promotion_banner_desktop_3 = $ring_promotion_banner_desktop_3;
-    // 	$homecontant->ring_promotion_banner_mobile_3 = $ring_promotion_banner_mobile_3;
-    // 	$homecontant->ring_promotion_banner_alt_3 = $request->ring_promotion_banner_alt_3;
-    // 	$homecontant->ring_promotion_banner_title_3 = $request->ring_promotion_banner_title_3;
-    // 	$homecontant->ring_promotion_banner_desc_3 = $request->ring_promotion_banner_desc_3;
-    // 	$homecontant->ring_promotion_banner_link_3 = $request->ring_promotion_banner_link_3;
-    // 	$homecontant->ring_promotion_banner_last = $ring_promotion_banner_last;
-    // 	$homecontant->ring_promotion_banner_alt = $request->ring_promotion_banner_alt;
-    // 	$homecontant->ring_promotion_banner_desc = $request->ring_promotion_banner_desc;
-    // 	$homecontant->save();
-    // 	return redirect()->back()->with('success', 'Data updated successfully');
-    // }
-
     public function section1(Request $request)
     {
         $homecontant =  HomeSection1::find(1);
@@ -248,8 +62,7 @@ class HomeContentController extends Controller
             $path = $request->file('image')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path, 'public');
             $bannerpath = 'images/home/' . $fileName;
-        }else
-        {
+        } else {
             $bannerpath = $homecontant->image;
         }
 
@@ -296,9 +109,7 @@ class HomeContentController extends Controller
             $path = $request->file('image')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path, 'public');
             $bannerpath = 'images/home/' . $fileName;
-        }
-        else
-        {
+        } else {
             $bannerpath = $homecontant->image;
         }
         $conditions = ['id' => 1];
@@ -344,9 +155,7 @@ class HomeContentController extends Controller
             $path = $request->file('image')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path, 'public');
             $bannerpath = 'images/home/' . $fileName;
-        }
-        else
-        {
+        } else {
             $bannerpath = $homecontant->image;
         }
         $conditions = ['id' => 1];
@@ -393,9 +202,7 @@ class HomeContentController extends Controller
             $path1 = $request->file('image1')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path1, 'public');
             $bannerpath1 = 'images/home/' . $fileName;
-        }
-        else
-        {
+        } else {
             $bannerpath1 = $homecontant->image1;
         }
 
@@ -414,9 +221,7 @@ class HomeContentController extends Controller
             $path2 = $request->file('image2')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path2, 'public');
             $bannerpath2 = 'images/home/' . $fileName;
-        }
-        else
-        {
+        } else {
             $bannerpath2 = $homecontant->image2;
         }
 
@@ -469,9 +274,7 @@ class HomeContentController extends Controller
             $path1 = $request->file('image_desktop')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path1, 'public');
             $bannerpath1 = 'images/home/' . $fileName;
-        }
-        else
-        {
+        } else {
             $bannerpath1 = $homecontant->image_desktop;
         }
 
@@ -490,9 +293,7 @@ class HomeContentController extends Controller
             $path2 = $request->file('image_mobile')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path2, 'public');
             $bannerpath2 = 'images/home/' . $fileName;
-        }
-        else
-        {
+        } else {
             $bannerpath2 = $homecontant->image_mobile;
         }
 
@@ -512,5 +313,109 @@ class HomeContentController extends Controller
         ];
         HomeSection5::updateOrInsert($conditions, $values);
         return redirect()->back()->with('success', 'Data added successfully');
+    }
+
+    ## home page shop by category section
+    public function shopByCateList()
+    {
+        $data = [
+            "title" => 'Shop by category list',
+            "viewurl" => 'admin.shopbycat.view',
+            "editurl" => 'admin.shopbycat.edit',
+            'list' => ShopByCategoryHomePage::orderBy('id', 'desc')->get(),
+        ];
+        return view('admin.shop_by_cat_homeList', $data);
+    }
+
+    public function shopBycatView()
+    {
+        $data = [
+            'url_action' => route('admin.shopbycat.add'),
+            'backtrack' => 'admin.shopbycat.list',
+            'title' => 'Add Shopy by category',
+            "obj" => '',
+        ];
+        return view('admin.shopbycat', $data);
+    }
+
+    public function addShopByCat(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048', // Adjust mime types and max size as needed
+        ], [
+            'title.required' => 'The title field is required.',
+            // 'image.required' => 'An image is required.',
+            // 'image.image' => 'The uploaded file must be an image.',
+            // 'image.mimes' => 'The image must be a JPEG, PNG, JPG, WEBP or GIF file.',
+            // 'image.max' => 'The image size must not exceed 5 MB.',
+        ]);
+
+        // if ($request->file('image') != NULL) {
+        //     $extension = $request->file('image')->getClientOriginalExtension();
+        //     $fileName = "ring_style_" . time() . '.' . $extension;
+        //     $path = $request->file('image')->storeAs('public/images/home', $fileName, 's3');
+        //     Storage::disk('s3')->setVisibility($path, 'public');
+        //     $imagepath = 'images/home/' . $fileName;
+        // }
+        $shopbyshape = new ShopByCategoryHomePage;
+        $shopbyshape->title = $request->title;
+        $shopbyshape->link = $request->link;;
+        $shopbyshape->order_number = $request->order_number ?? 0;
+        // $shopbyshape->image = $imagepath;
+        $shopbyshape->image_alt = $request->image_alt;;
+        $shopbyshape->status = $request->status ?? 'false';
+        $shopbyshape->save();
+        return redirect()->back()->with('success', 'Data added successfully');
+    }
+
+    public function editShopByCat($id)
+    {
+
+        $editdata = ShopByCategoryHomePage::find($id);
+        if ($editdata == null) {
+            return 'no data';
+        }
+        $data = [
+            'url_action' => route('admin.shopbycat.edit', ['id' => $editdata['id']]),
+            'backtrack' => 'admin.shopbycat.list',
+            'title' => 'Edit Shop by category',
+            'obj' => $editdata,
+        ];
+        return view('admin.shopbycat', $data);
+    }
+
+    public function updateShopByCat(Request $request, $id)
+    {
+
+        $obj = RingMetal::find($id);
+        $this->validate($request, [
+            'title' => 'required',
+        ], [
+            'title.required' => 'The title field is required.',
+        ]);
+
+        // if ($request->file('image') != NULL) {
+        //     $oldImagePath = 'public/' . $obj->icon; // Replace with the actual path
+        //     if (Storage::exists($oldImagePath)) {
+        //         Storage::delete($oldImagePath);
+        //     }
+        //     $extension = $request->file('image')->getClientOriginalExtension();
+        //     $fileName = "ring_style_" . time() . '.' . $extension;
+        //     $path = $request->file('image')->storeAs('public/images/ringMetal', $fileName);
+        //     $imagepath = 'images/ringMetal/' . $fileName;
+        // } else {
+        //     $imagepath = $obj->icon;
+        // }
+
+
+        $obj->title = $request->title;
+        $obj->link = $request->link;
+        $obj->order_number = $request->order_number;
+        // $obj->image = $imagepath;
+        $obj->image_alt = $request->image_alt;
+        $obj->status = $request->status ?? 'false';
+        $obj->save();
+        return redirect()->back()->with('success', 'Data updated successfully');
     }
 }

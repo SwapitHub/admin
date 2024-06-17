@@ -253,7 +253,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="{{ route('admin.createmenu') }}">
+								<a href="{{ route('admin.shopbycat.list') }}">
 									<i class="fa fa-circle"></i>Shop by Category
 								</a>
 							</li>
