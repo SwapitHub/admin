@@ -56,6 +56,26 @@
 											@enderror
 										</div>
 									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Browse Name</label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="name" name="name"
+											value="{{ old('name',$shapedata->name) }}" type="text" placeholder="Diamond Shape Name">
+											@error('name')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">Redirect to </label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="redirect_to" name="redirect_to"
+											value="{{ old('redirect_to',$shapedata->redirect_to) }}" type="text" placeholder="Redirect Url">
+											@error('redirect_to')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
 									<div class="form-group row">
 										<label for="validationCustom1" class="col-xl-3 col-md-4">Extension </label>
 										<div class="col-xl-8 col-md-7">

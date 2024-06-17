@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="page-header-left">
-						<h3>Add diamond shape 
+						<h3>Add diamond shape
 							<small>Dimond Admin panel</small>
 						</h3>
 					</div>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -55,6 +55,26 @@
 											@enderror
 										</div>
 									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Browse Name</label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="name" name="name"
+											value="{{ old('name') }}" type="text" placeholder="Diamond Shape Name">
+											@error('name')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
+                                    <div class="form-group row">
+										<label for="validationCustom0" class="col-xl-3 col-md-4">Redirect to </label>
+										<div class="col-xl-8 col-md-7">
+											<input class="form-control" id="redirect_to" name="redirect_to"
+											value="{{ old('redirect_to') }}" type="text" placeholder="Redirect Url">
+											@error('redirect_to')
+											<div class="invalid-feedback">{{ $message }}</div>
+											@enderror
+										</div>
+									</div>
 									<div class="form-group row">
 										<label for="validationCustom1" class="col-xl-3 col-md-4">Extension</label>
 										<div class="col-xl-8 col-md-7">
@@ -76,7 +96,7 @@
 											<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
@@ -84,7 +104,7 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="order_number" value="0" class="form-control">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label class="col-xl-3 col-md-4">Status</label>
@@ -101,7 +121,7 @@
 										class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
 									</div>
 								</form>
-								
+
 							</div>
 						</div>
 					</div>
