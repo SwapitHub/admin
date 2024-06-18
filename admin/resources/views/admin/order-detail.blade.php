@@ -46,15 +46,20 @@
                                 <div class="row g-4">
                                     <div class="col-sm-12">
                                         @if ($invoice_count == 0)
-                                            <button class="btn btn-outline-primary">Cancel</button>
+                                            @if (empty($order->tracking_number))
+                                                <button class="btn btn-outline-primary">Cancel</button>
+                                            @endif
                                         @endif
 
                                         @if ($invoice_count == 0)
                                             <button class="btn btn btn-outline-secondary"
                                                 onclick="MakeInvoice('{{ $order->order_id }}')">Invoice</button>
                                         @endif
-                                        <button class="btn btn btn-outline-secondary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">Ship</button>
+                                        @if (empty($order->tracking_number))
+                                            <button class="btn btn btn-outline-secondary" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">Ship</button>
+                                        @endif
+
                                     </div>
                                     <div class="col-xl-8">
                                         <div class="card-details-title">
@@ -340,12 +345,13 @@
                         <h5 class="modal-title" id="exampleModalLabel">Create new Shipment</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                     </div>
-                    <form action="{{ route('shipping.create',['order_id'=>$order->id]) }}" method="POST" >
+                    <form action="{{ route('shipping.create', ['order_id' => $order->id]) }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="">Carrier Name</label>
-                                <input type="text" name="carrier_name" required class="form-control" placeholder="Carrier Name">
+                                <input type="text" name="carrier_name" required class="form-control"
+                                    placeholder="Carrier Name">
                             </div>
                         </div>
                         <div class="modal-footer">

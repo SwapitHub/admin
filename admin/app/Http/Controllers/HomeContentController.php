@@ -29,7 +29,7 @@ class HomeContentController extends Controller
         $banner = Banner::orderBy('id', 'desc')->where('type', 'Home')->get();
         $data = [
             "title" => 'Home Content',
-            "url_action" => route('admin.homecontent.update'),
+            "url_action" => '',
             'bannerlist' => $banner,
             'sectionList' => $sectionData,
             "obj" => HomeContent::find(1)
