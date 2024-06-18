@@ -16,6 +16,7 @@ use App\Models\Widget;
 use App\Models\ContactUs;
 use App\Models\User;
 use App\Library\UpsShipping;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -29,25 +30,51 @@ class AdminController extends Controller
     {
         $this->productCount = ProductModel::count();
         $this->widget = Widget::count();
-        $this->contactMsg = ContactUs::where('type','general')->count();
+        $this->contactMsg = ContactUs::where('type', 'general')->count();
         $this->users = User::count();
         $this->orders = OrderModel::count();
         $this->trnsactions = TransactionModel::count();
         $this->latest_order = OrderModel::latest()->take(5)->get();
+        $this->dailysales = $this->getTodayTransactions();
+        $this->monthlysales = $this->getMonthlyTransactions();
+    }
+
+    ## get daily sales
+    public function getTodayTransactions()
+    {
+        $today = Carbon::today();
+        $totalAmount = TransactionModel::whereDate('created_at', $today)
+            ->sum('amount');
+        return $formattedAmount = number_format($totalAmount, 2);
+    }
+
+    ## get monthly sales
+    public function getMonthlyTransactions()
+    {
+        // Get the start and end dates of the current month
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
+
+        // Query to get all transactions of the current month and aggregate the amount
+         $totalAmount = TransactionModel::whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->sum('amount');
+            return $formattedAmount = number_format($totalAmount, 2);
     }
 
     public function dashboard()
     {
         $data = [
-            'productCount'=> $this->productCount,
-            'widget'=> $this->widget,
-            'contactMsg'=>  $this->contactMsg,
-            'users'=>  $this->users,
-            'orders'=>$this->orders,
-            'trnsactions'=>$this->trnsactions,
-            'latest_orders'=>$this->latest_order,
+            'productCount' => $this->productCount,
+            'widget' => $this->widget,
+            'contactMsg' =>  $this->contactMsg,
+            'users' =>  $this->users,
+            'orders' => $this->orders,
+            'trnsactions' => $this->trnsactions,
+            'latest_orders' => $this->latest_order,
+            'dalysales' => $this->dailysales,
+            'monthlysales' =>  $this->monthlysales,
         ];
-        return view('admin.dashboard',$data);
+        return view('admin.dashboard', $data);
     }
 
     public function profile()
@@ -133,7 +160,7 @@ class AdminController extends Controller
             Storage::disk('s3')->setVisibility($path, 'public');
             // // Delete old image from S3
             if ($oldImagePath) {
-                $oldImagePath = 'public/storage/'.$oldImagePath;
+                $oldImagePath = 'public/storage/' . $oldImagePath;
                 Storage::disk('s3')->delete($oldImagePath);
             }
             $output['msg'] = 'Icon updated';
@@ -145,23 +172,5 @@ class AdminController extends Controller
         $admin->save();
         $output['res'] = 'success';
         echo json_encode($output);
-    }
-
-    public function shipping()
-    {
-        $accessKey = env('UPS_ACCESS_KEY');
-        $baseUrl = env('UPS_BASE_URL');
-        $username = env('UPS_USERNAME');
-        $password = env('UPS_PASSWORD');
-
-        // You can now use these variables as needed in your logic
-        // For example, making a request to the UPS API
-
-        return response()->json([
-            'accessKey' => $accessKey,
-            'baseUrl' => $baseUrl,
-            'username' => $username,
-            'password' => $password
-        ]);
     }
 }

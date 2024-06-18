@@ -64,7 +64,7 @@ class CartController extends Controller
 			$cart->ring_size = $request->ring_size;
 			$cart->ring_type = $request->ring_type;
 			$cart->ring_color = $request->ring_color;
-			$cart->ring_color = $request->ring_color;
+			$cart->ring_price = $request->ring_price;
 			$cart->engraving = $request->engraving;
 			$cart->font = $request->font;
 			$cart->metalType = $request->metalType;

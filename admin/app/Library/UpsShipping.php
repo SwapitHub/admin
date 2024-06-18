@@ -149,61 +149,107 @@ class UpsShipping
         return $response_data['QuoteId'];
     }
 
+    // public function createShipping($quoteId)
+    // {
+    //     $output['res'] ='error';
+    //     $output['msg'] ='error'
+    //     ;
+    //     $base_url = $this->baseUrl . 'shipments/' . $quoteId;
+    //     $curl = curl_init();
+    //     $dataPayload = '';
+
+    //     curl_setopt_array($curl, array(
+    //         CURLOPT_URL => $base_url,
+    //         CURLOPT_RETURNTRANSFER => true,
+    //         CURLOPT_ENCODING => '',
+    //         CURLOPT_MAXREDIRS => 10,
+    //         CURLOPT_TIMEOUT => 0,
+    //         CURLOPT_FOLLOWLOCATION => true,
+    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //         CURLOPT_POSTFIELDS => $dataPayload,
+    //         CURLOPT_CUSTOMREQUEST => 'POST',
+    //         CURLOPT_HTTPHEADER => array(
+    //             'Authorization: Bearer ' . $this->token,
+    //             'Content-Type: application/json',
+    //             'Content-Length: ' . strlen($dataPayload)
+    //         ),
+    //     ));
+
+    //     $response = curl_exec($curl);
+
+    //     curl_close($curl);
+    //     $shipment  = json_decode($response,true);
+    //     if(!empty($shipment) || $shipment ==null)
+    //     {
+    //         $output['res'] ='success';
+    //         $output['msg'] ='Shipment created';
+    //         $output['data'] =['TrackingNumber'=>$shipment['TrackingNumber']];
+    //         return $output;
+    //     }
+    // }
+
     public function createShipping($quoteId)
     {
+        $output = [
+            'res' => 'error',
+            'msg' => 'An unexpected error occurred.'
+        ];
+
         $base_url = $this->baseUrl . 'shipments/' . $quoteId;
-
         $curl = curl_init();
+        $dataPayload = '';
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $base_url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $this->token
-            ),
-        ));
+        try {
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $base_url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_POSTFIELDS => $dataPayload,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer ' . $this->token,
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($dataPayload)
+                ),
+            ));
 
-        $response = curl_exec($curl);
+            $response = curl_exec($curl);
 
-        curl_close($curl);
-        echo $response;
+            if ($response === false) {
+                throw new Exception('cURL Error: ' . curl_error($curl));
+            }
 
+            $httpStatusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            if ($httpStatusCode !== 200) {
+                throw new Exception('HTTP Error: ' . $httpStatusCode . ' - ' . $response);
+            }
 
+            curl_close($curl);
 
-        // try {
-        //     $curl = curl_init();
-        //     curl_setopt_array($curl, array(
-        //         CURLOPT_URL => $url,
-        //         CURLOPT_RETURNTRANSFER => true,
-        //         CURLOPT_ENCODING => '',
-        //         CURLOPT_MAXREDIRS => 10,
-        //         CURLOPT_TIMEOUT => 0,
-        //         CURLOPT_FOLLOWLOCATION => true,
-        //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //         CURLOPT_CUSTOMREQUEST => 'POST',
-        //         CURLOPT_HTTPHEADER => array(
-        //             'Authorization: Bearer ' . $this->token
-        //         ),
-        //     ));
+            $shipment = json_decode($response, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception('JSON Decode Error: ' . json_last_error_msg());
+            }
 
-        //     $response = curl_exec($curl);
+            if (empty($shipment) || !isset($shipment['TrackingNumber'])) {
+                throw new Exception('Invalid response received from the API.');
+            }
 
-        //     var_dump($response);
-        //     exit;
+            $output['res'] = 'success';
+            $output['msg'] = 'Shipment created';
+            $output['data'] = ['TrackingNumber' => $shipment['TrackingNumber']];
+        } catch (Exception $e) {
+            $output['msg'] = $e->getMessage();
+        } finally {
+            if (isset($curl) && is_resource($curl)) {
+                curl_close($curl);
+            }
+        }
 
-        //     // curl_close($curl);
-        //     // echo $response;
-        //     // return json_decode($response);
-        // } catch (\Throwable $e) {
-        //     var_dump($e);
-        // }
-
-
+        return $output;
     }
 }

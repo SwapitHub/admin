@@ -31,7 +31,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xxl-3 col-md-6 xl-50">
-                    <a href="{{ route('admin.widget.list') }}">
+                    {{-- <a href="{{ route('admin.widget.list') }}"> --}}
                         <div class="card o-hidden widget-cards">
                             <div class="warning-box card-body">
                                 <div class="media static-top-widget align-items-center">
@@ -42,16 +42,16 @@
                                     </div>
                                     <div class="media-body media-doller">
                                         <span class="m-0">Daily sales</span>
-                                        <h3 class="mb-0"> <span class="counter">$ 0</span>
+                                        <h3 class="mb-0"> <span class="counter">$ {{$dalysales}}</span>
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    {{-- </a> --}}
                 </div>
                 <div class="col-xxl-3 col-md-6 xl-50">
-                    <a href="{{ route('admin.widget.list') }}">
+                    {{-- <a href="{{ route('admin.widget.list') }}"> --}}
                         <div class="card o-hidden widget-cards">
                             <div class="warning-box card-body">
                                 <div class="media static-top-widget align-items-center">
@@ -62,13 +62,13 @@
                                     </div>
                                     <div class="media-body media-doller">
                                         <span class="m-0">Monthly sales </span>
-                                        <h3 class="mb-0"> <span class="counter">$ 0</span>
+                                        <h3 class="mb-0"> <span class="counter">$ {{ $monthlysales }}</span>
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    {{-- </a> --}}
                 </div>
                 <div class="col-xxl-3 col-md-6 xl-50">
                     <a href="{{ route('admin.widget.list') }}">
