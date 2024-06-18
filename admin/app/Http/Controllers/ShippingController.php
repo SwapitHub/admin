@@ -8,6 +8,8 @@ use App\Models\ShipmentModel;
 use App\Models\OrderModel;
 use App\Models\AddresModel;
 use App\Models\TransactionModel;
+use App\Models\OrderStatus;
+use DB;
 use Validator;
 
 class ShippingController extends Controller
@@ -41,18 +43,19 @@ class ShippingController extends Controller
                     //   var_dump($values);
                     if ($values['res'] == 'success') {
                         $result = $values['data'];
-                        $updateOrder = ['tracking_number' => $result['TrackingNumber'],'status'=>'COMPLETED'];
+                        $updateOrder = ['tracking_number' => $result['TrackingNumber'], 'status' => 'COMPLETED'];
                         //  $updateSuccess = OrderModel::update($order_id, $updateOrder);
                         $uporder = OrderModel::find($order_id);
                         $updateSuccess = $uporder->update($updateOrder);
                         if ($updateSuccess) {
                             ## make shipment add data in shipment table
                             //find transactionid
-                            $transaction = TransactionModel::where('order_id',$orders['order_id'])->first();
+                            $transaction = TransactionModel::where('order_id', $orders['order_id'])->first();
                             $shipdata = new ShipmentModel();
                             $shipdata->order_id = $orders['order_id'];
                             $shipdata->transaction_id = $transaction['transaction_id'];
                             $shipdata->status = 'COMPLETED';
+                            $shipdata->delivery_status = 3;
                             $shipdata->amount = $orders['amount'];
                             $shipdata->save();
                             return redirect()->back()->with('success', 'Shipment created successfully');
@@ -63,5 +66,18 @@ class ShippingController extends Controller
                 }
             }
         }
+    }
+
+    ## shipment list
+    public function list()
+    {
+        $list = ShipmentModel::select('shipments.*','order_status.name') // Adjust the select clause as needed
+            ->join('order_status', 'shipments.delivery_status', '=', 'order_status.id')
+            ->orderBy('shipments.id', 'desc')
+            ->get();
+        $data = [
+            'list' => $list,
+        ];
+        return view('admin.shipments', $data);
     }
 }
