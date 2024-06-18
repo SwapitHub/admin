@@ -678,7 +678,7 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 link</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section5']->btn_name) }}">
+                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section5']->link) }}">
                                                 @error('link')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
