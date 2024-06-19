@@ -50,10 +50,15 @@
                                 </div>
                                 <div class="form-group">
                                     <select name="orderStatus" class="form-control">
-                                        <option value="All" {{ request('orderStatus') == 'All' ? 'selected' : '' }}>All</option>
-                                        <option value="Success" {{ request('orderStatus') == 'Success' ? 'selected' : '' }}>Success</option>
-                                        <option value="Processing" {{ request('orderStatus') == 'Processing' ? 'selected' : '' }}>Processing</option>
-                                        <option value="Cancel" {{ request('orderStatus') == 'Cancel' ? 'selected' : '' }}>Cancel</option>
+                                        <option value="All" {{ request('orderStatus') == 'All' ? 'selected' : '' }}>All
+                                        </option>
+                                        <option value="Success" {{ request('orderStatus') == 'Success' ? 'selected' : '' }}>
+                                            Success</option>
+                                        <option value="Processing"
+                                            {{ request('orderStatus') == 'Processing' ? 'selected' : '' }}>Processing
+                                        </option>
+                                        <option value="Cancel" {{ request('orderStatus') == 'Cancel' ? 'selected' : '' }}>
+                                            Cancel</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -61,7 +66,7 @@
                                 </div>
                             </form>
                             &ensp;
-                                <a href="{{ route('sale.orders.export') }}" class="btn btn-outline-success mb-3">Export </a>
+                            <a href="{{ route('sale.orders.export') }}" class="btn btn-outline-success mb-3">Export </a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-desi ">
@@ -117,36 +122,36 @@
                                                         //     $gemstoneImage = getGemStoneImages($products->gemstone_id);
                                                         // }
                                                         $ringImage = null;
-$diamondImage = null;
-$gemstoneImage = null;
+                                                        $diamondImage = null;
+                                                        $gemstoneImage = null;
 
-if (!empty($products->ring_id) && !empty($products->diamond_id) && !empty($products->gemstone_id)) {
-    // If all three products are present
-    $ringImage = getProductImages($products->ring_id, $products->ring_color);
-    $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
-    $gemstoneImage = getGemStoneImages($products->gemstone_id);
-} elseif (!empty($products->ring_id) && !empty($products->diamond_id)) {
-    // If only ring and diamond are present
-    $ringImage = getProductImages($products->ring_id, $products->ring_color);
-    $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
-} elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
-    // If only ring and gemstone are present
-    $ringImage = getProductImages($products->ring_id, $products->ring_color);
-    $gemstoneImage = getGemStoneImages($products->gemstone_id);
-} elseif (!empty($products->diamond_id) && !empty($products->gemstone_id)) {
-    // If only diamond and gemstone are present
-    $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
-    $gemstoneImage = getGemStoneImages($products->gemstone_id);
-} elseif (!empty($products->ring_id)) {
-    // If only ring is present
-    $ringImage = getProductImages($products->ring_id, $products->ring_color);
-} elseif (!empty($products->diamond_id)) {
-    // If only diamond is present
-    $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
-} elseif (!empty($products->gemstone_id)) {
-    // If only gemstone is present
-    $gemstoneImage = getGemStoneImages($products->gemstone_id);
-}
+                                                        if (!empty($products->ring_id) && !empty($products->diamond_id) && !empty($products->gemstone_id)) {
+                                                            // If all three products are present
+                                                            $ringImage = getProductImages($products->ring_id, $products->ring_color);
+                                                            $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                        } elseif (!empty($products->ring_id) && !empty($products->diamond_id)) {
+                                                            // If only ring and diamond are present
+                                                            $ringImage = getProductImages($products->ring_id, $products->ring_color);
+                                                            $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+                                                        } elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
+                                                            // If only ring and gemstone are present
+                                                            $ringImage = getProductImages($products->ring_id, $products->ring_color);
+                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                        } elseif (!empty($products->diamond_id) && !empty($products->gemstone_id)) {
+                                                            // If only diamond and gemstone are present
+                                                            $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                        } elseif (!empty($products->ring_id)) {
+                                                            // If only ring is present
+                                                            $ringImage = getProductImages($products->ring_id, $products->ring_color);
+                                                        } elseif (!empty($products->diamond_id)) {
+                                                            // If only diamond is present
+                                                            $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+                                                        } elseif (!empty($products->gemstone_id)) {
+                                                            // If only gemstone is present
+                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                        }
                                                         ?>
                                                         <div class="d-flex border p-2">
                                                             @if ($ringImage)
