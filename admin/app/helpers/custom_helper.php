@@ -96,7 +96,7 @@ if (!function_exists('getDiamondImages')) {
             try {
                 $cacheKey = 'get_diamond_image';
                 // $diamond_image = Cache::get($cacheKey);
-                if (!$diamond_image) {
+                // if (!$diamond_image) {
                     $api_url = "https://apiservices.vdbapp.com/v2/diamonds?type=" . $type . "&stock_num=" . $stock_number;
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
@@ -125,7 +125,7 @@ if (!function_exists('getDiamondImages')) {
                     }
 
 
-                }
+                // }
 
 
 
