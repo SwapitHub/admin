@@ -152,6 +152,10 @@
                                                             // If only gemstone is present
                                                             $gemstoneImage = getGemStoneImages($products->gemstone_id);
                                                         }
+
+                                                        var_dump($gemstoneImage);
+                                                        var_dump($diamondImage);
+                                                        var_dump($ringImage);
                                                         ?>
                                                         <div class="d-flex border p-2">
                                                             @if ($ringImage)
