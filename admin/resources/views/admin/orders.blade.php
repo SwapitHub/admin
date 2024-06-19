@@ -102,6 +102,8 @@
                                                     @foreach ($orderItem as $orderItem)
                                                         <?php
                                                         $products = json_decode($orderItem->order_data);
+                                                        var_dump($products);
+                                                        exit;
                                                         $ringImage = null;
                                                         $diamondImage = null;
                                                         $gemstoneImage = null;

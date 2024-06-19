@@ -72,10 +72,10 @@ class OrdersController extends Controller
                 if (!empty($order_data->ring_id)) {
                     $ring_details_arr = [];
                     $ring_data = ProductModel::find($order_data->ring_id);
-                    $ring_details_arr['ring_name'] = $ring_data['name']??null;
-                    $ring_details_arr['ring_style'] = $ring_data['sku']??null;
-                    $ring_details_arr['ring_size'] = $order_data->ring_size??null;
-                    $ring_details_arr['ring_price'] = $order_data->ring_price??null;
+                    $ring_details_arr['ring_name'] = $ring_data['name'];
+                    $ring_details_arr['ring_style'] = $ring_data['sku'];
+                    $ring_details_arr['ring_size'] = $order_data->ring_size;
+                    $ring_details_arr['ring_price'] = $order_data->ring_price;
                     // get product Image
                     $ring_details_arr['ring_image'] = getProductImages($order_data->ring_id, $order_data->ring_color);
 
@@ -87,20 +87,16 @@ class OrdersController extends Controller
                 if (!empty($order_data->diamond_id) && !empty($order_data->diamond_type)) {
                     $diamond_details_arr = [];
                     $diamond_details =  getDiamondImages($order_data->diamond_id, $order_data->diamond_type);
-                    if(!empty($diamond_details) || $diamond_details == null)
-                    {
-                        $diamond_details_arr['diamond_image'] = $diamond_details->image_url??null;
-                        $diamond_details_arr['stock_number']  = $order_data->diamond_id;
-                        $diamond_details_arr['diamond_type']  = $order_data->diamond_type;
-                        $diamond_details_arr['diamond_carat'] = $diamond_details->size??null . ' Carat';
-                        $diamond_details_arr['diamond_shape'] = $diamond_details->shape;
-                        $diamond_details_arr['diamond_color']  = $diamond_details->color;
-                        $diamond_details_arr['diamond_clarity'] = $diamond_details->clarity;
-                        $diamond_details_arr['diamond_cut'] = $diamond_details->cut;
-                        $diamond_details_arr['diamond_price'] = $order_data->diamond_price;
-                        $order->diamond_detail = json_encode($diamond_details_arr);
-                    }
-
+                    $diamond_details_arr['diamond_image'] = $diamond_details->image_url;
+                    $diamond_details_arr['stock_number']  = $order_data->diamond_id;
+                    $diamond_details_arr['diamond_type']  = $order_data->diamond_type;
+                    $diamond_details_arr['diamond_carat'] = $diamond_details->size . ' Carat';
+                    $diamond_details_arr['diamond_shape'] = $diamond_details->shape;
+                    $diamond_details_arr['diamond_color']  = $diamond_details->color;
+                    $diamond_details_arr['diamond_clarity'] = $diamond_details->clarity;
+                    $diamond_details_arr['diamond_cut'] = $diamond_details->cut;
+                    $diamond_details_arr['diamond_price'] = $order_data->diamond_price;
+                    $order->diamond_detail = json_encode($diamond_details_arr);
                 } else {
                     $order->diamond_detail = null;
                 }
