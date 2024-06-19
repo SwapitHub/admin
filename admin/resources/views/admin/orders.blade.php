@@ -101,7 +101,7 @@
                                                 <td class="d-flex">
                                                     @foreach ($orderItem as $orderItem)
                                                         <?php
-                                                        $products = json_decode($orderItem->order_data);z
+                                                        $products = json_decode($orderItem->order_data);
                                                         $ringImage = null;
                                                         $diamondImage = null;
                                                         $gemstoneImage = null;
