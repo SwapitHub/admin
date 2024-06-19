@@ -101,21 +101,52 @@
                                                 <td class="d-flex">
                                                     @foreach ($orderItem as $orderItem)
                                                         <?php
-                                                        $products = json_decode($orderItem->order_data);
+                                                        // $products = json_decode($orderItem->order_data);
+                                                        // $ringImage = null;
+                                                        // $diamondImage = null;
+                                                        // $gemstoneImage = null;
+                                                        // if (!empty($products->ring_id) && !empty($products->diamond_id)) {
+                                                        //     $ringImage = getProductImages($products->ring_id, $products->ring_color);
+                                                        //     $diamondImage = getDiamondImages($products->diamond_id,$products->diamond_type);
+                                                        // } elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
+                                                        //     $ringImage = getProductImages($products->ring_id, $products->ring_color);
+                                                        //     $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                        // } elseif (!empty($products->diamond_id)) {
+                                                        //     $diamondImage = getDiamondImages($products->diamond_id,$products->diamond_type);
+                                                        // } elseif (!empty($products->gemstone_id)) {
+                                                        //     $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                        // }
                                                         $ringImage = null;
-                                                        $diamondImage = null;
-                                                        $gemstoneImage = null;
-                                                        if (!empty($products->ring_id) && !empty($products->diamond_id)) {
-                                                            $ringImage = getProductImages($products->ring_id, $products->ring_color);
-                                                            $diamondImage = getDiamondImages($products->diamond_id,$products->diamond_type);
-                                                        } elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
-                                                            $ringImage = getProductImages($products->ring_id, $products->ring_color);
-                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
-                                                        } elseif (!empty($products->diamond_id)) {
-                                                            $diamondImage = getDiamondImages($products->diamond_id,$products->diamond_type);
-                                                        } elseif (!empty($products->gemstone_id)) {
-                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
-                                                        }
+$diamondImage = null;
+$gemstoneImage = null;
+
+if (!empty($products->ring_id) && !empty($products->diamond_id) && !empty($products->gemstone_id)) {
+    // If all three products are present
+    $ringImage = getProductImages($products->ring_id, $products->ring_color);
+    $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+    $gemstoneImage = getGemStoneImages($products->gemstone_id);
+} elseif (!empty($products->ring_id) && !empty($products->diamond_id)) {
+    // If only ring and diamond are present
+    $ringImage = getProductImages($products->ring_id, $products->ring_color);
+    $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+} elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
+    // If only ring and gemstone are present
+    $ringImage = getProductImages($products->ring_id, $products->ring_color);
+    $gemstoneImage = getGemStoneImages($products->gemstone_id);
+} elseif (!empty($products->diamond_id) && !empty($products->gemstone_id)) {
+    // If only diamond and gemstone are present
+    $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+    $gemstoneImage = getGemStoneImages($products->gemstone_id);
+} elseif (!empty($products->ring_id)) {
+    // If only ring is present
+    $ringImage = getProductImages($products->ring_id, $products->ring_color);
+} elseif (!empty($products->diamond_id)) {
+    // If only diamond is present
+    $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+} elseif (!empty($products->gemstone_id)) {
+    // If only gemstone is present
+    $gemstoneImage = getGemStoneImages($products->gemstone_id);
+}
                                                         ?>
                                                         <div class="d-flex border p-2">
                                                             @if ($ringImage)
