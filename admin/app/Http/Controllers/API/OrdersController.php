@@ -87,8 +87,7 @@ class OrdersController extends Controller
                 if (!empty($order_data->diamond_id) && !empty($order_data->diamond_type)) {
                     $diamond_details_arr = [];
                     $diamond_details =  getDiamondImages($order_data->diamond_id, $order_data->diamond_type);
-                    var_dump($diamond_details);
-                    exit;
+
                     $diamond_details_arr['diamond_image'] = $diamond_details->image_url;
                     $diamond_details_arr['stock_number']  = $order_data->diamond_id;
                     $diamond_details_arr['diamond_type']  = $order_data->diamond_type;
