@@ -143,7 +143,7 @@ class ProductController extends Controller
 
     public function dbProduct(Request $request)
     {
-        $products = ProductModel::orderBy('id', 'desc')->paginate(30);
+        $products = ProductModel::orderBy('id', 'desc')->where('parent_sku','=',null)->paginate(30);
         if (isset($request->filter)) {
             $keyword = trim($request->filter);
             $products = ProductModel::orderBy('id', 'desc')

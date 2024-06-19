@@ -20,7 +20,7 @@
 								</a>
 							</li>
 							<li class="breadcrumb-item">Subcategory</li>
-							<li class="breadcrumb-item active">Subcategory Lists</li>
+							<li class="breadcrumb-item active">Subcategories List</li>
 						</ol>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 											<th>Category</th>
 											<th>Status</th>
 											{{-- <th>Created On</th> --}}
-											<th>sStatus/Options</th>
+											<th>Options</th>
 
 										</tr>
 									</thead>
@@ -72,8 +72,8 @@
 												value="" id="flexCheckDefault" data-id="{{ $item->id }}">
 											</td>
 
-											{{-- <td>{{ $item->name }}</td> --}}
-											<td>{{ $item->slug }}</td>
+											<td>{{ $item->name }}</td>
+											{{-- <td>{{ $item->slug }}</td> --}}
 											<td>{{ $item->menu_name }}</td>
 											<td>{{ $item->catname }}</td>
 
