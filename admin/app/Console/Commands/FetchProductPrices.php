@@ -157,7 +157,9 @@ class FetchProductPrices extends Command
 	     if($price != 0 || $price != null)
 		 {
 			 $discount_amount = $price * ($this->discount_amount / 100);
-			 return $final_price = $price - $discount_amount;
+			 $final_price = $price - $discount_amount;
+             $final_price = number_format($final_price, 2); // Format to 2 decimal places
+             return $final_price;
 		 }
 
 	 }
