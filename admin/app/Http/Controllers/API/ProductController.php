@@ -82,6 +82,9 @@ class ProductController extends Controller
             ->join('product_price', 'products.sku', '=', 'product_price.product_sku')
             ->where('products.status', 'true')
             ->whereNull('products.parent_sku')
+            ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
+            ->where('product_price.metalColor', 'White')
+            ->where('product_price.metalType', '18kt')
             ->distinct(); // Ensure distinct products
 
         // Apply the bridal sets filter
