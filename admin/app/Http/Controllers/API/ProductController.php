@@ -75,71 +75,25 @@ class ProductController extends Controller
         $output['msg'] = 'data retrieved successfully';
 
 
-        // $products = ProductModel::orderBy('entity_id', 'asc')->where('status', 'true')->whereNull('parent_sku');
-        $products = ProductModel::query()
-            ->join('product_price', 'products.sku', '=', 'product_price.product_sku')
-            ->where('products.status', 'true')
-            ->whereNull('products.parent_sku')
-            ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
-            ->where('product_price.metalColor', 'White');
+        $products = ProductModel::orderBy('entity_id', 'asc')->where('status', 'true')->whereNull('parent_sku');
         if ($request->bridal_sets == 'true') {
             $products->whereNotNull('matching_wedding_band');
         }
-        // Apply sorting and additional filters based on request
         if (!is_null($request->query('sortby'))) {
             $sortBy = $request->query('sortby');
             if ($sortBy == 'low_to_high') {
-                $products->orderBy('product_price.price', 'asc');
-            } elseif ($sortBy == 'high_to_low') {
-                $products->orderBy('product_price.price', 'desc');
-            } elseif ($sortBy == 'Newest') {
-                $products->orderBy('products.created_at', 'desc');
-            } elseif ($sortBy == 'best_seller') {
-                $products->where('products.is_bestseller', '1');
+                $products = ProductModel::orderBy('white_gold_price', 'asc')->where('status', 'true');
+            }
+            if ($sortBy == 'high_to_low') {
+                $products = ProductModel::orderBy('white_gold_price', 'desc')->where('status', 'true');
+            }
+            if ($sortBy == 'Newest') {
+                $products->where('is_newest', '1');
+            }
+            if ($sortBy == 'best_seller') {
+                $products->where('is_bestseller', '1');
             }
         }
-
-        // Execute the query and get the results
-        $products = $products->select('products.*', 'product_price.price');
-
-        // // Apply sorting and additional filters based on request
-        // if (!is_null($request->query('sortby'))) {
-        //     $products = ProductModel::query()
-        //     ->join('product_price', 'products.sku', '=', 'product_price.product_sku')
-        //     ->where('products.status', 'true')
-        //     ->whereNull('products.parent_sku')
-        //     ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
-        //     ->where('product_price.metalColor', 'White');
-        //     $sortBy = $request->query('sortby');
-        //     if ($sortBy == 'low_to_high') {
-        //         $products->orderBy('product_price.price', 'asc');
-        //     } elseif ($sortBy == 'high_to_low') {
-        //         $products->orderBy('product_price.price', 'desc');
-        //     } elseif ($sortBy == 'Newest') {
-        //         $products->orderBy('products.created_at', 'desc');
-        //     } elseif ($sortBy == 'best_seller') {
-        //         $products->where('products.is_bestseller', '1');
-        //     }
-        //     $actual_count = $products->get()->count();
-        // }
-
-
-
-        // if (!is_null($request->query('sortby'))) {
-        //     $sortBy = $request->query('sortby');
-        //     if ($sortBy == 'low_to_high') {
-        //         $products = ProductModel::orderBy('white_gold_price', 'asc')->where('status', 'true');
-        //     }
-        //     if ($sortBy == 'high_to_low') {
-        //         $products = ProductModel::orderBy('white_gold_price', 'desc')->where('status', 'true');
-        //     }
-        //     if ($sortBy == 'Newest') {
-        //         $products->where('is_newest', '1');
-        //     }
-        //     if ($sortBy == 'best_seller') {
-        //         $products->where('is_bestseller', '1');
-        //     }
-        // }
 
         if (!is_null($request->query('shape'))) {
             $products->where('CenterShape', strtoupper(trim($request->query('shape'))));
@@ -223,14 +177,16 @@ class ProductController extends Controller
             $product['diamond_type'] = 'natural';
             $product['diamondQuality'] = $priceData['diamondQuality'] ?? 0;
             $product['metalType'] = '18KT Gold';
-            if (!is_null($product['matching_wedding_band']) || !empty($product['matching_wedding_band'])) {
-                ## if matching set exist then reterive tha details and send them
-                $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
-                if ($is_matchingset->exists()) {
+            if(!is_null($product['matching_wedding_band']) || !empty($product['matching_wedding_band']))
+            {
+                 ## if matching set exist then reterive tha details and send them
+                 $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
+                 if($is_matchingset->exists())
+                 {
                     $product['matching_wedding_band'] = $is_matchingset->first();
-                } else {
+                 }else{
                     $product['matching_wedding_band'] = NULL;
-                }
+                 }
             }
 
             ## check if center stone exist then get the value
