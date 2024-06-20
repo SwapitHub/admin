@@ -1,5 +1,5 @@
 <?php
-	
+
 	namespace App\Http\Controllers\API;
 	use Illuminate\Support\Facades\Hash;
 	use App\Http\Controllers\Controller;
@@ -12,7 +12,7 @@
     use App\Models\OrderModel;
     use App\Models\OrderItem;
     use Validator;
-	
+
 	class UserDashboardController extends Controller
 	{
 		public function index(Request $request)
@@ -32,7 +32,7 @@
             }else{
 				$cart = $this->cartItems($request->user_id);
 				$wishlist = $this->getWishlist($request->user_id);
-				$output['res'] = 'success';  
+				$output['res'] = 'success';
 				$output['msg'] = 'data retrieved successfully';
                 $output['userdata'] = $this->getUserData($request->user_id);
                 $output['cart'] = $cart;
@@ -76,7 +76,7 @@
             $user->last_name = $request->last_name;
             $user->email = $request->email;
             $user->status = 'true';
-            $user->password= bcrypt($request->password);     
+            $user->password= bcrypt($request->password);
             $user->save();
             $output['res'] = 'success';
             $output['msg'] = 'Data updated successfully.';
@@ -84,7 +84,7 @@
             return response()->json($output, 200);
 
         }
-		
+
 		public function cartItems($user_id)
         {
 		    	$cart = Cart::where('status', 'true')
@@ -92,39 +92,45 @@
 						->latest()
 						->take(4)
 						->get();
-        
+
                 $cart_collection = [];
                 foreach ($cart as $cartitems) {
-                    $item_data = []; 
+                    $item_data = [];
                     $item_data['id'] = $cartitems->id;
-                    
+
                     $item_data['active_color'] = $cartitems->ring_color;
                     $item_data['ring_price'] = $cartitems->ring_price;
                     $item_data['ring_carat'] = $cartitems->ring_carat;
+                    $item_data['ring_type'] = $cartitems->ring_type;
                     $item_data['carat_price'] = $cartitems->carat_price;
+                    $item_data['engraving'] = $cartitems->engraving;
+                    $item_data['font'] = $cartitems->font;
                     $item_data['img_sku'] = $cartitems->img_sku;
                     $item_data['diamond_id'] = $cartitems->diamond_id;
                     $item_data['diamond_price'] = $cartitems->diamond_price;
                     $item_data['gemstone_id'] = $cartitems->gemstone_id;
                     $item_data['gemstone_id'] = $cartitems->gemstone_id;
                     $item_data['gemstone_price'] = $cartitems->gemstone_price;
+                    $item_data['diamond_type'] = $cartitems->diamond_type;
                     $item_data['status'] = $cartitems->status;
-                 
+
 
                     if (!empty($cartitems->ring_id)) {
-                        // fetch ring data here 
+                        // fetch ring data here
                         $ring_data = ProductModel::where('id', $cartitems->ring_id)->first();
-                        $item_data['ring'] = $ring_data; 
+                        $item_data['ring'] = $ring_data;
                     }else
                     {
                         $item_data['ring'] = [];
                     }
 
-                    if (!empty($cartitems->diamond_id)) {
-                        // fetch diamond data here 
-                        $diamond_data = ''; 
-    
-                        $url = "https://apiservices.vdbapp.com/v2/diamonds?type=Diamond&stock_num=$cartitems->diamond_id";
+                    if (!empty($cartitems->diamond_id) && !empty($cartitems->diamond_type)) {
+                        // fetch diamond data here
+                        $diamond_data = '';
+
+                        // $url = "https://apiservices.vdbapp.com/v2/diamonds?type=Diamond&stock_num=$cartitems->diamond_id";
+                        $url = "https://apiservices.vdbapp.com/v2/diamonds?type=$cartitems->diamond_type&stock_num=$cartitems->diamond_id";
+
                         $curl = curl_init();
 
                         curl_setopt_array($curl, array(
@@ -146,19 +152,19 @@
                         curl_close($curl);
                         $resp = json_decode($response);
                         $diamond_data = $resp->response->body->diamonds;
-                        $item_data['diamond'] = $diamond_data; 
+                        $item_data['diamond'] = $diamond_data;
 
                     }else
                     {
-                        $item_data['diamond'] = []; 
+                        $item_data['diamond'] = [];
                     }
 
                     if (!empty($cartitems->gemstone_id) || !is_null($cartitems->gemstone_id)) {
-                        // fetch gemstone data here 
+                        // fetch gemstone data here
                         $gemstone_data = '';
 
-                        ########################      
-                        $gemstone_data = ''; 
+                        ########################
+                        $gemstone_data = '';
                         $url = "https://apiservices.vdbapp.com/v2/gemstones?stock_num=$cartitems->gemstone_id";
                         $curl = curl_init();
 
@@ -184,11 +190,11 @@
                     }
                     else
                     {
-                        $item_data['gemstone'] = []; 
+                        $item_data['gemstone'] = [];
                     }
                     $cart_collection[] = $item_data;
                 }
-				return $cart_collection;        
+				return $cart_collection;
         }
 
         public function getWishlist($user_id)
@@ -201,36 +207,40 @@
 
             $cart_collection = [];
             foreach ($cart as $cartitems) {
-                $item_data = []; 
+                $item_data = [];
                 $item_data['id'] = $cartitems->id;
                 $item_data['product_type'] = $cartitems->product_type;
                 $item_data['active_color'] = $cartitems->ring_color;
                 $item_data['ring_price'] = $cartitems->ring_price;
+                $item_data['ring_type'] = $cartitems->ring_type;
                 $item_data['ring_carat'] = $cartitems->ring_carat;
                 $item_data['carat_price'] = $cartitems->carat_price;
                 $item_data['img_sku'] = $cartitems->img_sku;
                 $item_data['diamond_id'] = $cartitems->diamond_id;
+                $item_data['diamond_type'] = $cartitems->diamond_type;
                 $item_data['diamond_price'] = $cartitems->diamond_price;
                 $item_data['gemstone_id'] = $cartitems->gemstone_id;
                 $item_data['gemstone_id'] = $cartitems->gemstone_id;
                 $item_data['gemstone_price'] = $cartitems->gemstone_price;
                 $item_data['status'] = $cartitems->status;
-            
+
 
                 if (!empty($cartitems->ring_id)) {
-                    // fetch ring data here 
+                    // fetch ring data here
                     $ring_data = ProductModel::where('id', $cartitems->ring_id)->first();
-                    $item_data['ring'] = $ring_data; 
+                    $item_data['ring'] = $ring_data;
                 }else
                 {
                     $item_data['ring'] = [];
                 }
 
-                if (!empty($cartitems->diamond_id)) {
-                    // fetch diamond data here 
-                    $diamond_data = ''; 
+                if (!empty($cartitems->diamond_id) && !empty($cartitems->diamond_type)) {
+                    // fetch diamond data here
+                    $diamond_data = '';
 
-                    $url = "https://apiservices.vdbapp.com/v2/diamonds?type=Diamond&stock_num=$cartitems->diamond_id";
+                    // $url = "https://apiservices.vdbapp.com/v2/diamonds?type=Diamond&stock_num=$cartitems->diamond_id";
+                    $url = "https://apiservices.vdbapp.com/v2/diamonds?type=$cartitems->diamond_type&stock_num=$cartitems->diamond_id";
+
                     $curl = curl_init();
 
                     curl_setopt_array($curl, array(
@@ -252,18 +262,18 @@
                     curl_close($curl);
                     $resp = json_decode($response);
                     $diamond_data = $resp->response->body->diamonds;
-                    $item_data['diamond'] = $diamond_data; 
+                    $item_data['diamond'] = $diamond_data;
 
                 }else
                 {
-                    $item_data['diamond'] = []; 
+                    $item_data['diamond'] = [];
                 }
 
                 if (!empty($cartitems->gemstone_id) || !is_null($cartitems->gemstone_id)) {
-                    // fetch gemstone data here 
+                    // fetch gemstone data here
                     $gemstone_data = '';
-                    ########################      
-                    $gemstone_data = ''; 
+                    ########################
+                    $gemstone_data = '';
                     $url = "https://apiservices.vdbapp.com/v2/gemstones?stock_num=$cartitems->gemstone_id";
                     $curl = curl_init();
 
@@ -289,11 +299,11 @@
                 }
                 else
                 {
-                    $item_data['gemstone'] = []; 
+                    $item_data['gemstone'] = [];
                 }
                 $cart_collection[] = $item_data;
             }
-            return $cart_collection;  
+            return $cart_collection;
         }
 
         public function getOrderHistory($user_id)
