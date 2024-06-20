@@ -188,7 +188,7 @@ class ProductController extends Controller
                 array_push($productList, $product);
             }
             // Attach the results to the output
-            $output['products'] = $productList;
+            $output['data'] = $productList;
             $output['count'] = $count;
             $output['total_count'] = $actual_count;
         } else {
