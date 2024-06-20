@@ -71,32 +71,40 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+
+        #####################################################
+
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
 
+        // Initialize the query with the base conditions and join with product_price table
+        $products = ProductModel::query()
+            ->join('product_price', 'products.sku', '=', 'product_price.product_sku')
+            ->where('products.status', 'true')
+            ->whereNull('products.parent_sku');
 
-        $products = ProductModel::orderBy('entity_id', 'asc')->where('status', 'true')->whereNull('parent_sku');
+        // Apply the bridal sets filter
         if ($request->bridal_sets == 'true') {
-            $products->whereNotNull('matching_wedding_band');
+            $products->whereNotNull('products.matching_wedding_band');
         }
+
+        // Apply sorting based on request
         if (!is_null($request->query('sortby'))) {
             $sortBy = $request->query('sortby');
             if ($sortBy == 'low_to_high') {
-                $products = ProductModel::orderBy('white_gold_price', 'asc')->where('status', 'true');
-            }
-            if ($sortBy == 'high_to_low') {
-                $products = ProductModel::orderBy('white_gold_price', 'desc')->where('status', 'true');
-            }
-            if ($sortBy == 'Newest') {
-                $products->where('is_newest', '1');
-            }
-            if ($sortBy == 'best_seller') {
-                $products->where('is_bestseller', '1');
+                $products->orderBy('product_price.price', 'asc');
+            } elseif ($sortBy == 'high_to_low') {
+                $products->orderBy('product_price.price', 'desc');
+            } elseif ($sortBy == 'Newest') {
+                $products->orderBy('products.created_at', 'desc');
+            } elseif ($sortBy == 'best_seller') {
+                $products->where('products.is_bestseller', '1');
             }
         }
 
+        // Apply additional filters
         if (!is_null($request->query('shape'))) {
-            $products->where('CenterShape', strtoupper(trim($request->query('shape'))));
+            $products->where('products.CenterShape', strtoupper(trim($request->query('shape'))));
         }
 
         if (!is_null($request->query('ring_style'))) {
@@ -109,51 +117,90 @@ class ProductController extends Controller
             if (!empty($subcatIds)) {
                 $products->where(function ($query) use ($subcatIds) {
                     foreach ($subcatIds as $id) {
-                        $query->orWhereRaw("FIND_IN_SET(?, sub_category)", [$id]);
+                        $query->orWhereRaw("FIND_IN_SET(?, products.sub_category)", [$id]);
                     }
                 });
             }
         }
+
         if (!is_null($request->query('metal_color'))) {
             $metalcolor_id = $request->query('metal_color');
-            $products->where('metalColor_id', $metalcolor_id);
+            $products->where('products.metalColor_id', $metalcolor_id);
         }
+
         if (!is_null($request->query('price_range'))) {
             $range = explode(',', $request->query('price_range'));
             $min = $range[0];
             $max = $range[1];
-            $products->whereBetween('white_gold_price', [$min, $max]);
+            $products->whereBetween('product_price.price', [$min, $max]);
         }
 
-        $actual_count = $products->get()->count();
+        // Apply filters for diamond_type and metalColor
+        $products->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
+            ->where('product_price.metalColor', 'White');    // Filter for White metalColor
+
+        // Count the filtered results
+        $actual_count = $products->count();
+
+        // Retrieve the products if needed (for pagination or display)
         $productsList = $products->paginate(30);
         $count = $productsList->count();
+
         if ($count) {
             $productList = [];
             foreach ($productsList as $product) {
-
                 $product->name = (!empty($product->product_browse_pg_name)) ? ucfirst(strtolower($product->product_browse_pg_name)) : ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->name);
                 $product->name = ucwords($name);
-                $product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
-                $product->yellow_gold_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Yellow')->where('diamond_type', 'natural')->first()['price'] ?? 0;
-                $product->rose_gold_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Pink')->where('diamond_type', 'natural')->first()['price'] ?? 0;
-                $product->platinum_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', 'Platinum')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
+
+                // Get the prices based on different criteria
+                $product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                    ->where('metalType', '18kt')
+                    ->where('metalColor', 'White')
+                    ->where('diamond_type', 'natural')
+                    ->first()
+                    ->price ?? 0;
+
+                $product->yellow_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                    ->where('metalType', '18kt')
+                    ->where('metalColor', 'Yellow')
+                    ->where('diamond_type', 'natural')
+                    ->first()
+                    ->price ?? 0;
+
+                $product->rose_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                    ->where('metalType', '18kt')
+                    ->where('metalColor', 'Pink')
+                    ->where('diamond_type', 'natural')
+                    ->first()
+                    ->price ?? 0;
+
+                $product->platinum_price = ProductPrice::where('product_sku', $product['sku'])
+                    ->where('metalType', 'Platinum')
+                    ->where('metalColor', 'White')
+                    ->where('diamond_type', 'natural')
+                    ->first()
+                    ->price ?? 0;
+
                 array_push($productList, $product);
             }
-
-            $output['product_count'] = $actual_count;
-            $output['data'] = $productList;
-            return response()->json($output, 200);
+            // Attach the results to the output
+            $output['products'] = $productList;
+            $output['count'] = $count;
+            $output['total_count'] = $actual_count;
         } else {
             $output['res'] = 'error';
             $output['msg'] = 'No product found!';
             $output['data'] = [];
             return response()->json($output, 200);
         }
+        return response()->json($output);
+
+
+        ######################################################
 
         return response()->json($output, 200);
     }
@@ -177,16 +224,14 @@ class ProductController extends Controller
             $product['diamond_type'] = 'natural';
             $product['diamondQuality'] = $priceData['diamondQuality'] ?? 0;
             $product['metalType'] = '18KT Gold';
-            if(!is_null($product['matching_wedding_band']) || !empty($product['matching_wedding_band']))
-            {
-                 ## if matching set exist then reterive tha details and send them
-                 $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
-                 if($is_matchingset->exists())
-                 {
+            if (!is_null($product['matching_wedding_band']) || !empty($product['matching_wedding_band'])) {
+                ## if matching set exist then reterive tha details and send them
+                $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
+                if ($is_matchingset->exists()) {
                     $product['matching_wedding_band'] = $is_matchingset->first();
-                 }else{
+                } else {
                     $product['matching_wedding_band'] = NULL;
-                 }
+                }
             }
 
             ## check if center stone exist then get the value
