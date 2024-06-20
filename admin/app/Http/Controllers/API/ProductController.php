@@ -195,7 +195,7 @@ class ProductController extends Controller
             // Attach the results to the output
             $output['data'] = $productList;
             $output['count'] = $count;
-            $output['total_count'] = $actual_count;
+            $output['product_count'] = $actual_count;
         } else {
             $output['res'] = 'error';
             $output['msg'] = 'No product found!';
