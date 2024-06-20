@@ -87,7 +87,6 @@ class ProductController extends Controller
             $sortBy = $request->query('sortby');
             if ($sortBy == 'low_to_high') {
                 $products->where('diamond_type','natural');
-                $products->where('metalColor','18kt');
                 $products->where('diamondQuality','SI1, G');
                 $products->orderBy('product_price.price', 'asc');
             }
