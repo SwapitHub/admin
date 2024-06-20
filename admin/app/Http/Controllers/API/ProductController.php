@@ -81,7 +81,6 @@ class ProductController extends Controller
             ->where('products.status', 'true')
             ->whereNull('products.parent_sku')
             ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
-            ->where('product_price.diamondQuality', 'SI1, G')  // Filter for natural diamond_type
             ->where('product_price.metalColor', 'White');
         if ($request->bridal_sets == 'true') {
             $products->whereNotNull('matching_wedding_band');
