@@ -149,7 +149,8 @@ class ProductController extends Controller
         if ($count) {
             $productList = [];
             foreach ($productsList as $product) {
-                $product->name = (!empty($product->product_browse_pg_name)) ? ucfirst(strtolower($product->product_browse_pg_name)) : ucfirst(strtolower($product->name));
+                // $product->name = (!empty($product->product_browse_pg_name)) ? ucfirst(strtolower($product->product_browse_pg_name)) : ucfirst(strtolower($product->name));
+                $product->name = ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
