@@ -81,7 +81,8 @@ class ProductController extends Controller
         $products = ProductModel::query()
             ->join('product_price', 'products.sku', '=', 'product_price.product_sku')
             ->where('products.status', 'true')
-            ->whereNull('products.parent_sku');
+            ->whereNull('products.parent_sku')
+            ->distinct(); // Ensure distinct products
 
         // Apply the bridal sets filter
         if ($request->bridal_sets == 'true') {
