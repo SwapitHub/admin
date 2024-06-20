@@ -80,29 +80,26 @@ class ProductController extends Controller
             $products->whereNotNull('matching_wedding_band');
         }
 
-        // Join with product_price table
-        $products->join('product_price', 'products.sku', '=', 'product_price.product_sku');
-        // Apply sorting filter
+        // Apply sorting and additional filters based on request
         if (!is_null($request->query('sortby'))) {
+            $products = ProductModel::query()
+            ->join('product_price', 'products.sku', '=', 'product_price.product_sku')
+            ->where('products.status', 'true')
+            ->whereNull('products.parent_sku')
+            ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
+            ->where('product_price.metalColor', 'White');
             $sortBy = $request->query('sortby');
             if ($sortBy == 'low_to_high') {
-                $products->where('diamond_type','natural');
-                $products->where('diamondQuality','SI1, G');
                 $products->orderBy('product_price.price', 'asc');
-            }
-            if ($sortBy == 'high_to_low') {
-                $products->where('diamond_type','natural');
-                $products->where('metalColor','18kt');
-                $products->where('diamondQuality','SI1, G');
+            } elseif ($sortBy == 'high_to_low') {
                 $products->orderBy('product_price.price', 'desc');
-            }
-            if ($sortBy == 'Newest') {
-                $products->where('is_newest', '1');
-            }
-            if ($sortBy == 'best_seller') {
-                $products->where('is_bestseller', '1');
+            } elseif ($sortBy == 'Newest') {
+                $products->orderBy('products.created_at', 'desc');
+            } elseif ($sortBy == 'best_seller') {
+                $products->where('products.is_bestseller', '1');
             }
         }
+
 
 
         // if (!is_null($request->query('sortby'))) {
