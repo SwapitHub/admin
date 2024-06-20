@@ -96,9 +96,11 @@ class ProductController extends Controller
         if (!is_null($request->query('sortby'))) {
             $sortBy = $request->query('sortby');
             if ($sortBy == 'low_to_high') {
-                $products->orderBy('product_price.price', 'asc');
+                // $products->orderBy('product_price.price', 'asc');
+                $products->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) ASC");
             } elseif ($sortBy == 'high_to_low') {
-                $products->orderBy('product_price.price', 'desc');
+                // $products->orderBy('product_price.price', 'desc');
+                $products->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) DESC");
             } elseif ($sortBy == 'Newest') {
                 $products->orderBy('products.created_at', 'desc');
             } elseif ($sortBy == 'best_seller') {
