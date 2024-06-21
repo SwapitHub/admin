@@ -183,6 +183,11 @@ class CheckOutController extends Controller
             'clientIp' => $orderData['clientIp']
         ];
         $response =  $this->createCharge($chargeData);
+
+        echo "<pre>";
+        var_dump($response);
+        exit;
+
         if ($response['res'] == 'success') {
             $orderData['ref_num'] = $response['data']['id'];
             $orderData['status'] = 'SUCCESS';
