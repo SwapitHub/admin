@@ -10,6 +10,7 @@ use App\Models\Cart;
 use App\Models\User;
 use App\Models\AddresModel;
 use App\Models\OrderStatus;
+use App\Models\RefundModel;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Cache;
@@ -202,6 +203,12 @@ class OrderController extends Controller
                 ->update(['status' => 'CLOSED']);
 
             if ($is_updated) {
+                $refund = new RefundModel();
+                $refund->user_id = $transaction['user_id'];
+                $refund->order_id = $order_id;
+                $refund->amount = $transaction['amount'];
+                $refund->save();
+                return redirect()->back()->with('success', $result['message']);
             }
         } else {
             return redirect()->back()->with('error', $result['message']);
