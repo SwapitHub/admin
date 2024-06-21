@@ -15,13 +15,21 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Cache;
 use App\Exports\OrderExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Library\Clover;
 
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
 
-    ## order status list
+    ##order refund view
+    public function refund()
+    {
+        $data = [];
+        return view('admin.refundlist',$data);
+    }
+
+    ############### order status secion
     public function orderStatus()
     {
 
@@ -34,7 +42,6 @@ class OrderController extends Controller
         ];
         return view('admin.order_status', $data);
     }
-
 
     public function addOrderStatus(Request $request)
     {
@@ -90,9 +97,9 @@ class OrderController extends Controller
         $obj->save();
         return redirect()->back()->with('success', 'Order status updated successfully');
     }
+    ################ order status secion
 
-
-
+    ##create invoice
     public function makeInvoice($order_id)
     {
         $orderData = OrderModel::where('order_id', $order_id)->first();
@@ -109,23 +116,13 @@ class OrderController extends Controller
         }
     }
 
+    ##export orders
     public function ordersExport()
     {
         return Excel::download(new OrderExport, 'orders.csv');
     }
 
-
-    // public function orders(Request $request)
-    // {
-    //     $order_data = $request->search;
-    //     $order_data = $request->orderStatus;
-    //     $orders = DB::table('orders')
-    //         ->orderBy('orders.id', 'desc')
-    //         ->join('users', 'orders.user_id', '=', 'users.id')
-    //         ->select('users.first_name', 'users.last_name', 'users.email', 'orders.*')
-    //         ->paginate(10);
-    //     return view('admin.orders', ['orders' => $orders]);
-    // }
+    ##order list
     public function orders(Request $request)
     {
         // Retrieve search and order status from the request
@@ -160,7 +157,7 @@ class OrderController extends Controller
     }
 
 
-
+    ##order details
     public function ordersDetail($id)
     {
         $order_data = DB::table('orders')
@@ -186,5 +183,28 @@ class OrderController extends Controller
 
 
         return view('admin.order-detail', $data);
+    }
+
+    ##create refund
+    public function createRefund($order_id)
+    {
+        $transaction =  TransactionModel::where('order_id', $order_id)->first();
+        $payload = [
+            'charge_id' => $transaction['charge_id'],
+            'ref_num' => $transaction['ref_num'],
+            'amount' => $transaction['amount'],
+        ];
+        $clover = new Clover();
+        $result =  $clover->createRefund($payload);
+        if ($result['res'] == 'success') {
+            ## make order closed and update order status and make refund in refund table
+            $is_updated = OrderModel::where('order_id', $order_id)
+                ->update(['status' => 'CLOSED']);
+
+            if ($is_updated) {
+            }
+        } else {
+            return redirect()->back()->with('error', $result['message']);
+        }
     }
 }

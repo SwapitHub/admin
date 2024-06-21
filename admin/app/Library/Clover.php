@@ -128,6 +128,7 @@ class Clover
     public function createRefund($payload)
     {
         $authorization = 'Bearer' . ' ' . $this->authorizationKey;
+        $amount = $payload['amount'] * 100;
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => "https://scl-sandbox.dev.clover.com/v1/refunds",
@@ -138,9 +139,9 @@ class Clover
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode([
-                'charge' => $payload['charge'],
-                'amount' => $payload['amount'],
-                'external_reference_id' => $payload['reference_no'],
+                'charge' => $payload['charge_id'],
+                'amount' => $amount,
+                'external_reference_id' => $payload['ref_num'],
                 'reason' => 'requested_by_customer'
             ]),
             CURLOPT_HTTPHEADER => [
@@ -167,11 +168,5 @@ class Clover
                 return ['res' => 'success', 'message' => 'Refund created', 'data' => $json_data];
             }
         }
-
-        // if ($err) {
-        //     echo "cURL Error #:" . $err;
-        // } else {
-        //     echo $response;
-        // }
     }
 }

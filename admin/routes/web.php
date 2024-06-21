@@ -267,6 +267,9 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/orders/invoice/{order_id}', [App\Http\Controllers\OrderController::class, 'makeInvoice'])->name('order.invoice');
 	Route::get('/invoice/{order_id}',[App\Http\Controllers\InvoiceController::class, 'invoicePdf'])->name('sale.orders.invoice.download');
 	Route::get('/order-detail/{id}', [App\Http\Controllers\OrderController::class, 'ordersDetail'])->name('sale.orders.detail');
+    Route::get('/orders/cancel/{order_id}', [App\Http\Controllers\OrderController::class, 'createRefund'])->name('sale.orders.refund');
+
+    Route::get('/refund', [App\Http\Controllers\OrderController::class, 'refund'])->name('sale.orders.refundlist');
 
     Route::get('/order-status',[App\Http\Controllers\OrderController::class, 'orderStatus'])->name('order.status');
     Route::get('/order-status/add',[App\Http\Controllers\OrderController::class, 'addOrderStatus'])->name('order.status.add');

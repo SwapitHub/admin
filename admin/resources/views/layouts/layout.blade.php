@@ -300,7 +300,7 @@
 								</a>
 							</li>
                             <li>
-								<a href="{{ route('sale.invoices') }}">
+								<a href="{{ route('sale.orders.refundlist') }}">
 									<i class="fa fa-circle"></i> Returns
 								</a>
 							</li>
@@ -800,20 +800,18 @@
 </body>
 @if (session('success'))
 <script>
-	iziToast.success({
-		title: 'OK',
-		message: '{{ session('
-		success ') }}',
-	});
+    iziToast.success({
+        title: 'OK',
+        message: '{{ session('success') }}',
+    });
 </script>
 @endif
 @if (session('error'))
 <script>
 	iziToast.error({
-		title: 'Error',
-		message: '{{ session('
-		error ') }}',
-	});
+        title: 'Error',
+        message: '{{ session('error') }}',
+    });
 </script>
 @endif
 

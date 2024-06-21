@@ -47,7 +47,7 @@
                                     <div class="col-sm-12">
                                         @if ($invoice_count == 0)
                                             @if (empty($order->tracking_number))
-                                                <button class="btn btn-outline-primary">Cancel</button>
+                                                <a href="{{ route('sale.orders.refund',['order_id'=>$order->order_id]) }}" class="btn btn-outline-primary">Refund</a>
                                             @endif
                                         @endif
 
@@ -166,7 +166,8 @@
                                                                         {{ getRingName($products->ring_id) }} <br>
                                                                     @endif
                                                                     @if ($diamondImage)
-                                                                        {{ $diamondImage->shape }} {{ $diamondImage->size }}
+                                                                        {{ $diamondImage->shape }}
+                                                                        {{ $diamondImage->size }}
                                                                     @endif
                                                                     @if ($gemstoneImage)
                                                                         {{ $gemstoneImage->shape }}
@@ -366,6 +367,10 @@
     </div>
     @push('scripts')
         <script>
+            // function refund(order_id) {
+            //     alert(order_id);
+            // }
+
             function MakeInvoice(order_id) {
                 var url = "{{ url('/orders/invoice/') }}" + '/' + order_id;
                 swal({
