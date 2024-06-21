@@ -169,7 +169,7 @@ class WishlistController extends Controller
                     $item_data['ring'] = [];
                 }
 
-                if (!empty($cartitems->diamond_id)) {
+                if (!empty($cartitems->diamond_id) && !empty($cartitems->diamond_type)) {
                     // fetch diamond data here
                     $diamond_data = '';
                     $encodedDiamondId = urlencode($cartitems->diamond_id);
