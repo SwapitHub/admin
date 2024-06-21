@@ -67,11 +67,11 @@
                 return response()->json($output, 401);
             }
             // Check if the current password matches the user's password
-            if (!Hash::check($request->current_password, $user->password)) {
-                $output['res'] = 'error';
-                $output['msg'] = 'Current password is incorrect.';
-                return response()->json($output, 401);
-            }
+            // if (!Hash::check($request->current_password, $user->password)) {
+            //     $output['res'] = 'error';
+            //     $output['msg'] = 'Current password is incorrect.';
+            //     return response()->json($output, 401);
+            // }
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             // $user->email = $request->email;
