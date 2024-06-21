@@ -16,6 +16,7 @@ use App\Models\Widget;
 use App\Models\ContactUs;
 use App\Models\User;
 use App\Library\UpsShipping;
+use App\Library\Clover;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -56,9 +57,9 @@ class AdminController extends Controller
         $endOfMonth = Carbon::now()->endOfMonth();
 
         // Query to get all transactions of the current month and aggregate the amount
-         $totalAmount = TransactionModel::whereBetween('created_at', [$startOfMonth, $endOfMonth])
+        $totalAmount = TransactionModel::whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->sum('amount');
-            return $formattedAmount = number_format($totalAmount, 2);
+        return $formattedAmount = number_format($totalAmount, 2);
     }
 
     public function dashboard()
@@ -172,5 +173,18 @@ class AdminController extends Controller
         $admin->save();
         $output['res'] = 'success';
         echo json_encode($output);
+    }
+
+    public function createCharge()
+    {
+        $chargeData = [
+            'amount' => 100,
+            'card_token' => 'clv_1TSTSV9UGpCo5MP2rntwX1CW',
+            'email' => 'test@gmail.com',
+        ];
+        $clover = new Clover();
+        $result = $clover->createCharge($chargeData);
+        echo "<pre>";
+        var_dump($result);
     }
 }

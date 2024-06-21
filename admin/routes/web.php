@@ -340,6 +340,6 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 
 
     Route::post('/shipping/{order_id}',[App\Http\Controllers\ShippingController::class, 'index'])->name('shipping.create');
-
+    Route::get('/createCharge', [App\Http\Controllers\AdminController::class, 'createCharge']);
 });
 
