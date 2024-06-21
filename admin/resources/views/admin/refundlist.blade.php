@@ -50,21 +50,19 @@
                                 </thead>
 
                                 <tbody>
-                                    {{-- @foreach($list as $item) --}}
+                                    @foreach($list as $item)
                                     <tr>
-                                        {{-- <td><a href="{{ route('sale.orders.detail',['id'=>$item->order_id]) }}" style="text-decoration:underline;color:blue !important">{{ $item->order_id }}</a></td>
+                                        <td>{{ $item->order_id }}</td>
 
-                                        <td>{{ $item->transaction_id }}</td>
+                                        <td>{{ $item->amount }}</td>
 
                                         <td>{{ $item->created_at }}</td>
 
-                                        <td>Card Payment</td>
+                                        <td>{{ $item->first_name }}  {{ $item->last_name }}</td>
 
-                                        <td>{{ $item->name }}</td>
-
-                                        <td>${{ $item->amount }}/-</td> --}}
+                                        <td><a href="{{ route('sale.orders.detail',['id'=>$item->order_id]) }}"><i class="fa fa-eye fa-2x"></i></a></td>
                                     </tr>
-                                    {{-- @endforeach --}}
+                                    @endforeach
 
 
                                 </tbody>

@@ -26,8 +26,15 @@ class OrderController extends Controller
     ##order refund view
     public function refund()
     {
-        $data = [];
-        return view('admin.refundlist',$data);
+        // $data = [];
+        $query = DB::table('refund')
+            ->join('users', 'refund.user_id', '=', 'users.id')
+            ->select('users.first_name', 'users.last_name', 'users.email', 'refund.*')
+            ->orderBy('refund.id', 'desc')
+            ->paginate(10);
+
+        $data = ['list' => $query];
+        return view('admin.refundlist', $data);
     }
 
     ############### order status secion

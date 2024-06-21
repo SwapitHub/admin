@@ -55,9 +55,9 @@
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'email' => 'required|email|unique:users,email,' . $user->id,
-                'current_password' => 'required',
-                'password' => 'required|min:8',
-                'c_password' => 'required|same:password',
+                // 'current_password' => 'required',
+                // 'password' => 'required|min:8',
+                // 'c_password' => 'required|same:password',
             ]);
             // Check if validation fails
             if ($validator->fails()) {
@@ -74,9 +74,9 @@
             }
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
-            $user->email = $request->email;
+            // $user->email = $request->email;
             $user->status = 'true';
-            $user->password= bcrypt($request->password);
+            // $user->password= bcrypt($request->password);
             $user->save();
             $output['res'] = 'success';
             $output['msg'] = 'Data updated successfully.';
