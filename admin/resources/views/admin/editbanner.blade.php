@@ -100,9 +100,12 @@
 										<div class="col-xl-8 col-md-7">
 											<select name="page" id="page" class="form-control">
 												<option selected disabled>--select--</option>
-												@foreach ($pages as $page)
-                                                    <option value="{{ $page->id }}" {{ ($bannerdata->page == $page->id )?'selected':'' }}>{{ $page->name }}</option>
-                                                @endforeach
+                                                @isset($pages)
+                                                @foreach ($pages as $page)
+                                                <option value="{{ $page->id }}" {{ ($bannerdata->page == $page->id )?'selected':'' }}>{{ $page->name }}</option>
+                                            @endforeach
+                                                @endisset
+
 											</select>
 										</div>
 									</div>
