@@ -238,7 +238,7 @@ class ProductController extends Controller
                 $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
                 if ($is_matchingset->exists()) {
                     $matching_bands_product = $is_matchingset->first();
-                    $matching_bands_product->price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
+                    $matching_bands_product->price = ProductPrice::where('product_sku', $matching_bands_product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
 
                     $product['matching_wedding_band'] = $matching_bands_product;
                 } else {
