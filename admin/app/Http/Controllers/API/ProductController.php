@@ -237,7 +237,10 @@ class ProductController extends Controller
                 ## if matching set exist then reterive tha details and send them
                 $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
                 if ($is_matchingset->exists()) {
-                    $product['matching_wedding_band'] = $is_matchingset->first();
+                    $matching_bands_product = $is_matchingset->first();
+                    $matching_bands_product->price = 'x123';
+
+                    $product['matching_wedding_band'] = $matching_bands_product;
                 } else {
                     $product['matching_wedding_band'] = NULL;
                 }
