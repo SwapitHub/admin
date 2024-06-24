@@ -43,67 +43,42 @@ class ProductImport1 implements ToCollection, WithHeadingRow
         foreach ($collection as $row) {
             if ($row->filter()->isNotEmpty()) {
                 $input = $row->toArray();
-
-                $input['internal_sku'] = $input['sku'];
-                if($input['newname'] == '#N/A')
-                {
-                  $input['name'] = $input['name'];
-                }
-                else
-                {
-                  $input['name'] = $input['newname'];
-                }
-
-                if ($input['newdescription'] == '#N/A') {
-                    $input['description'] = $input['description'];
-                }
-                else
-                {
-                    $input['description'] = $input['newdescription'];
-                }
-                ## added product type
-                if ($input['parent_sku'] == NULL || $input['parent_sku'] == '#N/A') {
-                    $input['type'] = 'parent_product';
-                    $input['parent_sku'] = NULL;
-                } else {
-                    $input['type'] = 'child_product';
-                }
-
-
-                $input['slug'] = $product->generateUniqueSlug($input['name']);
-                if ($input['newsubcategory'] == '#N/A' || $input['newsubcategory'] == 'null' || empty($input['newsubcategory'])) {
-                    // $values =  $this->fetchCategoryValue($input['newsubcategory']);
-                    ## if newcatvalue == NA then leave it
-                    $catvalue = $input['categoryvalue'];
-                } else {
-                    ## if new category not NA than add this one
-                    $catvalue = $input['newsubcategory'];
-                    // $values =  $this->fetchCategoryValue($input['categoryvalue']);
-                }
-                $values =  $this->fetchCategoryValue($catvalue);
+                //    dd($input);
+                $values = $input['subcategory'];
+                $splitValues = explode('/', $values);
                 $input['menu'] = $this->menu_id;
-                $input['category'] = $values['category']??null;
-                $input['sub_category'] = $values['sub_category']??null;
+                $response =  $this->fetchCatSubcatValues($splitValues);
+                $input['category'] = $response['cat'];
+                $input['sub_category'] = $response['subcat'];
+                $input['slug'] = $product->generateUniqueSlug(!empty($input['product_browse_pg_name'])?$input['product_browse_pg_name']:$input['name']);
+                if($input['parent_sku'] == $input['sku'])
+                {
+                    $input['parent_sku'] = null;
+                }
+                if($input['parent_sku'] == null){
+					$input['type'] = 'parent_product';
+					}else{
+					$input['type'] = 'child_product';
+				}
+                $input['internal_sku'] = $input['sku'];
                 $input['videos'] = ($input['videos'] != null) ? $product->sortVideos($input['videos']) : null;
                 $input['images'] = (!empty($input['images']))?json_encode(explode(',', $input['images'])):null;
                 $input['metalType_id'] = $this->getMetalTypeIdByName('18 Kt');
                 $input['metalColor_id'] = $this->getMetalColorIdByName($input['metalcolor']);
                 $input['status'] = 'true';
+                unset($input['subcategory']);
 
-                unset($input['newsubcategory']);
-                unset($input['newname']);
-                unset($input['newdescription']);
                 $matchData = [
                     'sku' => $input['sku'],
                 ];
-                if (!ProductModel::updateOrCreate($matchData, $input)) {
+                $saved = ProductModel::updateOrCreate($matchData, $input);
+                if (!$saved) {
                     $stat = 'false';
                 }
-            }
-            if ($stat == 'true') {
-                echo "success";
-            } else {
-                echo "error";
+                var_dump($saved);
+
+
+            //    dd($input);
             }
         }
     }
@@ -141,27 +116,38 @@ class ProductImport1 implements ToCollection, WithHeadingRow
         }
     }
 
-    ## get product category and subcategories
-    public function fetchCategoryValue($categoryvalue)
+    ## get menu cat and subcat
+    public function fetchCatSubcatValues($values)
     {
-        $catvalue = explode(',', $categoryvalue);
-        $catval = $catvalue[0];
-        $values = explode('/', $catval);
-        $category = isset($values[0]) ? $values[0] : null;
-        $subcategory = isset($values[1]) ? $values[1] : null;
-        $response_cat = $this->createOrFetchCategory($category);
-        if ($response_cat) {
-            if ($subcategory != null) {
-                $response_subcat =  $this->createOrFetchSubCategory($response_cat, $subcategory);
-            } else {
-                $response_subcat = null;
-            }
+        //    var_dump($values);
+        $cat_id = $this->createOrFetchCategory($values[1]);
+        if (isset($values[2]) && !empty($values[2])) {
+           $subcat_id =  $this->createOrFetchSubCategory($cat_id,$values[2]);
         }
-        return $retuen_arr = [
-            'category' => $response_cat,
-            'sub_category' => $response_subcat
-        ];
+        return ['cat'=>$cat_id,'subcat'=>$subcat_id??null];
     }
+
+    ## get product category and subcategories
+    // public function fetchCategoryValue($categoryvalue)
+    // {
+    //     $catvalue = explode(',', $categoryvalue);
+    //     $catval = $catvalue[0];
+    //     $values = explode('/', $catval);
+    //     $category = isset($values[0]) ? $values[0] : null;
+    //     $subcategory = isset($values[1]) ? $values[1] : null;
+    //     $response_cat = $this->createOrFetchCategory($category);
+    //     if ($response_cat) {
+    //         if ($subcategory != null) {
+    //             $response_subcat =  $this->createOrFetchSubCategory($response_cat, $subcategory);
+    //         } else {
+    //             $response_subcat = null;
+    //         }
+    //     }
+    //     return $retuen_arr = [
+    //         'category' => $response_cat,
+    //         'sub_category' => $response_subcat
+    //     ];
+    // }
 
     ## check if these category and subcategory are exist in db then get the ids otherwise added them in db and get id
     public function createOrFetchCategory($category)
