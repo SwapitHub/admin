@@ -221,7 +221,7 @@ class ProductController extends Controller
 
         if (!is_null($entity_id)) {
             $product =  ProductModel::where('entity_id', $entity_id)->orWhere('slug', $entity_id)->first();
-            $product['name'] = ucfirst(strtolower(!empty($product['product_browse_pg_name']) ? $product['product_browse_pg_name'] : $product['name']));
+            $product['name'] = ucfirst(strtolower(!empty($product['name']) ? $product['name'] : $product['product_browse_pg_name']));
             $product['description'] = ucfirst(strtolower($product['description']));
             $product['images'] = json_decode($product['images']);
             $product['videos'] = json_decode($product['videos']);
