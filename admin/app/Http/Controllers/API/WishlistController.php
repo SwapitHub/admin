@@ -163,8 +163,8 @@ class WishlistController extends Controller
                 $item_data['gemstone_stock_no'] = $cartitems->gemstone_stock_no;
                 $item_data['gemstone_price'] = $cartitems->gemstone_price;
                 $item_data['is_band_available'] = $cartitems->is_band_available;
-                $item_data['band_sku'] = $cartitems->band_sku??null;
-                $item_data['band_price'] = $cartitems->band_price??null;
+                $item_data['band_sku'] = empty($cartitems->band_sku)?null:$cartitems->band_sku;
+                $item_data['band_price'] = empty($cartitems->band_price)?null:$cartitems->band_price;
 
                 if (!empty($cartitems->ring_id)) {
                     // fetch ring data here
