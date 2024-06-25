@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+
 	window.Parsley.addValidator('mobile10', {
 		validateString: function(value) {
 			var digits = value.replace(/\D/g, '');
@@ -10,7 +10,7 @@ $(document).ready(function(){
 		},
 	});
 	$(".dropify").dropify();
-	
+
 	// $('.summernote').summernote({
 	// 	placeholder: 'Description',
 	// 	tabsize: 2,
@@ -24,7 +24,7 @@ $(document).ready(function(){
 	// 		['insert', ['link', 'picture', 'video']],
 	// 		['view', ['fullscreen', 'codeview', 'help']]
 	// 	]
-	// });	
+	// });
 
 
 	$('.summernote').summernote({
@@ -52,6 +52,20 @@ $(document).ready(function(){
 			  }, 10);
 			}
 		  },
+          onDialogShown: function() {
+            var $dialog = $('.note-link-dialog');
+            var $checkbox = $('<label><input type="checkbox" class="note-link-target"> Open in new window</label>');
+            $dialog.find('.form-group').last().append($checkbox);
+
+            $dialog.find('.note-link-btn').click(function() {
+              if ($('.note-link-target').prop('checked')) {
+                setTimeout(function() {
+                  var links = $('.note-editable').find('a[href="' + $('.note-link-url').val() + '"]');
+                  links.attr('target', '_blank');
+                }, 10);
+              }
+            });
+          }
 		// lowercaseAttributes: false,
 		codeviewFilter: false, // Disable filtering of HTML code
 		codeviewIframeFilter: false // Disable filtering of HTML code inside iframe
@@ -59,8 +73,8 @@ $(document).ready(function(){
 
 
 	$(".form").parsley();
-	
-	// form submit 
+
+	// form submit
 	$(".form").submit(function(event){
 		event.preventDefault();
 		var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -105,7 +119,7 @@ $(document).ready(function(){
 						$(".main-spinner").addClass('d-none');
 						$(".submitBtn").attr('disabled',false);
 					}
-					
+
 				},
 				error:function(response)
 				{
@@ -120,8 +134,8 @@ $(document).ready(function(){
 			});
 		}
 	});
-	
-	// form submit 
+
+	// form submit
 	$(".form-icon").submit(function(event){
 		event.preventDefault();
 		var csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -169,7 +183,7 @@ $(document).ready(function(){
 						$(".main-spinner").addClass('d-none');
 						$(".submitBtn").attr('disabled',false);
 					}
-					
+
 				},
 				error:function(response)
 				{
@@ -184,7 +198,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-	
+
 });
 
 function logout(url)
@@ -220,7 +234,7 @@ function logout(url)
 							window.location.href = jsonres.redirect_url;
 						}, 900);
 					}
-					
+
 				},
 				error:function(response)
 				{
@@ -257,12 +271,12 @@ function deleteItem(url)
 						});
 						setTimeout(function() {
 							window.location.reload();
-						}, 900);   
+						}, 900);
 						}else{
 						swal(jsonres.res, {
 							icon: "error",
 						});
-					}       
+					}
 				},
 				error:function(response)
 				{
@@ -274,13 +288,13 @@ function deleteItem(url)
 		}
 	});
 }
-// delete multiple data 
+// delete multiple data
 $('.delete_all').on('click', function (e) {
 	var action_url = $("#url").val();
 	var allVals = [];
 	$(".checkbox_animated:checked").each(function () {
 		allVals.push($(this).attr('data-id'));
-	}); 
+	});
 	if (allVals.length <= 0) {
 		alert("Please select row.");
 		} else {
@@ -303,14 +317,14 @@ $('.delete_all').on('click', function (e) {
 								message: jsondata.msg,
 							});
 						}
-						
+
 					},
 					error:function(res)
 					{
-						console.log(res);	
+						console.log(res);
 					}
 				});
 			});
 		}
 	}
-});	
+});

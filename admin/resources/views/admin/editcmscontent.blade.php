@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="page-header-left">
-						<h3>Edit content 
+						<h3>Edit content
 							<small>Dimond Admin panel</small>
 						</h3>
 					</div>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -79,6 +79,7 @@
 										<label for="validationCustom1" class="col-xl-3 col-md-4">Content</label>
 										<div class="col-xl-8 col-md-7">
 											<textarea name="content" id="content" cols="30" rows="10" class="summernote form-control" style="">{{ old('content',$editdata->content) }}</textarea>
+
 											@error('content')
 											<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
@@ -97,7 +98,7 @@
 												<option selected disabled>Select</option>
 												@foreach($cms_category as $category)
 												<option value="{{ $category->id }}" {{ ($category->id == $editdata->cms_category)?'selected':'' }}>{{ $category->name }}</option>
-												@endforeach 
+												@endforeach
 											</select>
 											@error('category')
 											<div class="invalid-feedback">{{ $message }}</div>
@@ -130,7 +131,7 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="order_number" value="{{ $editdata->order_number }}" class="form-control">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label class="col-xl-3 col-md-4">Status</label>
@@ -148,7 +149,7 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="meta_title" value="{{ $editdata->meta_title }}" class="form-control" placeholder="Meta Title">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
@@ -156,7 +157,7 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="meta_keyword" value="{{ $editdata->meta_keyword }}" class="form-control" placeholder="Meta Keyword">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4" >
@@ -170,7 +171,7 @@
 										class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
 									</div>
 								</form>
-								
+
 							</div>
 						</div>
 					</div>

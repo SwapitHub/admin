@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="page-header-left">
-						<h3>Add new entry 
+						<h3>Add new entry
 							<small>Dimond Admin panel</small>
 						</h3>
 					</div>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -131,7 +131,7 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="order_number" value="0" class="form-control">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label class="col-xl-3 col-md-4">Status</label>
@@ -143,14 +143,14 @@
 											</div>
 										</div>
 									</div>
-									
+
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
 										Meta Title</label>
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="meta_title" value="" class="form-control" placeholder="Meta Title">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4">
@@ -158,7 +158,7 @@
 										<div class="col-xl-8 col-md-7">
 											<input type="text" name="meta_keyword" value="" class="form-control" placeholder="Meta Keyword">
 										</div>
-										
+
 									</div>
 									<div class="form-group row">
 										<label for="validationCustom4" class="col-xl-3 col-md-4" >
@@ -172,7 +172,7 @@
 										class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
 									</div>
 								</form>
-								
+
 							</div>
 						</div>
 					</div>

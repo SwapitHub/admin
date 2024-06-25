@@ -733,8 +733,8 @@
 <script src=" {{ env('AWS_URL') }}admin-assets/admin/js/dropzone/dropzone-script.js"></script>
 
 <!--ckeditor js-->
-{{-- <script src=" {{ env('AWS_URL') }}admin-assets/admin/js/editor/ckeditor/ckeditor.js"></script> --}}
-{{-- <script src=" {{ env('AWS_URL') }}admin-assets/admin/js/editor/ckeditor/ckeditor.custom.js"></script> --}}
+<script src=" {{ env('AWS_URL') }}admin-assets/admin/js/editor/ckeditor/ckeditor.js"></script>
+<script src=" {{ env('AWS_URL') }}admin-assets/admin/js/editor/ckeditor/ckeditor.custom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 

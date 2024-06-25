@@ -165,7 +165,7 @@ class WishlistController extends Controller
                 $item_data['gemstone_price'] = $cartitems->gemstone_price;
                 $item_data['is_band_available'] = $cartitems->is_band_available;
                 $item_data['band_sku'] = empty($cartitems->band_sku)?null:$cartitems->band_sku;
-                $item_data['band_price'] = empty($cartitems->band_price)?null:$cartitems->band_price;
+                $item_data['band_price'] = $cartitems->band_price;
                 if (!is_null($item_data['band_sku']) || !empty($item_data['band_sku'])) {
                     ## if matching set exist then reterive tha details and send them
                     $is_matchingset = ProductModel::where('sku', $item_data['band_sku']);
