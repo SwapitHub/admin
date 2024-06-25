@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\ProductModel;
+use App\Models\ProductPrice;
 use App\Models\Wishlist;
 use Validator;
 
@@ -165,6 +166,18 @@ class WishlistController extends Controller
                 $item_data['is_band_available'] = $cartitems->is_band_available;
                 $item_data['band_sku'] = empty($cartitems->band_sku)?null:$cartitems->band_sku;
                 $item_data['band_price'] = empty($cartitems->band_price)?null:$cartitems->band_price;
+                if (!is_null($item_data['band_sku']) || !empty($item_data['band_sku'])) {
+                    ## if matching set exist then reterive tha details and send them
+                    $is_matchingset = ProductModel::where('sku', $item_data['band_sku']);
+                    if ($is_matchingset->exists()) {
+                        $matching_bands_product = $is_matchingset->first();
+                        $matching_bands_product->price = ProductPrice::where('product_sku', $item_data['band_sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
+
+                        $item_data['matching_wedding_band'] = $matching_bands_product;
+                    } else {
+                        $item_data['matching_wedding_band'] = NULL;
+                    }
+                }
 
                 if (!empty($cartitems->ring_id)) {
                     // fetch ring data here
