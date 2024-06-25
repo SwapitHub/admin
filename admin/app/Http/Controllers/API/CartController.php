@@ -78,6 +78,9 @@ class CartController extends Controller
 			$cart->gemstone_stock_no = $request->gemstone_stock_no;
 			$cart->gemstone_price = $request->gemstone_price;
 			$cart->status = 'true';
+			$cart->is_band_available = isset($request->is_band_available)?$request->is_band_available:'false';
+			$cart->band_sku = $request->band_sku;
+			$cart->band_price = $request->band_price;
 			$cart->save();
 			$output['res'] = 'success';
 			$output['msg'] = 'product added in cart';

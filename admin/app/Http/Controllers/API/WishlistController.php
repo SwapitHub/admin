@@ -71,6 +71,9 @@ class WishlistController extends Controller
             $wishlist->gemstone_stock_no = $request->gemstone_stock_no;
             $wishlist->gemstone_price = $request->gemstone_price;
             $wishlist->status = 'true';
+            $wishlist->is_band_available = isset($request->is_band_available)?$request->is_band_available:'false';
+			$wishlist->band_sku = $request->band_sku;
+			$wishlist->band_price = $request->band_price;
             $wishlist->save();
             $output['res'] = 'success';
             $output['msg'] = 'product added in wishlist';
@@ -159,6 +162,9 @@ class WishlistController extends Controller
                 $item_data['gemstone_id'] = $cartitems->gemstone_id;
                 $item_data['gemstone_stock_no'] = $cartitems->gemstone_stock_no;
                 $item_data['gemstone_price'] = $cartitems->gemstone_price;
+                $item_data['is_band_available'] = $cartitems->is_band_available;
+                $item_data['band_sku'] = $cartitems->band_sku;
+                $item_data['band_price'] = $cartitems->band_price;
 
                 if (!empty($cartitems->ring_id)) {
                     // fetch ring data here
