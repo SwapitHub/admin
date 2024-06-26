@@ -16,7 +16,7 @@ use PhpParser\Node\Stmt\Else_;
 
 class WeddingBandProducts extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $query = ProductModel::where('menu', 2)
             ->where('status', 'true')
