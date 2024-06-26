@@ -81,6 +81,7 @@ class ProductController extends Controller
         $products = ProductModel::query()
             ->join('product_price', 'products.sku', '=', 'product_price.product_sku')
             ->where('products.status', 'true')
+            ->where('products.menu', 7)
             ->whereNull('products.parent_sku')
             ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
             ->where('product_price.metalColor', 'White')
