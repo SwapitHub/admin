@@ -18,7 +18,7 @@ class WishlistController extends Controller
         $rules = [
             'user_id' => 'required|numeric',
             'product_type' => 'required',
-            'ring_id' => 'required_without_all:diamond_id,gemstone_id',
+            // 'ring_id' => 'required_without_all:diamond_id,gemstone_id',
 			// 'ring_type' => 'required_with:ring_id|required_without_all:diamond_id,gemstone_id',
             // 'diamond_id' => 'required_without_all:ring_id,gemstone_id',
             // 'gemstone_id' => 'required_without_all:ring_id,diamond_id',
