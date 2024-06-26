@@ -20,34 +20,69 @@ class WeddingBandProducts extends Controller
     // public function index(Request $request)
     // {
     //     $category_slug = $request->query('category');
-    //     if(!empty($category_slug))
-    //     {
-    //        $cat_id = Category::where('slug',$category_slug)->first()['id'];
-    //     }
     //     $subcategory_slug = $request->query('subcategory');
-    //     if(!empty($category_slug) && !empty($subcategory_slug))
-    //     {
-    //         $subcat_id = Subcategory::where('category_id',$cat_id)->where('slug',$subcategory_slug)->first()['id'];
+
+    //     $cat_id = null;
+    //     $subcat_id = null;
+
+    //     if (!empty($category_slug)) {
+    //         $cat_id = Category::where('slug', $category_slug)->pluck('id')->first();
     //     }
 
+    //     if (!empty($category_slug) && !empty($subcategory_slug)) {
+    //         $subcat_id = Subcategory::where('category_id', $cat_id)
+    //             ->where('slug', $subcategory_slug)
+    //             ->pluck('id')
+    //             ->first();
+    //     }
 
 
     //     $query = ProductModel::where('menu', 2)
     //         ->where('status', 'true')
     //         ->whereNull('parent_sku');
-    //         if(isset($cat_id) && isset($subcat_id))
-    //         {
-    //          $query->where('category',$cat_id)->where('sub_category');
+
+    //     if (isset($cat_id)) {
+    //         $query->where('category', $cat_id);
+    //     }
+
+    //     if (isset($subcat_id)) {
+    //         $query->where('sub_category', $subcat_id);
+    //     }
+
+    //     if (!is_null($request->query('metal_color'))) {
+    //         $metalcolor_id = $request->query('metal_color');
+    //         $query->where('metalColor_id', $metalcolor_id);
+    //     }
+
+
+    //     if (!is_null($request->query('price_range'))) {
+    //         $range = explode(',', $request->query('price_range'));
+    //         $min = $range[0];
+    //         $max = $range[1];
+    //         $query->whereBetween('product_price.price', [$min, $max]);
+    //     }
+
+    //     // Apply sorting based on request
+    //     if (!is_null($request->query('sortby'))) {
+    //         $sortBy = $request->query('sortby');
+
+    //         if ($sortBy == 'Newest') {
+    //             $query->orderBy('created_at', 'desc');
+    //         } elseif ($sortBy == 'best_seller') {
+    //             $query->where('is_bestseller', '1');
     //         }
+    //     }
 
 
-
-    //     $count =  $query->count();
+    //     $count = $query->count();
     //     $productList = $query->paginate(30);
+
     //     $output['count'] = $count;
     //     $output['data'] = $productList;
+
     //     return response()->json($output, 200);
     // }
+
     public function index(Request $request)
     {
         $category_slug = $request->query('category');
@@ -71,12 +106,37 @@ class WeddingBandProducts extends Controller
             ->where('status', 'true')
             ->whereNull('parent_sku');
 
-        if (isset($cat_id)) {
+        if ($cat_id) {
             $query->where('category', $cat_id);
         }
 
-        if (isset($subcat_id)) {
+        if ($subcat_id) {
             $query->where('sub_category', $subcat_id);
+        }
+
+        if ($request->query('metal_color')) {
+            $metalcolor_id = $request->query('metal_color');
+            $query->where('metalColor_id', $metalcolor_id);
+        }
+
+        if ($request->query('price_range')) {
+            $range = explode(',', $request->query('price_range'));
+            if (count($range) == 2) {
+                $min = $range[0];
+                $max = $range[1];
+                $query->whereBetween('product_price.price', [$min, $max]);
+            }
+        }
+
+        // Apply sorting based on request
+        if ($request->query('sortby')) {
+            $sortBy = $request->query('sortby');
+
+            if ($sortBy == 'Newest') {
+                $query->orderBy('created_at', 'desc');
+            } elseif ($sortBy == 'best_seller') {
+                $query->where('is_bestseller', '1');
+            }
         }
 
         $count = $query->count();
