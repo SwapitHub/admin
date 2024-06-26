@@ -83,6 +83,71 @@ class WeddingBandProducts extends Controller
     //     return response()->json($output, 200);
     // }
 
+    // public function index(Request $request)
+    // {
+    //     $category_slug = $request->query('category');
+    //     $subcategory_slug = $request->query('subcategory');
+
+    //     $cat_id = null;
+    //     $subcat_id = null;
+
+    //     if (!empty($category_slug)) {
+    //         $cat_id = Category::where('slug', $category_slug)->pluck('id')->first();
+    //     }
+
+    //     if (!empty($category_slug) && !empty($subcategory_slug)) {
+    //         $subcat_id = Subcategory::where('category_id', $cat_id)
+    //             ->where('slug', $subcategory_slug)
+    //             ->pluck('id')
+    //             ->first();
+    //     }
+
+    //     $query = ProductModel::where('menu', 2)
+    //         ->where('status', 'true')
+    //         ->whereNull('parent_sku');
+
+    //     if ($cat_id) {
+    //         $query->where('category', $cat_id);
+    //     }
+
+    //     if ($subcat_id) {
+    //         $query->where('sub_category', $subcat_id);
+    //     }
+
+    //     if ($request->query('metal_color')) {
+    //         $metalcolor_id = $request->query('metal_color');
+    //         $query->where('metalColor_id', $metalcolor_id);
+    //     }
+
+    //     if ($request->query('price_range')) {
+    //         $range = explode(',', $request->query('price_range'));
+    //         if (count($range) == 2) {
+    //             $min = $range[0];
+    //             $max = $range[1];
+    //             $query->whereBetween('product_price.price', [$min, $max]);
+    //         }
+    //     }
+
+    //     // Apply sorting based on request
+    //     if ($request->query('sortby')) {
+    //         $sortBy = $request->query('sortby');
+
+    //         if ($sortBy == 'Newest') {
+    //             $query->orderBy('created_at', 'desc');
+    //         } elseif ($sortBy == 'best_seller') {
+    //             $query->where('is_bestseller', '1');
+    //         }
+    //     }
+
+    //     $count = $query->count();
+    //     $productList = $query->paginate(30);
+
+    //     $output['count'] = $count;
+    //     $output['data'] = $productList;
+
+    //     return response()->json($output, 200);
+    // }
+
     public function index(Request $request)
     {
         $category_slug = $request->query('category');
@@ -102,21 +167,25 @@ class WeddingBandProducts extends Controller
                 ->first();
         }
 
-        $query = ProductModel::where('menu', 2)
-            ->where('status', 'true')
-            ->whereNull('parent_sku');
+        $query = ProductModel::query()
+            ->leftJoin('product_price', 'products.sku', '=', 'product_price.product_sku')
+            ->where('products.menu', 2)
+            ->where('products.status', 'true')
+            ->whereNull('products.parent_sku')
+            ->select('products.*', DB::raw('IFNULL(product_price.price, 0) as price'));
 
         if ($cat_id) {
-            $query->where('category', $cat_id);
+            $query->where('products.category', $cat_id);
         }
 
         if ($subcat_id) {
-            $query->where('sub_category', $subcat_id);
+            $query->where('products.sub_category', $subcat_id);
         }
 
         if ($request->query('metal_color')) {
             $metalcolor_id = $request->query('metal_color');
-            $query->where('metalColor_id', $metalcolor_id);
+            $query->where('products.metalColor_id', $metalcolor_id)
+                ->orWhereNull('products.metalColor_id'); // Include products without a price entry
         }
 
         if ($request->query('price_range')) {
@@ -124,7 +193,7 @@ class WeddingBandProducts extends Controller
             if (count($range) == 2) {
                 $min = $range[0];
                 $max = $range[1];
-                $query->whereBetween('product_price.price', [$min, $max]);
+                $query->whereBetween(DB::raw('IFNULL(product_price.price, 0)'), [$min, $max]);
             }
         }
 
@@ -133,18 +202,74 @@ class WeddingBandProducts extends Controller
             $sortBy = $request->query('sortby');
 
             if ($sortBy == 'Newest') {
-                $query->orderBy('created_at', 'desc');
+                $query->orderBy('products.created_at', 'desc');
             } elseif ($sortBy == 'best_seller') {
-                $query->where('is_bestseller', '1');
+                $query->where('products.is_bestseller', '1');
             }
         }
+        ####################################
+        $actual_count = $query->count();
+        $productsList = $query->paginate(30);
+        $count = $productsList->count();
 
-        $count = $query->count();
-        $productList = $query->paginate(30);
+        if ($count) {
+            $productList = [];
+            foreach ($productsList as $product) {
+                // $product->name = (!empty($product->product_browse_pg_name)) ? ucfirst(strtolower($product->product_browse_pg_name)) : ucfirst(strtolower($product->name));
+                $product->name = ucfirst(strtolower($product->name));
+                $product->description = ucfirst(strtolower($product->description));
+                $product->images = json_decode($product->images);
+                $product->videos = json_decode($product->videos);
+                $name = strtolower($product->name);
+                $product->name = ucwords($name);
 
-        $output['count'] = $count;
-        $output['data'] = $productList;
+                // Get the prices based on different criteria
+                $product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                    ->where('metalType', '18kt')
+                    ->where('metalColor', 'White')
+                    ->where('diamond_type', 'natural')
+                    ->first()
+                    ->price ?? 0;
 
+                $product->yellow_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                    ->where('metalType', '18kt')
+                    ->where('metalColor', 'Yellow')
+                    ->where('diamond_type', 'natural')
+                    ->first()
+                    ->price ?? 0;
+
+                $product->rose_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                    ->where('metalType', '18kt')
+                    ->where('metalColor', 'Pink')
+                    ->where('diamond_type', 'natural')
+                    ->first()
+                    ->price ?? 0;
+
+                $product->platinum_price = ProductPrice::where('product_sku', $product['sku'])
+                    ->where('metalType', 'Platinum')
+                    ->where('metalColor', 'White')
+                    ->where('diamond_type', 'natural')
+                    ->first()
+                    ->price ?? 0;
+
+                array_push($productList, $product);
+            }
+            // Attach the results to the output
+            $output['count'] = $count;
+            $output['product_count'] = $actual_count;
+            $output['data'] = $productList;
+
+        }
+        else
+        {
+            $output['res'] = 'error';
+            $output['msg'] = 'No product found!';
+            $output['data'] = [];
+            return response()->json($output, 200);
+        }
+
+
+        ####################################
         return response()->json($output, 200);
     }
 }
