@@ -30,7 +30,7 @@
 		Route::get('get-menu/{slug}',[App\Http\Controllers\API\MenuController::class,'getMenuName']);
 		Route::get('rings',[App\Http\Controllers\API\MenuController::class,'rings']);
 		Route::get('products',[App\Http\Controllers\API\ProductController::class,'index']);
-		Route::get('weddingband-products',[App\Http\Controllers\API\WeddingBandProducts::class,'index']);
+		Route::get('weddingband-products/',[App\Http\Controllers\API\WeddingBandProducts::class,'index']);
 		Route::get('product/{entity_id}',[App\Http\Controllers\API\ProductController::class,'productDetails']);
 		Route::get('faq',[App\Http\Controllers\API\FaqController::class,'index']);
 		Route::get('homecontent',[App\Http\Controllers\API\SiteinfoController::class,'homeContent']);
