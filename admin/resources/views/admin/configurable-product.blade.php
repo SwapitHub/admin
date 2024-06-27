@@ -517,7 +517,7 @@
                                     <div class="digital-add needs-validation">
                                         <div class="form-group mb-0">
                                             <div class="description-sm">
-                                                <textarea id="editor1" name="description" cols="10" rows="4">{{ $product->description }}</textarea>
+                                                <textarea name="description" cols="10" rows="4">{{ $product->description }}</textarea>
                                             </div>
                                         </div>
                                     </div>
