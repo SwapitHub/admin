@@ -250,8 +250,17 @@ class UpsShipping
             $response = curl_exec($curl);
             curl_close($curl);
             $result = json_decode($response, true);
+            if (isset($result['Error'])) {
+                $output['res'] = 'error';
+                $output['msg'] = $result['Error']['Message'];
+                $output['data'] = [];
+            }
+            $output['res'] = 'success';
+            $output['msg'] = 'shipping available for this postal code ';
+            $output['data'] = $result;
 
-            var_dump($result);
+            return $output;
+
             // if (isset($result['Success']) && $result['Success'] == false) {
             //     $output['res'] = 'error';
             //     $output['msg'] = 'Please try again , something went wrong';

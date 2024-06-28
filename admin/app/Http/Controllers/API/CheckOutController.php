@@ -239,6 +239,8 @@ class CheckOutController extends Controller
     {
         $shipping = new UpsShipping();
         $response = $shipping->isValidPostalCode($postalcode);
+
+        var_dump($response);
     }
 
     // public function testCharge()
