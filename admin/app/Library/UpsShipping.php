@@ -251,36 +251,21 @@ class UpsShipping
             curl_close($curl);
             $result = json_decode($response, true);
             if (isset($result['Error'])) {
-                $output['res'] = 'error';
-                $output['msg'] = $result['Error']['Message'];
-                $output['data'] = [];
+                // $output['res'] = 'error';
+                // $output['msg'] = $result['Error']['Message'];
+                // $output['data'] = [];
+                echo "a";
             }
             else{
-                $output['res'] = 'success';
-                $output['msg'] = 'shipping available for this postal code ';
-                $output['data'] = $result;
+                // $output['res'] = 'success';
+                // $output['msg'] = 'shipping available for this postal code ';
+                // $output['data'] = $result;
+                echo "d";
 
             }
 
 
-            return $output;
-
-            // if (isset($result['Success']) && $result['Success'] == false) {
-            //     $output['res'] = 'error';
-            //     $output['msg'] = 'Please try again , something went wrong';
-            //     $output['data'] = [];
-            //     $statuscode = 201;
-            // } else if ($result['Code'] == 16) {
-            //     $output['res'] = 'error';
-            //     $output['msg'] = $result['Message'];
-            //     $output['data'] = [];
-            //     $statuscode = 401;
-            // } else {
-            //     $output['res'] = 'success';
-            //     $output['msg'] = 'shipping available for this postal code ';
-            //     $output['data'] = $result;
-            //     $statuscode = 200;
-            // }
+            // return $output;
             // return response()->json($output, $statuscode);
         } catch (\Throwable $e) {
             var_dump($e);
