@@ -250,15 +250,19 @@ class UpsShipping
             $response = curl_exec($curl);
             curl_close($curl);
             $result = json_decode($response, true);
-            if(isset($result['Success']) && $result['Success'] == false)
-            {
-                 echo "TRY again something went wrong";
-            }else
-            {
-                var_dump($result);
+            if (isset($result['Success']) && $result['Success'] == false) {
+                $output['res'] = 'error';
+                $output['msg'] = 'Please try again , something went wrong';
+                $output['data'] = [];
+            } else if ($result['Code'] == 16) {
+                $output['res'] = 'error';
+                $output['msg'] = $result['Message'];
+                $output['data'] = [];
+            } else {
+                $output['res'] = 'success';
+                $output['msg'] = 'shipping available for this postal code ';
+                $output['data'] = $result;
             }
-
-
         } catch (\Throwable $e) {
             var_dump($e);
         }
