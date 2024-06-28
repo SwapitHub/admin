@@ -255,9 +255,13 @@ class UpsShipping
                 $output['msg'] = $result['Error']['Message'];
                 $output['data'] = [];
             }
-            $output['res'] = 'success';
-            $output['msg'] = 'shipping available for this postal code ';
-            $output['data'] = $result;
+            else{
+                $output['res'] = 'success';
+                $output['msg'] = 'shipping available for this postal code ';
+                $output['data'] = $result;
+
+            }
+
 
             return $output;
 
