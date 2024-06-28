@@ -235,6 +235,12 @@ class CheckOutController extends Controller
     }
 
 
+    public function checkValidPosalCode($postalcode)
+    {
+        $shipping = new UpsShipping();
+        $response = $shipping->isValidPostalCode($postalcode);
+    }
+
     // public function testCharge()
     // {
     //     $data['card_token'] = 'clv_1TSTSEktk6bP6YtMu8TR4Con';

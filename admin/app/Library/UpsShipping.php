@@ -149,45 +149,6 @@ class UpsShipping
         return $response_data['QuoteId'];
     }
 
-    // public function createShipping($quoteId)
-    // {
-    //     $output['res'] ='error';
-    //     $output['msg'] ='error'
-    //     ;
-    //     $base_url = $this->baseUrl . 'shipments/' . $quoteId;
-    //     $curl = curl_init();
-    //     $dataPayload = '';
-
-    //     curl_setopt_array($curl, array(
-    //         CURLOPT_URL => $base_url,
-    //         CURLOPT_RETURNTRANSFER => true,
-    //         CURLOPT_ENCODING => '',
-    //         CURLOPT_MAXREDIRS => 10,
-    //         CURLOPT_TIMEOUT => 0,
-    //         CURLOPT_FOLLOWLOCATION => true,
-    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //         CURLOPT_POSTFIELDS => $dataPayload,
-    //         CURLOPT_CUSTOMREQUEST => 'POST',
-    //         CURLOPT_HTTPHEADER => array(
-    //             'Authorization: Bearer ' . $this->token,
-    //             'Content-Type: application/json',
-    //             'Content-Length: ' . strlen($dataPayload)
-    //         ),
-    //     ));
-
-    //     $response = curl_exec($curl);
-
-    //     curl_close($curl);
-    //     $shipment  = json_decode($response,true);
-    //     if(!empty($shipment) || $shipment ==null)
-    //     {
-    //         $output['res'] ='success';
-    //         $output['msg'] ='Shipment created';
-    //         $output['data'] =['TrackingNumber'=>$shipment['TrackingNumber']];
-    //         return $output;
-    //     }
-    // }
-
     public function createShipping($quoteId)
     {
         $output = [
@@ -251,5 +212,31 @@ class UpsShipping
         }
 
         return $output;
+    }
+
+    public function isValidPostalCode($postalCode)
+    {
+        try {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://apibeta.parcelpro.com/v2.0/validate/postal-code/' . $postalCode,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    'Authorization: Bearer ' . $this->token
+                ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            echo $response;
+        } catch (\Throwable $e) {
+            var_dump($e);
+        }
     }
 }

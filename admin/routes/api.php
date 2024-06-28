@@ -64,6 +64,7 @@
 		Route::any('tokenize-card',[App\Http\Controllers\API\CheckOutController::class,'tokenizeCard']);
 		Route::post('create-charge',[App\Http\Controllers\API\CheckOutController::class,'testCharge']);
 		Route::get('widget/{name}',[App\Http\Controllers\API\PageController::class,'widgetCallByName']);
+		Route::get('check-postal-code/{code}',[App\Http\Controllers\API\CheckOutController::class,'checkValidPosalCode']);
 
 	});
 
