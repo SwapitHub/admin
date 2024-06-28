@@ -22,6 +22,35 @@ class UpsShipping
     }
 
     ## get the barrer token after authorizaion
+    // public function authorization()
+    // {
+    //     try {
+    //         $auth_url = $this->baseUrl . "auth";
+    //         $curl = curl_init();
+    //         curl_setopt_array($curl, array(
+    //             CURLOPT_URL => $auth_url,
+    //             CURLOPT_RETURNTRANSFER => true,
+    //             CURLOPT_ENCODING => '',
+    //             CURLOPT_MAXREDIRS => 10,
+    //             CURLOPT_TIMEOUT => 0,
+    //             CURLOPT_FOLLOWLOCATION => true,
+    //             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //             CURLOPT_CUSTOMREQUEST => 'POST',
+    //             CURLOPT_POSTFIELDS => 'password=' . $this->password . '&grant_type=password&username=' . $this->username,
+    //             CURLOPT_HTTPHEADER => array(
+    //                 'Content-Type: application/x-www-form-urlencoded'
+    //             ),
+    //         ));
+
+    //         $response = curl_exec($curl);
+    //         curl_close($curl);
+    //         $result =  json_decode($response, true);
+    //         ## return barrer token
+    //         return $result['access_token'];
+    //     } catch (\Throwable $e) {
+    //         var_dump($e);
+    //     }
+    // }
     public function authorization()
     {
         try {
@@ -36,21 +65,36 @@ class UpsShipping
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => 'password=' . $this->password . '&grant_type=password&username=' . $this->username,
+                CURLOPT_POSTFIELDS => http_build_query([
+                    'password' => $this->password,
+                    'grant_type' => 'password',
+                    'username' => $this->username
+                ]),
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/x-www-form-urlencoded'
                 ),
             ));
 
             $response = curl_exec($curl);
+            if ($response === false) {
+                throw new Exception('Curl error: ' . curl_error($curl));
+            }
             curl_close($curl);
-            $result =  json_decode($response, true);
-            ## return barrer token
-            return $result['access_token'];
+
+            $result = json_decode($response, true);
+            if (isset($result['access_token'])) {
+                return $result['access_token'];
+            } else {
+                throw new Exception('Authorization failed: ' . $response);
+            }
         } catch (\Throwable $e) {
-            var_dump($e);
+            // Handle the exception and log the error
+            error_log($e->getMessage());
+            // Optionally, you can return a specific message or code
+            return null;
         }
     }
+
 
     public function createQuote($payload)
     {
