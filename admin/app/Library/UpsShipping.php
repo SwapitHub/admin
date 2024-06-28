@@ -250,7 +250,7 @@ class UpsShipping
             $response = curl_exec($curl);
             curl_close($curl);
             $result = json_decode($response, true);
-            if(isset($result['result']) && $result['result'] == false)
+            if(isset($result['Success']) && $result['Success'] == false)
             {
                  echo "TRY again something went wrong";
             }else
