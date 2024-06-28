@@ -236,7 +236,8 @@ class UpsShipping
             curl_close($curl);
             echo $response;
         } catch (\Throwable $e) {
-            var_dump($e);
+            // var_dump($e);
+            echo "EXCEPTION";
         }
     }
 }
