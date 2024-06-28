@@ -249,7 +249,7 @@ class UpsShipping
             ));
             $response = curl_exec($curl);
             curl_close($curl);
-            echo $response;
+            // echo $response;
             $result = json_decode($response, true);
             if (isset($result['Code']) && $result['Code'] == 16) {
                 $output['res'] = 'error';
@@ -271,9 +271,6 @@ class UpsShipping
             $output['msg'] = 'shipment available for this postal code.';
             $output['data'] = $result;
             return $output;
-
-
-            var_dump($output);
         } catch (\Throwable $e) {
             var_dump($e);
         }
