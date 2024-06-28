@@ -68,10 +68,12 @@
                                 <table class="table all-package table-hover" id="editableTable">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Order Id / Date / Statue</th>
+                                            <th>Order Id </th>
+                                            <th>Order Date </th>
+                                            <th>Order Status </th>
+                                            <th>Custome Name</th>
+                                            <th>Custome Email</th>
                                             <th>Grand Total / Paymemt Method</th>
-                                            <th>Custome / Email </th>
                                             <th>Product</th>
                                             <th>Option</th>
                                         </tr>
@@ -84,19 +86,25 @@
                                                 $redirect_url = route('sale.orders.detail', ['id' => $order->id]);
                                             @endphp
                                             <tr onclick=window.location="{{ $redirect_url }}">
-                                                <td>{{ $index + 1 }}</td>
                                                 <td class="text-start">
-                                                    #{{ $order->order_id }}
-                                                    <br> <span>{{ $order->created_at }}</span> <span
-                                                        class="badge badge-{{ $order->status == 'SUCCESS' ? 'success' : 'primary' }}">{{ $order->status }}</span>
+                                                    {{ $order->order_id }}
                                                 </td>
-                                                <td data-field="number">$
-                                                    {{ $order->amount }} / {{ $order->method }}
+                                                <td class="text-start">
+                                                    {{ $order->created_at }}
+                                                </td>
+                                                <td class="text-start">
+                                                    <span
+                                                    class="badge badge-{{ $order->status == 'SUCCESS' ? 'success' : 'primary' }}">{{ $order->status }}</span>
+                                                </td>
+                                                <td class="text-start">
+                                                    {{ $order->first_name }} {{ $order->last_name }}</span>
+                                                </td>
+                                                <td class="text-start">
+                                                    {{ $order->email }}
                                                 </td>
 
-                                                <td data-field="date">
-                                                    <span>{{ $order->first_name }} {{ $order->last_name }}</span> <br>
-                                                    <span>{{ $order->email }}</span>
+                                                <td data-field="number">$
+                                                    {{ $order->amount }} / {{ $order->method }}
                                                 </td>
                                                 <td class="d-flex">
                                                     @foreach ($orderItem as $orderItem)

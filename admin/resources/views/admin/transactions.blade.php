@@ -76,7 +76,6 @@
                             <table class="table trans-table all-package">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
                                         <th>Order Id</th>
                                         <th>Transaction Id</th>
                                         <th>Reference No.</th>
@@ -90,10 +89,9 @@
                                 <tbody>
                                     @foreach ($transactions as $index=>$transaction)
                                     <tr>
-                                        <td>{{ $index+1 }}</td>
-                                        <td><a href="{{ route('sale.orders.detail',['id'=>$transaction->order_id]) }}" style="text-decoration:underline;color:blue !important">#{{ $transaction->order_id }}</a></td>
+                                        <td><a href="{{ route('sale.orders.detail',['id'=>$transaction->order_id]) }}" style="text-decoration:underline;color:blue !important">{{ $transaction->order_id }}</a></td>
 
-                                        <td>#{{ $transaction->transaction_id }}</td>
+                                        <td>{{ $transaction->transaction_id }}</td>
                                         <td>{{ is_null($transaction->ref_num) || empty($transaction->ref_num)?"NA":$transaction->ref_num }}</td>
 
                                         <td>{{ date('M d, Y', strtotime($transaction->created_at)) }}</td>

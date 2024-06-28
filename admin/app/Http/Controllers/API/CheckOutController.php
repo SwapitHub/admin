@@ -117,6 +117,7 @@ class CheckOutController extends Controller
             $order->method = "CARD PAYMENT";
             $order->address = $request->address;
             $order->status = 'PROCESSING';
+            $order->order_status = 1;
             if ($order->save()) {
                 $orderItme = new OrderItem();
                 $order_data = json_decode($request->order_data);

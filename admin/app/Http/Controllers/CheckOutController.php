@@ -9,13 +9,14 @@ class CheckOutController extends Controller
 {
     private function generateOrderID($length = 8)
     {
-        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        // $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $characters = '0123456789';
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-        return 'ORDER_' . date('YmdHis') . '_' . $randomString;
+        return 'WEB-' . date('Y') . '-' . $randomString;
     }
 
      //first make order and then make transaction and update order status in order
@@ -51,7 +52,7 @@ class CheckOutController extends Controller
             //  $output['res'] = 'success';
             //  $output['msg'] = 'success';
              return response()->json($this->generateOrderID(), 200);
- 
+
          }
      }
 }
