@@ -250,7 +250,15 @@ class UpsShipping
             $response = curl_exec($curl);
             curl_close($curl);
             $result = json_decode($response, true);
-            var_dump($result);
+            if(isset($result['result']) && $result['result'] == false)
+            {
+                 echo "TRY again something went wrong";
+            }else
+            {
+                var_dump($result);
+            }
+
+
         } catch (\Throwable $e) {
             var_dump($e);
         }
