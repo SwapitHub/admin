@@ -74,13 +74,6 @@ class CheckOutController extends Controller
 
     private function generateOrderID($length = 3)
     {
-        // $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        // $charactersLength = strlen($characters);
-        // $randomString = '';
-        // for ($i = 0; $i < $length; $i++) {
-        //     $randomString .= $characters[rand(0, $charactersLength - 1)];
-        // }
-        // return 'ORDER_' . date('YmdHis') . '_' . $randomString;
         $characters = '0123456789';
         $charactersLength = strlen($characters);
         $randomString = '';

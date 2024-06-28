@@ -50,10 +50,15 @@
                                 </div>
                                 <div class="form-group">
                                     <select name="orderStatus" class="form-control">
-                                        <option value="All" {{ request('orderStatus') == 'All' ? 'selected' : '' }}>All</option>
-                                        <option value="Success" {{ request('orderStatus') == 'Success' ? 'selected' : '' }}>Success</option>
-                                        <option value="Processing" {{ request('orderStatus') == 'Processing' ? 'selected' : '' }}>Processing</option>
-                                        <option value="Cancel" {{ request('orderStatus') == 'Cancel' ? 'selected' : '' }}>Cancel</option>
+                                        <option value="All" {{ request('orderStatus') == 'All' ? 'selected' : '' }}>All
+                                        </option>
+                                        <option value="Success" {{ request('orderStatus') == 'Success' ? 'selected' : '' }}>
+                                            Success</option>
+                                        <option value="Processing"
+                                            {{ request('orderStatus') == 'Processing' ? 'selected' : '' }}>Processing
+                                        </option>
+                                        <option value="Cancel" {{ request('orderStatus') == 'Cancel' ? 'selected' : '' }}>
+                                            Cancel</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -61,7 +66,7 @@
                                 </div>
                             </form>
                             &ensp;
-                                <a href="{{ route('sale.orders.export') }}" class="btn btn-outline-success mb-3">Export </a>
+                            <a href="{{ route('sale.orders.export') }}" class="btn btn-outline-success mb-3">Export </a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-desi ">
@@ -93,8 +98,29 @@
                                                     {{ $order->created_at }}
                                                 </td>
                                                 <td class="text-start">
+                                                    <?php
+                                                    if ($order->name == 'Processing') {
+                                                        $color = 'secondary';
+                                                    }
+                                                    else if($order->name =='Complete')
+                                                    {
+                                                        $color ='success';
+                                                    }
+                                                    elseif($order->name =='Failed')
+                                                    {
+                                                        $color ='warning';
+                                                    }
+                                                    elseif($order->name ='Refunded')
+                                                    {
+                                                        $color ='primary';
+                                                    }
+                                                    else {
+                                                        $color ='primary';
+                                                    }
+                                                    ?>
+
                                                     <span
-                                                    class="badge badge-{{ $order->status == 'SUCCESS' ? 'success' : 'primary' }}">{{ $order->status }}</span>
+                                                        class="badge badge-{{ $color }}">{{ $order->name }}</span>
                                                 </td>
                                                 <td class="text-start">
                                                     {{ $order->first_name }} {{ $order->last_name }}</span>
@@ -115,12 +141,12 @@
                                                         $gemstoneImage = null;
                                                         if (!empty($products->ring_id) && !empty($products->diamond_id)) {
                                                             $ringImage = getProductImages($products->ring_id, $products->ring_color);
-                                                            $diamondImage = getDiamondImages($products->diamond_id,$products->diamond_type);
+                                                            $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
                                                         } elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
                                                             $ringImage = getProductImages($products->ring_id, $products->ring_color);
                                                             $gemstoneImage = getGemStoneImages($products->gemstone_id);
                                                         } elseif (!empty($products->diamond_id)) {
-                                                            $diamondImage = getDiamondImages($products->diamond_id,$products->diamond_type);
+                                                            $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
                                                         } elseif (!empty($products->gemstone_id)) {
                                                             $gemstoneImage = getGemStoneImages($products->gemstone_id);
                                                         }

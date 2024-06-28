@@ -78,6 +78,7 @@ class CartController extends Controller
 			$cart->gemstone_id = $request->gemstone_id;
 			$cart->gemstone_stock_no = $request->gemstone_stock_no;
 			$cart->gemstone_price = $request->gemstone_price;
+			$cart->product_type = $request->product_type;
 			$cart->status = 'true';
 			$cart->is_band_available = isset($request->is_band_available)?$request->is_band_available:'false';
 			$cart->band_sku = $request->band_sku;
@@ -115,6 +116,7 @@ class CartController extends Controller
 			foreach ($cart as $cartitems) {
 				$item_data = [];
 				$item_data['id'] = $cartitems->id;
+				$item_data['product_type'] = $cartitems->product_type;
 				$item_data['user_id'] = $cartitems->user_id;
 				$item_data['ring_id'] = $cartitems->ring_id;
 				$item_data['ring_size'] = $cartitems->ring_size;

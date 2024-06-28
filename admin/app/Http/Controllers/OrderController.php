@@ -140,7 +140,8 @@ class OrderController extends Controller
         // Start building the query
         $query = DB::table('orders')
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->select('users.first_name', 'users.last_name', 'users.email', 'orders.*')
+            ->join('order_status', 'orders.order_status', '=', 'order_status.id')
+            ->select('users.first_name', 'users.last_name', 'users.email','order_status.name','orders.*')
             ->orderBy('orders.id', 'desc');
 
         // Add filter for order status if provided
