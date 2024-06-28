@@ -249,24 +249,31 @@ class UpsShipping
             ));
             $response = curl_exec($curl);
             curl_close($curl);
+            echo $response;
             $result = json_decode($response, true);
-            if (isset($result['Error'])) {
-                // $output['res'] = 'error';
-                // $output['msg'] = $result['Error']['Message'];
-                // $output['data'] = [];
-                echo "a";
-            }
-            else{
-                // $output['res'] = 'success';
-                // $output['msg'] = 'shipping available for this postal code ';
-                // $output['data'] = $result;
-                echo "d";
+            if (isset($result['Code']) && $result['Code'] == 16) {
+                $output['res'] = 'error';
+                $output['msg'] = $result['Message'];
+                $output['data'] = [];
 
+                return $output;
             }
 
+            if(isset($result['Error']))
+            {
+                $output['res'] = 'error';
+                $output['msg'] = 'Something went wrong please try again';
+                $output['data'] = [];
+                return $output;
+            }
 
-            // return $output;
-            // return response()->json($output, $statuscode);
+            $output['res'] = 'success';
+            $output['msg'] = 'shipment available for this postal code.';
+            $output['data'] = $result;
+            return $output;
+
+
+            var_dump($output);
         } catch (\Throwable $e) {
             var_dump($e);
         }
