@@ -79,6 +79,7 @@
                                             <th>Custome Name</th>
                                             <th>Custome Email</th>
                                             <th>Grand Total / Paymemt Method</th>
+                                            <th>Tracking No.</th>
                                             <th>Product</th>
                                             <th>Option</th>
                                         </tr>
@@ -131,6 +132,9 @@
 
                                                 <td data-field="number">$
                                                     {{ $order->amount }} / {{ $order->method }}
+                                                </td>
+                                                <td data-field="number">
+                                                    {{ !empty($order->tracking_no)?$order->tracking_no:'N/A'; }}
                                                 </td>
                                                 <td class="d-flex">
                                                     @foreach ($orderItem as $orderItem)

@@ -39,7 +39,7 @@
                             <table class="table trans-table all-package">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
+
                                         <th>Order Id</th>
                                         <th>Amount</th>
                                         <th>Invoice Date</th>
@@ -50,7 +50,7 @@
                                 <tbody>
                                     @foreach ($invoices as $index=>$invoice)
                                     <tr>
-                                        <td>{{ $index+1 }}</td>
+
                                         <td>{{ $invoice->order_id }}</td>
                                         <td>${{ $invoice->amount }}</td>
                                         <td>{{ $invoice->created_at }}</td>
