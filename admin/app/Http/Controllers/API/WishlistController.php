@@ -191,7 +191,8 @@ class WishlistController extends Controller
                 if (!empty($cartitems->diamond_id) && !empty($cartitems->diamond_type)) {
                     // fetch diamond data here
                     $diamond_data = '';
-                    $encodedDiamondId = urlencode($cartitems->diamond_id);
+                    $encodedDiamondId = $cartitems->diamond_id;
+                    // $encodedDiamondId = urlencode($cartitems->diamond_id);
                     $url = "https://apiservices.vdbapp.com/v2/diamonds?type=$cartitems->diamond_type&stock_num=$encodedDiamondId";
                     $curl = curl_init();
 
