@@ -9,6 +9,7 @@ use App\Models\Subcategory;
 use App\Models\DiamondShape;
 use App\Models\ProductPrice;
 use App\Models\CenterStone;
+use App\Models\Menu;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
@@ -462,5 +463,34 @@ class ProductController extends Controller
             }
         }
         return $products;
+    }
+
+    ## coveted Products
+    public function covetedProducts($menu_name)
+    {
+        $output['res'] = 'success';
+        $output['msg'] = 'data retrieved successfully';
+        if($menu_name =='engagement-rings')
+        {
+            $menu = 7;
+            $query = ProductModel::where('menu', $menu)
+                                  ->where('status', 'true')
+                                  ->orwhere('is_newest', 1)
+                                  ->orwhere('is_bestseller', 1)
+                                  ->limit(5)
+                                  ->get();
+        }
+        else
+        {
+            $menu = 2;
+            $query = ProductModel::where('menu', $menu)
+                                  ->where('status', 'true')
+                                  ->where('is_newest', 1)
+                                  ->orwhere('is_bestseller', 1)
+                                  ->limit(5)
+                                  ->get();
+        }
+        $output['data'] = $query;
+        return response()->json($output, 200);
     }
 }
