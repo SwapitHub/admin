@@ -316,7 +316,25 @@ class ProductController extends Controller
                 $slug = $product->slug;
             }
         }
-        $centerstones = implode(',', $request->center_stone);
+        if ($request->is_newest) {
+            $is_newest = $request->is_newest;
+        } else {
+            $is_newest = '0';
+        }
+        if ($request->is_bestseller) {
+            $is_bestseller = $request->is_bestseller;
+        } else {
+            $is_bestseller = '0';
+        }
+        if($request->center_stone)
+        {
+            $centerstones = implode(',', $request->center_stone);
+        }
+        else
+        {
+            $centerstones = '';
+        }
+
         $product->name = $request->name;
         $product->product_browse_pg_name = $request->product_browse_pg_name;
         $product->menu = $request->menu;
@@ -341,6 +359,8 @@ class ProductController extends Controller
         $product->meta_title = $request->meta_title;
         $product->meta_keyword = $request->meta_keyword;
         $product->meta_description = $request->meta_description;
+        $product->is_bestseller = $is_bestseller;
+        $product->is_newest = $is_newest;
         if ($product->save()) {
             ## check if product variation exist then update them also
             $query = ProductModel::orderBy('id', 'asc')->where('status', 'true')->where('parent_sku', $product['sku']);
