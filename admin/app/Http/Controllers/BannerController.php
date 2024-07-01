@@ -85,6 +85,7 @@
 		public function editBanner($id)
 		{
 			$bannerdata = Banner::find($id);
+            $data['pages'] = Cmscategory::where('status','true')->get();
 			$data['bannerdata'] = $bannerdata;
 			return view('admin.editbanner', $data);
 		}
