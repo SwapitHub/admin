@@ -35,11 +35,27 @@ class AdminController extends Controller
         $this->users = User::count();
         $this->orders = OrderModel::count();
         $this->trnsactions = TransactionModel::count();
+        $this->transactions = TransactionModel::latest()->take(5)->get();
         $this->latest_order = OrderModel::latest()->take(5)->get();
         $this->dailysales = $this->getTodayTransactions();
         $this->monthlysales = $this->getMonthlyTransactions();
+        $this->averageBasket = $this->averageBasketYTD();
     }
 
+    ## average Basket YTD
+    public function averageBasketYTD()
+    {
+        // Define the start of the year
+        $startOfYear = Carbon::now()->startOfYear();
+
+        // Calculate the total value and count of orders since the start of the year
+        $totalValue = OrderModel::where('created_at', '>=', $startOfYear)->sum('amount'); // Adjust the 'total' field as per your application
+        $orderCount = OrderModel::where('created_at', '>=', $startOfYear)->count();
+
+        // Calculate the average basket value
+        return $averageBasket = $orderCount > 0 ? $totalValue / $orderCount : 0;
+
+    }
     ## get daily sales
     public function getTodayTransactions()
     {
@@ -74,6 +90,8 @@ class AdminController extends Controller
             'latest_orders' => $this->latest_order,
             'dalysales' => $this->dailysales,
             'monthlysales' =>  $this->monthlysales,
+            'averageBasket' =>  $this->averageBasket,
+            'transactions' =>   $this->transactions
         ];
         return view('admin.dashboard', $data);
     }

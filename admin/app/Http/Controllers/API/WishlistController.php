@@ -19,7 +19,7 @@ class WishlistController extends Controller
             'user_id' => 'required|numeric',
             'product_type' => 'required',
             // 'ring_id' => 'required_without_all:diamond_id,gemstone_id',
-			// 'ring_type' => 'required_with:ring_id|required_without_all:diamond_id,gemstone_id',
+            // 'ring_type' => 'required_with:ring_id|required_without_all:diamond_id,gemstone_id',
             // 'diamond_id' => 'required_without_all:ring_id,gemstone_id',
             // 'gemstone_id' => 'required_without_all:ring_id,diamond_id',
             // 'ring_color' => 'required_with:ring_id',
@@ -34,7 +34,7 @@ class WishlistController extends Controller
             // 'product_type.required' => 'Product type id is required.',
             // 'ring_id.required_without_all' => 'Ring id is required if no diamond id or gemstone id is provided.',
             // 'diamond_id.required_without_all' => 'Diamond id is required if no ring id or gemstone id is provided.',
-			// 'ring_type.required_without_all' => 'Ring id is required',
+            // 'ring_type.required_without_all' => 'Ring id is required',
             // 'gemstone_id.required_without_all' => 'Gemstone id is required if no ring id or diamond id is provided.',
             // 'ring_color.required_with' => 'Ring color is required when ring id is provided.',
             // 'img_sku.required_with' => 'Image SKU is required when ring id is provided.',
@@ -48,9 +48,7 @@ class WishlistController extends Controller
             $output['res'] = 'error';
             $output['msg'] = $errors;
             return response()->json($output, 401);
-        }
-        else
-        {
+        } else {
             $wishlist = new Wishlist;
             $wishlist->product_type = $request->product_type;
             $wishlist->user_id = $request->user_id;
@@ -59,7 +57,7 @@ class WishlistController extends Controller
             $wishlist->ring_type = $request->ring_type;
             $wishlist->ring_color = $request->ring_color;
             $wishlist->engraving = $request->engraving;
-			$wishlist->font = $request->font;
+            $wishlist->font = $request->font;
             $wishlist->ring_price = $request->ring_price;
             $wishlist->ring_carat = $request->ring_carat;
             $wishlist->img_sku = $request->img_sku;
@@ -72,9 +70,9 @@ class WishlistController extends Controller
             $wishlist->gemstone_stock_no = $request->gemstone_stock_no;
             $wishlist->gemstone_price = $request->gemstone_price;
             $wishlist->status = 'true';
-            $wishlist->is_band_available = isset($request->is_band_available)?$request->is_band_available:'false';
-			$wishlist->band_sku = $request->band_sku;
-			$wishlist->band_price = $request->band_price;
+            $wishlist->is_band_available = isset($request->is_band_available) ? $request->is_band_available : 'false';
+            $wishlist->band_sku = $request->band_sku;
+            $wishlist->band_price = $request->band_price;
             $wishlist->save();
             $output['res'] = 'success';
             $output['msg'] = 'product added in wishlist';
@@ -82,42 +80,6 @@ class WishlistController extends Controller
             return response()->json($output, 200);
         }
     }
-
-    // public function getWishlistItem(Request $request)
-    // {
-    //     $rules = [
-    //         'user_id' => 'required',
-    //     ];
-    //     $messages = [
-    //         'user_id.required' => 'User id is required.',
-
-    //     ];
-    //     $validator = Validator::make($request->all(), $rules, $messages);
-    //     if ($validator->fails()) {
-    //         $errors = $validator->errors()->all();
-    //         $output['res'] = 'error';
-    //         $output['msg'] = $errors;
-    //         return response()->json($output, 401);
-    //     }
-    //     $wishlist = Wishlist::orderBy('id','desc')->count();
-    //     if($wishlist)
-    //     {
-    //         $output['res'] = 'success';
-    //         $output['msg'] = 'Wishlist are..';
-    //         $output['data'] = Wishlist::orderBy('id','desc')->get();
-    //         return response()->json($output, 200);
-    //     }else
-    //     {
-    //         $output['res'] = 'error';
-    //         $output['msg'] = 'Item not fond.';
-    //         $output['data'] = [];
-    //         return response()->json($output, 200);
-    //     }
-
-
-    // }
-
-
 
     public function getWishlistItem(Request $request)
     {
@@ -134,13 +96,12 @@ class WishlistController extends Controller
             $output['res'] = 'error';
             $output['msg'] = $errors;
             return response()->json($output, 401);
-        }else{
+        } else {
             $output['res'] = 'success';
             $output['msg'] = 'Wishlist are ...';
-            // return response()->json($output, 401);
-          $cart = Wishlist::orderBy('id','desc')->where('user_id',$request->user_id)->where('status','true')->get();
+            $cart = Wishlist::orderBy('id', 'desc')->where('user_id', $request->user_id)->where('status', 'true')->get();
 
-          $cart_collection = [];
+            $cart_collection = [];
             foreach ($cart as $cartitems) {
                 $item_data = [];
                 $item_data['id'] = $cartitems->id;
@@ -164,8 +125,9 @@ class WishlistController extends Controller
                 $item_data['gemstone_stock_no'] = $cartitems->gemstone_stock_no;
                 $item_data['gemstone_price'] = $cartitems->gemstone_price;
                 $item_data['is_band_available'] = $cartitems->is_band_available;
-                $item_data['band_sku'] = empty($cartitems->band_sku)?null:$cartitems->band_sku;
+                $item_data['band_sku'] = empty($cartitems->band_sku) ? null : $cartitems->band_sku;
                 $item_data['band_price'] = $cartitems->band_price;
+
                 if (!is_null($item_data['band_sku']) || !empty($item_data['band_sku'])) {
                     ## if matching set exist then reterive tha details and send them
                     $is_matchingset = ProductModel::where('sku', $item_data['band_sku']);
@@ -183,8 +145,7 @@ class WishlistController extends Controller
                     // fetch ring data here
                     $ring_data = ProductModel::where('id', $cartitems->ring_id)->first();
                     $item_data['ring'] = $ring_data;
-                }else
-                {
+                } else {
                     $item_data['ring'] = [];
                 }
 
@@ -197,17 +158,17 @@ class WishlistController extends Controller
                     $curl = curl_init();
 
                     curl_setopt_array($curl, array(
-                    CURLOPT_URL => $url,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'GET',
-                    CURLOPT_HTTPHEADER => array(
-                        'Authorization: Token token=iltz_Ie1tN0qm-ANqF7X6SRjwyhmMtzZsmqvyWOZ83I, api_key=_eTAh9su9_0cnehpDpqM9xA'
-                    ),
+                        CURLOPT_URL => $url,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'GET',
+                        CURLOPT_HTTPHEADER => array(
+                            'Authorization: Token token=iltz_Ie1tN0qm-ANqF7X6SRjwyhmMtzZsmqvyWOZ83I, api_key=_eTAh9su9_0cnehpDpqM9xA'
+                        ),
                     ));
 
                     $response = curl_exec($curl);
@@ -232,8 +193,7 @@ class WishlistController extends Controller
                     // $diamond_data = $resp->response->body->diamonds;
                     // $item_data['diamond'] = $diamond_data;
 
-                }else
-                {
+                } else {
                     $item_data['diamond'] = [];
                 }
 
@@ -244,26 +204,24 @@ class WishlistController extends Controller
                     $curl = curl_init();
 
                     curl_setopt_array($curl, array(
-                    CURLOPT_URL => $url,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'GET',
-                    CURLOPT_HTTPHEADER => array(
-                        'Authorization: Token token=iltz_Ie1tN0qm-ANqF7X6SRjwyhmMtzZsmqvyWOZ83I, api_key=_eTAh9su9_0cnehpDpqM9xA'
-                    ),
+                        CURLOPT_URL => $url,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'GET',
+                        CURLOPT_HTTPHEADER => array(
+                            'Authorization: Token token=iltz_Ie1tN0qm-ANqF7X6SRjwyhmMtzZsmqvyWOZ83I, api_key=_eTAh9su9_0cnehpDpqM9xA'
+                        ),
                     ));
                     $response = curl_exec($curl);
                     curl_close($curl);
                     $resp = json_decode($response);
                     $gemstone_data = $resp->response->body->gemstones;
                     $item_data['gemstone'] = $gemstone_data;
-                }
-                else
-                {
+                } else {
                     $item_data['gemstone'] = [];
                 }
                 $cart_collection[] = $item_data;
@@ -271,36 +229,30 @@ class WishlistController extends Controller
 
             $output['data'] = $cart_collection;
             return response()->json($output, 200);
-
         }
     }
 
     public function deleteItem($id)
     {
         $obj = Wishlist::find($id);
-        if($obj)
-        {
+        if ($obj) {
             $Item = $obj->delete();
-            if($Item)
-            {
-                    $output['res'] = 'success';
-                    $output['msg'] = 'Item removed from wishlist';
-                    $output['data'] = '';
-                    return response()->json($output, 200);
-            }else
-            {
-                    $output['res'] = 'error';
-                    $output['msg'] = 'something went wrong while deleting';
-                    $output['data'] = '';
-                    return response()->json($output, 201);
-            }
-        }
-        else
-        {
+            if ($Item) {
+                $output['res'] = 'success';
+                $output['msg'] = 'Item removed from wishlist';
+                $output['data'] = '';
+                return response()->json($output, 200);
+            } else {
                 $output['res'] = 'error';
-                $output['msg'] = 'Item not available for this ID.';
+                $output['msg'] = 'something went wrong while deleting';
                 $output['data'] = '';
                 return response()->json($output, 201);
+            }
+        } else {
+            $output['res'] = 'error';
+            $output['msg'] = 'Item not available for this ID.';
+            $output['data'] = '';
+            return response()->json($output, 201);
         }
     }
 
@@ -310,7 +262,7 @@ class WishlistController extends Controller
         $rules = [
             'user_id' => 'required',
             'product_type' => 'required',
-            'product_id'=>'required'
+            'product_id' => 'required'
 
         ];
         $messages = [
@@ -325,15 +277,13 @@ class WishlistController extends Controller
             $output['res'] = 'error';
             $output['msg'] = $errors;
             return response()->json($output, 401);
-        }else
-        {
+        } else {
             $action = $request->product_type;
-            switch($action)
-            {
+            switch ($action) {
                 case "ring":
-                   $wishlistExists =  Wishlist::where('user_id',$request->user_id)
-                            ->where('ring_id',$request->product_id)
-                            ->exists();
+                    $wishlistExists =  Wishlist::where('user_id', $request->user_id)
+                        ->where('ring_id', $request->product_id)
+                        ->exists();
 
                     if ($wishlistExists) {
                         $wishlistItemId = Wishlist::where('user_id', $request->user_id)
@@ -343,11 +293,11 @@ class WishlistController extends Controller
                     } else {
                         return null;
                     }
-                break;
+                    break;
                 case "gemstone":
-                    $wishlistExists =  Wishlist::where('user_id',$request->user_id)
-                    ->where('gemstone_id',$request->product_id)
-                    ->exists();
+                    $wishlistExists =  Wishlist::where('user_id', $request->user_id)
+                        ->where('gemstone_id', $request->product_id)
+                        ->exists();
                     if ($wishlistExists) {
                         $wishlistItemId = Wishlist::where('user_id', $request->user_id)
                             ->where('gemstone_id', $request->product_id)
@@ -356,11 +306,11 @@ class WishlistController extends Controller
                     } else {
                         return null;
                     }
-                break;
+                    break;
                 case "diamond":
-                    $wishlistExists =  Wishlist::where('user_id',$request->user_id)
-                    ->where('diamond_id',$request->product_id)
-                    ->exists();
+                    $wishlistExists =  Wishlist::where('user_id', $request->user_id)
+                        ->where('diamond_id', $request->product_id)
+                        ->exists();
                     if ($wishlistExists) {
                         $wishlistItemId = Wishlist::where('user_id', $request->user_id)
                             ->where('gemstone_id', $request->product_id)
@@ -369,7 +319,7 @@ class WishlistController extends Controller
                     } else {
                         return null;
                     }
-                break;
+                    break;
             }
         }
     }

@@ -107,12 +107,24 @@ class OrderController extends Controller
     }
     ################ order status secion
 
+    private function generateInvoiceID($length = 4)
+    {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return 'INV-' . date('Y') . '-' . $randomString;
+    }
+
     ##create invoice
     public function makeInvoice($order_id)
     {
         $orderData = OrderModel::where('order_id', $order_id)->first();
         if ($orderData) {
             $invoice = new InvoiceModel();
+            $invoice->invoice_id = $this->generateInvoiceID();
             $invoice->order_id = $orderData->order_id;
             $invoice->amount = $orderData->amount;
             $invoice->status = 'true';

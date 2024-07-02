@@ -102,21 +102,14 @@
                                                     <?php
                                                     if ($order->name == 'Processing') {
                                                         $color = 'secondary';
-                                                    }
-                                                    else if($order->name =='Complete')
-                                                    {
-                                                        $color ='success';
-                                                    }
-                                                    elseif($order->name =='Failed')
-                                                    {
-                                                        $color ='warning';
-                                                    }
-                                                    elseif($order->name ='Refunded')
-                                                    {
-                                                        $color ='primary';
-                                                    }
-                                                    else {
-                                                        $color ='primary';
+                                                    } elseif ($order->name == 'Complete') {
+                                                        $color = 'success';
+                                                    } elseif ($order->name == 'Failed') {
+                                                        $color = 'warning';
+                                                    } elseif ($order->name = 'Refunded') {
+                                                        $color = 'primary';
+                                                    } else {
+                                                        $color = 'primary';
                                                     }
                                                     ?>
 
@@ -134,28 +127,62 @@
                                                     {{ $order->amount }} / {{ $order->method }}
                                                 </td>
                                                 <td data-field="number">
-                                                    {{ !empty($order->tracking_no)?$order->tracking_no:'N/A'; }}
+                                                    {{ !empty($order->tracking_no) ? $order->tracking_no : 'N/A' }}
                                                 </td>
                                                 <td class="d-flex">
                                                     @foreach ($orderItem as $orderItem)
                                                         <?php
                                                         $products = json_decode($orderItem->order_data);
-                                                        $ringImage = null;
-                                                        $diamondImage = null;
-                                                        $gemstoneImage = null;
-                                                        if (!empty($products->ring_id) && !empty($products->diamond_id)) {
+                                                        // var_dump($products);
+                                                        if ($products->product_type == 'diamond') {
+                                                            // echo 'diamond';
+                                                            $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
+                                                            ?>
+                                                        <div class="d-flex border p-2">
+                                                            <img src="{{ $diamondImage->image_url }}" alt="">
+                                                        </div>
+                                                        <?php
+
+                                                        }
+
+                                                        if ($products->product_type == 'gemstone') {
+                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                            ?>
+                                                            <div class="d-flex border p-2">
+                                                                <img src="{{ $gemstoneImage->image_url }}" alt="">
+                                                            </div>
+                                                            <?php
+                                                        }
+
+                                                        // if ($products->product_type == 'maching_set') {
+                                                        //     echo 'maching_set';
+                                                        // }
+
+                                                        if ($products->product_type == 'ring_diamond') {
                                                             $ringImage = getProductImages($products->ring_id, $products->ring_color);
                                                             $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
-                                                        } elseif (!empty($products->ring_id) && !empty($products->gemstone_id)) {
+                                                            ?>
+                                                            <div class="d-flex border p-2">
+                                                               <img src="{{ $ringImage }}" alt="">
+                                                               <img src="{{ $diamondImage->image_url }}" alt="">
+                                                            </div>
+                                                            <?php
+                                                        }
+
+                                                        if($products->product_type == 'ring_gemstone')
+                                                        {
                                                             $ringImage = getProductImages($products->ring_id, $products->ring_color);
                                                             $gemstoneImage = getGemStoneImages($products->gemstone_id);
-                                                        } elseif (!empty($products->diamond_id)) {
-                                                            $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
-                                                        } elseif (!empty($products->gemstone_id)) {
-                                                            $gemstoneImage = getGemStoneImages($products->gemstone_id);
+                                                            ?>
+                                                            <div class="d-flex border p-2">
+                                                               <img src="{{ $ringImage }}" alt="">
+                                                               <img src="{{ $gemstoneImage->image_url }}" alt="">
+                                                            </div>
+                                                            <?php
+
                                                         }
                                                         ?>
-                                                        <div class="d-flex border p-2">
+                                                        {{-- <div class="d-flex border p-2">
                                                             @if ($ringImage)
                                                                 <img src="{{ $ringImage }}" alt="">
                                                             @endif
@@ -165,7 +192,7 @@
                                                             @if ($gemstoneImage)
                                                                 <img src="{{ $gemstoneImage->image_url }}" alt="">
                                                             @endif
-                                                        </div>
+                                                        </div> --}}
                                                     @endforeach
                                                 </td>
 

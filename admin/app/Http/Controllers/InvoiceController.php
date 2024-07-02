@@ -16,8 +16,16 @@ class InvoiceController extends Controller
 {
     public function index()
     {
+        $invoice = InvoiceModel::orderBy('id', 'desc')->get();
+
+        foreach ($invoice as $inv) {
+            $orderdata = OrderModel::where('order_id', $inv['order_id'])->first();
+            $users = User::find($orderdata['user_id']);
+            $inv['user_name'] = $users['first_name'] . ' ' . $users['last_name'];
+            $inv['email'] = $users['email'] ;
+        }
         $data = [
-            'invoices' => InvoiceModel::orderBy('id', 'desc')->get()
+            'invoices' =>$invoice,
         ];
         return view('admin.invoice', $data);
     }

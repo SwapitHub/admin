@@ -36,25 +36,28 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive table-desi">
-                            <table class="table trans-table all-package">
+							<table class="table all-package order-datatable" id="basic-1">
                                 <thead>
                                     <tr>
 
+                                        <th>Invoice Id</th>
+                                        <th>Custome Name </th>
+                                        <th>Custome Email </th>
                                         <th>Order Id</th>
                                         <th>Amount</th>
                                         <th>Invoice Date</th>
-                                        <th>Status</th>
                                         <th>option</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($invoices as $index=>$invoice)
                                     <tr>
-
+                                        <td>{{ $invoice->invoice_id }}</td>
+                                        <td>{{ $invoice->user_name }}</td>
+                                        <td>{{ $invoice->email }}</td>
                                         <td>{{ $invoice->order_id }}</td>
                                         <td>${{ $invoice->amount }}</td>
                                         <td>{{ $invoice->created_at }}</td>
-                                        <td>{{ $invoice->status }}</td>
                                         <td><a href="{{ route('order.invoices.view',['order_id'=>$invoice->order_id]) }}"><i class="fa fa-eye fa-2x" title="view"></i></a></td>
                                     </tr>
                                     @endforeach
