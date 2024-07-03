@@ -81,7 +81,7 @@
                                         <th>Reference No.</th>
                                         <th>Date</th>
                                         <th>Payment Method</th>
-                                        <th>Delivery Status</th>
+                                        <th>Txn Status</th>
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
@@ -100,7 +100,7 @@
 
                                         <td><span class="badge badge-{{ $transaction->status =='SUCCESS'?'success':'primary'; }}">{{ $transaction->status }}</span></td>
 
-                                        <td>${{ $transaction->amount }}/-</td>
+                                        <td>${{ number_format($transaction->amount,2) }}/-</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
