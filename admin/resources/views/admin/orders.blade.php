@@ -96,7 +96,7 @@
                                                     {{ $order->order_id }}
                                                 </td>
                                                 <td class="text-start">
-                                                    {{ $order->created_at }}
+                                                    <td>{{ date('M d, Y', strtotime($order->created_at)) }}</td>
                                                 </td>
                                                 <td class="text-start">
                                                     <?php
