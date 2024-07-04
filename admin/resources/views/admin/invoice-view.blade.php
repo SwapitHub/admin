@@ -190,7 +190,7 @@
                                                             <h4 class="theme-color fw-bold">Total Price :</h4>
                                                         </td>
                                                         <td>
-                                                            <h4 class="theme-color fw-bold">${{ number_format(round($order->amount, 2)),2,'.','' }}
+                                                            <h4 class="theme-color fw-bold">${{ number_format(round($order->amount, 2),2,'.','') }}
                                                             </h4>
                                                         </td>
                                                     </tr>
@@ -210,7 +210,7 @@
                                                             {{ date('M d , Y', strtotime($order->created_at)) }}
                                                             {{-- Apr 29 , 2024 --}}
                                                         </li>
-                                                        <li>Order Total: ${{ round($order->amount, 2) }}</li>
+                                                        <li>Order Total: ${{ number_format(round($order->amount, 2),2,'.','') }}</li>
                                                     </ul>
                                                 </div>
                                             </div>

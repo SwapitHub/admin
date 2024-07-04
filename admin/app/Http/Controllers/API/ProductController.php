@@ -39,7 +39,7 @@ class ProductController extends Controller
             $output['msg'] = $errors;
         }
         try {
-            if ($request->metalColor == 'rose') {
+            if ($request->metalColor == 'rose' || $request->metalColor == 'Rose') {
                 $metalColor = "pink";
             } else {
                 $metalColor = $request->metalColor;

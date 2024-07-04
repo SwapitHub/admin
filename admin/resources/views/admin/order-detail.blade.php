@@ -248,7 +248,7 @@
                                                         <li>Order Date:
                                                             {{ date('M d , Y', strtotime($order->created_at)) }}
                                                         </li>
-                                                        <li>Order Total: ${{ round($order->amount, 2) }}</li>
+                                                        <li>Order Total: ${{ number_format(round($order->amount, 2),2,'.','') }}</li>
                                                     </ul>
                                                 </div>
                                             </div>

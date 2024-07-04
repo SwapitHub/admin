@@ -69,7 +69,7 @@ class InvoiceController extends Controller
 
         $data['order'] = $order_data;
         $data['orderItems'] = OrderItem::orderBy('id', 'desc')->where('order_id', $order_id)->get();
-        $data['invoiceId'] = InvoiceModel::where('order_id', $order_id)->first()['id'];
+        $data['invoiceId'] = InvoiceModel::where('order_id', $order_id)->first()['invoice_id'];
 
         $address_count = $order_data->address;
         $address_ =  explode(',', $address_count);
@@ -85,7 +85,9 @@ class InvoiceController extends Controller
 
 
         // return view('invoice',$data);
+        // exit;
         $pdf = Pdf::loadView('invoice', $data);
-        return $pdf->download();
+        $filename = $data['invoiceId'] .'.'.'pdf';
+        return $pdf->download($filename);
     }
 }

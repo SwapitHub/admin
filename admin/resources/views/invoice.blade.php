@@ -26,7 +26,8 @@
         .footer {
             font-size: 0.875rem;
             padding: 1rem;
-            background-color: rgb(241 245 249);
+            /*background-color: rgb(241 245 249);*/
+            background-color: #ffffff;
         }
 
         table {
@@ -40,6 +41,7 @@
 
         table.products tr {
             background-color: rgb(96 165 250);
+            text-align: left;
         }
 
         table.products th {
@@ -48,7 +50,8 @@
         }
 
         table tr.items {
-            background-color: rgb(241 245 249);
+            /* background-color: rgb(241 245 249); */
+            background-color: #ffffff;
         }
 
         table tr.items td {
@@ -126,13 +129,13 @@
             if (!empty($products->ring_id) &&!empty($products->diamond_id))
             {
             $ringImages[$orderItem->id] = getProductImages($products->ring_id,$products->ring_color);
-            $diamondImages[$orderItem->id] = getDiamondImages($products->diamond_id);
+            $diamondImages[$orderItem->id] = getDiamondImages($products->diamond_id,$products->diamond_type);
             }
             elseif (!empty($products->ring_id) &&!empty($products->gemstone_id)) {
             $ringImages[$orderItem->id] = getProductImages($products->ring_id,$products->ring_color);
             $gemstoneImages[$orderItem->id] = getGemStoneImages($products->gemstone_id);
             } elseif (!empty($products->diamond_id)) {
-            $diamondImages[$orderItem->id] = getDiamondImages($products->diamond_id);
+            $diamondImages[$orderItem->id] = getDiamondImages($products->diamond_id,$products->diamond_type);
             } elseif (!empty($products->gemstone_id)) {
             $gemstoneImages[$orderItem->id] = getGemStoneImages($products->gemstone_id);
             }
@@ -179,7 +182,7 @@
                     @endif
                 </td>
                 <td>
-                    ${{ round($orderItem->total_amount, 2) }}
+                    ${{ number_format(round($orderItem->total_amount, 2),2,'.','') }}
                 </td>
             </tr>
             @endforeach
@@ -187,17 +190,17 @@
     </div>
 
     <div class="total">
-        Sub Total: ${{ round($order->amount, 2) }}
+        Sub Total: ${{ number_format(round($order->amount, 2),2,'.','') }}
     </div>
     <div class="total">
-        Shipping: $0
+        Shipping: $0.00
     </div>
     <div class="total">
-        Tax(GST) :$0
+        Tax(GST) :$0.00
     </div>
     <hr>
     <div class="total">
-        Total: ${{ round($order->amount, 2) }}
+        Total: ${{ number_format(round($order->amount, 2),2,'.','') }}
     </div>
 
     <table class="w-full">
