@@ -56,14 +56,13 @@
                                         <td><a href="{{ route('sale.orders.detail',['id'=>$item->order_id]) }}" style="text-decoration:underline;color:blue !important">{{ $item->order_id }}</a></td>
 
                                         <td>{{ $item->transaction_id }}</td>
-
-                                        <td>{{ $item->created_at }}</td>
+                                        <td>{{ date('M d, Y', strtotime($item->created_at)) }}</td>
 
                                         <td>Card Payment</td>
 
                                         <td>{{ $item->name }}</td>
 
-                                        <td>${{ $item->amount }}/-</td>
+                                        <td>${{ number_format($item->amount,2,'.','') }}/-</td>
                                     </tr>
                                     @endforeach
 

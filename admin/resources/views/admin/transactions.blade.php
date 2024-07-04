@@ -100,7 +100,7 @@
 
                                         <td><span class="badge badge-{{ $transaction->status =='SUCCESS'?'success':'primary'; }}">{{ $transaction->status }}</span></td>
 
-                                        <td>${{ number_format($transaction->amount,2) }}/-</td>
+                                        <td>${{ number_format($transaction->amount,2,'.','') }}/-</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

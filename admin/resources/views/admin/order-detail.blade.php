@@ -72,7 +72,7 @@
                                                         <th colspan="2">Items</th>
                                                         <th class="text-end" colspan="2">
                                                             <a href="javascript:void(0)" class="theme-color">Grand Total -
-                                                                ${{ round($order->amount, 2) }}</a>
+                                                                ${{ number_format(round($order->amount, 2),2,'.','') }}</a>
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -188,8 +188,8 @@
                                                             </td>
                                                             <td>
                                                                 <p>Price</p>
-                                                                <h5>${{ round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2) }}
-                                                                </h5>
+                                                                {{-- <h5>${{ round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2) }} </h5> --}}
+                                                                <h5>${{ number_format(round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2) ,2,'.','') }} </h5>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -201,7 +201,8 @@
                                                             <h5>Subtotal :</h5>
                                                         </td>
                                                         <td>
-                                                            <h4>${{ round($order->amount, 2) }}</h4>
+                                                            {{-- <h4>${{ round($order->amount, 2) }}</h4> --}}
+                                                            <h4>${{ number_format($order->amount, 2, '.', '') }}</h4>
                                                         </td>
                                                     </tr>
 
@@ -216,7 +217,7 @@
 
                                                     <tr class="table-order">
                                                         <td colspan="3">
-                                                            <h5>Tax(GST) :</h5>
+                                                            <h5>Tax :</h5>
                                                         </td>
                                                         <td>
                                                             <h4>$0.00</h4>
@@ -228,7 +229,7 @@
                                                             <h4 class="theme-color fw-bold">Total Price :</h4>
                                                         </td>
                                                         <td>
-                                                            <h4 class="theme-color fw-bold">${{ round($order->amount, 2) }}
+                                                            <h4 class="theme-color fw-bold">${{ number_format(round($order->amount, 2),2,'.','') }}
                                                             </h4>
                                                         </td>
                                                     </tr>
@@ -241,7 +242,7 @@
                                         <div class="row g-4">
                                             <div class="col-12">
                                                 <div class="order-success bg-white">
-                                                    <h4>summery</h4>
+                                                    <h4>summary</h4>
                                                     <ul class="order-details">
                                                         <li>Order ID: {{ $order->order_id }}</li>
                                                         <li>Order Date:

@@ -54,10 +54,10 @@
                                     <tr>
                                         <td>{{ $item->order_id }}</td>
 
-                                        <td>{{ $item->amount }}</td>
+                                        <td>{{ number_format($item->amount,2,'.','') }}</td>
 
-                                        <td>{{ $item->created_at }}</td>
-
+                                        {{-- <td>{{ $item->created_at }}</td> --}}
+                                        <td>{{ date('M d, Y', strtotime($item->created_at)) }}</td>
                                         <td>{{ $item->first_name }}  {{ $item->last_name }}</td>
 
                                         <td><a href="{{ route('sale.orders.detail',['id'=>$item->order_id]) }}"><i class="fa fa-eye fa-2x"></i></a></td>
