@@ -20,7 +20,7 @@
 			$cacheKey = 'gemstone_attr';
 			$gemstone_attr = Cache::get($cacheKey);
 			// $gemstone_attr = Cache::forget($cacheKey);
-            exit;
+            // exit;
 			if(!$gemstone_attr)
 			{
 				$stones = gemstoneModel::where('status','true')->get();
