@@ -55,8 +55,8 @@ class ProductController extends Controller
                 $output['data'] = $product_price;
             } else {
                 $output['res'] = 'error';
-                $output['msg'] = 'product price is :';
-                $output['data'] = 'product price not found';
+                $output['msg'] = 'product price not found';
+                $output['data'] = '';
             }
             return response()->json($output, 200);
         } catch (Exception $e) {
