@@ -291,9 +291,7 @@
                                                 <div class="order-success bg-white">
                                                     <div class="payment-mode">
                                                         <h4>payment method</h4>
-                                                        <p>Pay on Delivery (Cash/Card). Cash on delivery (COD)
-                                                            available. Card/Net banking acceptance subject to
-                                                            device availability.</p>
+                                                        <p>Card Payment</p>
                                                     </div>
                                                 </div>
                                             </div>

@@ -67,7 +67,7 @@
                                                         <th colspan="2">Invoice Items ({{ count($orderItems) }})</th>
                                                         <th class="text-end" colspan="2">
                                                             <a href="javascript:void(0)" class="theme-color">Grand Total -
-                                                                ${{ round($order->amount, 2) }}</a>
+                                                                ${{ number_format(round($order->amount, 2),2,'.','') }}</a>
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -149,7 +149,7 @@
                                                             </td>
                                                             <td>
                                                                 <p>Price</p>
-                                                                <h5>${{ round($orderItem->total_amount, 2) }}</h5>
+                                                                <h5>${{ number_format(round($orderItem->total_amount, 2),2,'.','') }}</h5>
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -163,7 +163,7 @@
                                                             <h5>Subtotal :</h5>
                                                         </td>
                                                         <td>
-                                                            <h4>${{ round($order->amount, 2) }}</h4>
+                                                            <h4>${{ number_format(round($order->amount, 2),2,'.','') }}</h4>
                                                         </td>
                                                     </tr>
 
@@ -178,7 +178,7 @@
 
                                                     <tr class="table-order">
                                                         <td colspan="3">
-                                                            <h5>Tax(GST) :</h5>
+                                                            <h5>Tax :</h5>
                                                         </td>
                                                         <td>
                                                             <h4>$0.00</h4>
@@ -190,7 +190,7 @@
                                                             <h4 class="theme-color fw-bold">Total Price :</h4>
                                                         </td>
                                                         <td>
-                                                            <h4 class="theme-color fw-bold">${{ round($order->amount, 2) }}
+                                                            <h4 class="theme-color fw-bold">${{ number_format(round($order->amount, 2)),2,'.','' }}
                                                             </h4>
                                                         </td>
                                                     </tr>
