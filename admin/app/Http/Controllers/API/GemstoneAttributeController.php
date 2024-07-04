@@ -18,11 +18,7 @@
 			$output['msg'] = 'data retrieved successfully';
 
 			$cacheKey = 'gemstone_attr';
-			// $gemstone_attr = Cache::get($cacheKey);
-			// $gemstone_attr = Cache::forget($cacheKey);
-            Cache::forget($cacheKey);
-            echo "fortger";
-            exit;
+			$gemstone_attr = Cache::get($cacheKey);
 			if(!$gemstone_attr)
 			{
 				$stones = gemstoneModel::where('status','true')->get();
