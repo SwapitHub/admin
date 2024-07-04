@@ -319,6 +319,11 @@
 									<i class="fa fa-circle"></i> Report
 								</a>
 							</li>
+                            <li>
+								<a href="{{ route('sale.revenue') }}">
+									<i class="fa fa-circle"></i> Revenue
+								</a>
+							</li>
 						</ul>
 					</li>
 					<li>

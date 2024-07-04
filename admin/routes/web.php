@@ -284,6 +284,9 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/report', [App\Http\Controllers\ReportController::class, 'index'])->name('sale.report');
 
 
+	Route::get('/revenue', [App\Http\Controllers\ReportController::class, 'revenue'])->name('sale.revenue');
+
+
 	//gemstone filters
 
 	Route::get('/gemstones', [App\Http\Controllers\GemstoneAttributeController::class, 'gemstones'])->name('admin.gemstone.list');

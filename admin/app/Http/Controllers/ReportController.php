@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\OrderModel;
 use Illuminate\Support\Facades\DB;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -34,7 +35,7 @@ class ReportController extends Controller
             'aggregate_field' => 'amount',
             'chart_type' => 'line',
         ];
-    
+
         $transaction = new LaravelChart($chart_options_transaction);
 
         $chart_options_created_user = [
@@ -46,10 +47,10 @@ class ReportController extends Controller
             'filter_field' => 'created_at',
             'filter_period' => 'month', // show users only registered this month
         ];
-    
+
         $user_this_month = new LaravelChart($chart_options_created_user);
 
-        
+
         $settings1 = [
             'chart_title'           => 'Users',
             'chart_type'            => 'line',
@@ -81,12 +82,34 @@ class ReportController extends Controller
             'entries_number'        => '5',
             'translation_key'       => 'order',
             'continuous_time'       => true,
-           
+
         ];
-        
+
         $users_order = new LaravelChart($settings1, $settings2);
 
-       
-        return view('admin.report', compact('users','transaction','user_this_month','users_order'));
+
+        return view('admin.report', compact('users', 'transaction', 'user_this_month', 'users_order'));
+    }
+
+    public function revenue()
+    {
+        $dailyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, DATE(created_at) as date')
+            ->groupBy('date')
+            ->pluck('total_revenue', 'date');
+
+        $weeklyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, YEARWEEK(created_at) as week')
+            ->groupBy('week')
+            ->pluck('total_revenue', 'week');
+
+        $monthlyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, MONTH(created_at) as month')
+            ->whereYear('created_at', Carbon::now()->year)
+            ->groupBy('month')
+            ->pluck('total_revenue', 'month');
+
+        $yearlyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, YEAR(created_at) as year')
+            ->groupBy('year')
+            ->pluck('total_revenue', 'year');
+
+        return view('admin.revenue', compact('dailyRevenue', 'weeklyRevenue', 'monthlyRevenue', 'yearlyRevenue'));
     }
 }
