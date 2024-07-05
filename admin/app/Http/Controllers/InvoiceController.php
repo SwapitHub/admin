@@ -71,7 +71,7 @@ class InvoiceController extends Controller
         $data['orderItems'] = OrderItem::orderBy('id', 'desc')->where('order_id', $order_id)->get();
         // $data['invoiceId'] = InvoiceModel::where('order_id', $order_id)->first()['invoice_id'];
         $invoice =  InvoiceModel::where('order_id', $order_id)->first();
-        $data['invoiceId'] =$invoice['invoice_id']??['id'];
+        $data['invoiceId'] =!empty($invoice['invoice_id'])?$invoice['invoice_id']:$invoice['id'];
 
         $address_count = $order_data->address;
         $address_ =  explode(',', $address_count);
