@@ -338,12 +338,11 @@ class ProductController extends Controller
                 ->get();
             $searched_product = [];
             foreach ($products as $product) {
-                // $product->name = ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
-                $name = strtolower($product->name);
-                $product->name = ucfirst($name . ' ' .$product->fractionsemimount);
+                $name = strtolower($product->product_browse_pg_name);
+                $product->name = ucfirst($name);
                 $product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
                 array_push($searched_product, $product);
             }
