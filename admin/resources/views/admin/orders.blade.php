@@ -164,7 +164,10 @@
                                                             ?>
                                                             <div class="d-flex border p-2">
                                                                <img src="{{ $ringImage }}" alt="">
+                                                               @if($diamondImage != null)
                                                                <img src="{{ $diamondImage->image_url }}" alt="">
+                                                               @endif
+
                                                             </div>
                                                             <?php
                                                         }
