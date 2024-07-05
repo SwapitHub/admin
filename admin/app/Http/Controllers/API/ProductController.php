@@ -333,12 +333,12 @@ class ProductController extends Controller
                         ->orWhere('metalWeight', 'like', "%$q%")
                         ->orWhere('finishLevel', 'like', "%$q%");
                 })
-                ->select('name', 'slug', 'default_image_url', 'white_gold_price', 'sku')
+                ->select('name','product_browse_pg_name','slug', 'default_image_url', 'white_gold_price', 'sku')
                 ->limit(5)
                 ->get();
             $searched_product = [];
             foreach ($products as $product) {
-                // $product->name = ucfirst(strtolower($product->name));
+                $product->name = ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
