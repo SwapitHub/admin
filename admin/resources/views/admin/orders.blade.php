@@ -164,7 +164,7 @@
                                                             ?>
                                                             <div class="d-flex border p-2">
                                                                <img src="{{ $ringImage }}" alt="">
-                                                               <img src="{{ $diamondImage->image_url }}" alt="">
+                                                               {{-- <img src="{{ $diamondImage->image_url }}" alt=""> --}}
                                                             </div>
                                                             <?php
                                                         }
