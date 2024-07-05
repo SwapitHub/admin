@@ -415,7 +415,8 @@ class ProductController extends Controller
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->product_browse_pg_name);
-                $product->name = ucwords($name);
+                // $product->name = ucwords($name);
+                $product->name = ucfirst($name . ' ' .$product->fractionsemimount);
                 $product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
                 array_push($searched_product, $product);
             }
