@@ -338,7 +338,7 @@ class ProductController extends Controller
                 ->get();
             $searched_product = [];
             foreach ($products as $product) {
-                $product->name = ucfirst(strtolower($product->product_browse_pg_name??$product->name));
+                $product->name = ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
@@ -410,7 +410,7 @@ class ProductController extends Controller
             $searched_product = [];
 
             foreach ($products as $product) {
-                $product->name = ucfirst(strtolower($product->product_browse_pg_name??$product->name));
+                $product->name = ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
