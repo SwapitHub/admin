@@ -343,7 +343,7 @@ class ProductController extends Controller
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->product_browse_pg_name);
                 $product->name = ucfirst($name);
-                $product->menu = Menu::find($product->menu)['name'];
+                $product->menu = Menu::find($product->menu)['slug'];
                 $product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
                 array_push($searched_product, $product);
             }
