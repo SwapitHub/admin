@@ -73,6 +73,9 @@ class SiteinfoController extends Controller
         $siteinfo->zip = $request->zip;
         $siteinfo->country = $request->country;
         $siteinfo->copyright = $request->copyright;
+        $siteinfo->meta_title = $request->meta_title;
+        $siteinfo->meta_keyword = $request->meta_keyword;
+        $siteinfo->meta_description = $request->meta_description;
         $siteinfo->save();
         return redirect()->back()->with('success', 'Site information updated successfully.');
     }
