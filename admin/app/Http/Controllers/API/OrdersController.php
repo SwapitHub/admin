@@ -146,7 +146,7 @@ class OrdersController extends Controller
             $order = [
                 'order_id' => $request->order_id,
                 'order_status' => $initial_order->status,
-                'order_date' => date('M d , Y', strtotime($initial_order->created_at)),
+                'order_date' => date('M d, Y', strtotime($initial_order->created_at)),
                 'order_method' => $initial_order->method,
                 'total_amount' => $initial_order->amount,
                 'shipping_address' => $shipping_address,

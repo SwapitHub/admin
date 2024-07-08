@@ -93,23 +93,33 @@ class ReportController extends Controller
 
     public function revenue()
     {
-        $dailyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, DATE(created_at) as date')
-            ->groupBy('date')
-            ->pluck('total_revenue', 'date');
+        // $dailyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, DATE(created_at) as date')
+        //     ->groupBy('date')
+        //     ->pluck('total_revenue', 'date');
 
-        $weeklyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, YEARWEEK(created_at) as week')
-            ->groupBy('week')
-            ->pluck('total_revenue', 'week');
+        // $weeklyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, YEARWEEK(created_at) as week')
+        //     ->groupBy('week')
+        //     ->pluck('total_revenue', 'week');
 
-        $monthlyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, MONTH(created_at) as month')
-            ->whereYear('created_at', Carbon::now()->year)
-            ->groupBy('month')
-            ->pluck('total_revenue', 'month');
+        // $monthlyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, MONTH(created_at) as month')
+        //     ->whereYear('created_at', Carbon::now()->year)
+        //     ->groupBy('month')
+        //     ->pluck('total_revenue', 'month');
 
-        $yearlyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, YEAR(created_at) as year')
-            ->groupBy('year')
-            ->pluck('total_revenue', 'year');
+        // $yearlyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, YEAR(created_at) as year')
+        //     ->groupBy('year')
+        //     ->pluck('total_revenue', 'year');
 
-        return view('admin.revenue', compact('dailyRevenue', 'weeklyRevenue', 'monthlyRevenue', 'yearlyRevenue'));
+        // return view('admin.revenue', compact('dailyRevenue', 'weeklyRevenue', 'monthlyRevenue', 'yearlyRevenue'));
+
+        // user by month
+        $chart_options1 = [
+            'chart_title' => 'Users by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\User',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+        ];
     }
 }
