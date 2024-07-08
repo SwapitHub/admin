@@ -112,14 +112,57 @@ class ReportController extends Controller
 
         // return view('admin.revenue', compact('dailyRevenue', 'weeklyRevenue', 'monthlyRevenue', 'yearlyRevenue'));
 
-        // user by month
+
+
         $chart_options1 = [
-            'chart_title' => 'Users by months',
-            'report_type' => 'group_by_date',
-            'model' => 'App\Models\User',
-            'group_by_field' => 'created_at',
-            'group_by_period' => 'month',
-            'chart_type' => 'bar',
+            'chart_title'           => 'Total Revenue (Daily)',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\OrderModel', // Assuming your model is named Order
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'day',
+            'aggregate_function'    => 'sum',
+            'aggregate_field'       => 'amount', // Field to sum up for revenue
+            'chart_type'            => 'line',
         ];
+        $dailyRevenue = new LaravelChart($chart_options1);
+
+        $chart_options2 = [
+            'chart_title'           => 'Total Revenue (Weekly)',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\OrderModel', // Assuming your model is named Order
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'week',
+            'aggregate_function'    => 'sum',
+            'aggregate_field'       => 'amount', // Field to sum up for revenue
+            'chart_type'            => 'line',
+        ];
+        $weekleyRevenue = new LaravelChart($chart_options2);
+
+        $chart_options3 = [
+            'chart_title'           => 'Total Revenue (Monthly)',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\OrderModel', // Assuming your model is named Order
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'month',
+            'aggregate_function'    => 'sum',
+            'aggregate_field'       => 'amount', // Field to sum up for revenue
+            'chart_type'            => 'bar',
+        ];
+        $monthlyRevenue = new LaravelChart($chart_options3);
+
+        $chart_options4 = [
+            'chart_title'           => 'Total Revenue (Monthly)',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\OrderModel', // Assuming your model is named Order
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'year',
+            'aggregate_function'    => 'sum',
+            'aggregate_field'       => 'amount', // Field to sum up for revenue
+            'chart_type'            => 'bar',
+        ];
+        $yearlyRevenue = new LaravelChart($chart_options4);
+
+
+        return view('admin.revenue', compact('dailyRevenue','weekleyRevenue','monthlyRevenue','yearlyRevenue'));
     }
 }

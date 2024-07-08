@@ -84,6 +84,27 @@
 										required value="{{ $menudata->order_number }}">
 									</div>
 								</div>
+                                <div class="form-group row">
+                                    <label for="menuname" class="col-xl-3 col-md-4"><span></span>Meta title
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" id="meta_title" name="meta_title" type="text" value="{{ $menudata->meta_title }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="menuname" class="col-xl-3 col-md-4"><span></span>Meta keyword
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" id="meta_keyword" name="meta_keyword" type="text" value="{{ $menudata->meta_keyword }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="menuname" class="col-xl-3 col-md-4"><span></span>Meta description
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" id="meta_description" name="meta_description" type="text" value="{{ $menudata->meta_description }}">
+                                    </div>
+                                </div>
 								<div class="form-group row">
 									<label class="col-xl-3 col-md-4">Status</label>
 									<div class="col-xl-9 col-md-8">

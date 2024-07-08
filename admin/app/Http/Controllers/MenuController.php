@@ -48,6 +48,9 @@ class MenuController extends Controller
         $menu->image = $image_path;
         $menu->term_condition = $request->term_condition;
         $menu->order_number = $request->order_number;
+        $menu->meta_title = $request->meta_title;
+        $menu->meta_keyword = $request->meta_keyword;
+        $menu->meta_description = $request->meta_description;
         $menu->status = $request->status ?? 'false';
         $menu->save();
         return redirect()->back()->with('success', 'Menu added successfully');
@@ -93,6 +96,9 @@ class MenuController extends Controller
         $menu->image = $image_path;
         $menu->term_condition = $request->term_condition;
         $menu->order_number = $request->order_number;
+        $menu->meta_title = $request->meta_title;
+        $menu->meta_keyword = $request->meta_keyword;
+        $menu->meta_description = $request->meta_description;
         $menu->status = $request->status ?? 'false';
         $menu->save();
         return redirect()->back()->with('success', 'Menu updated successfully');

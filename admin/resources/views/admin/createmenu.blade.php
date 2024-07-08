@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- Container-fluid Ends-->
-	
+
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
 		<div class="row">
@@ -84,6 +84,27 @@
 									required value="0">
 								</div>
 							</div>
+                            <div class="form-group row">
+								<label for="menuname" class="col-xl-3 col-md-4"><span></span>Meta title
+								</label>
+								<div class="col-md-8">
+									<input class="form-control" id="meta_title" name="meta_title" type="text">
+								</div>
+							</div>
+                            <div class="form-group row">
+								<label for="menuname" class="col-xl-3 col-md-4"><span></span>Meta keyword
+								</label>
+								<div class="col-md-8">
+									<input class="form-control" id="meta_keyword" name="meta_keyword" type="text">
+								</div>
+							</div>
+                            <div class="form-group row">
+								<label for="menuname" class="col-xl-3 col-md-4"><span></span>Meta description
+								</label>
+								<div class="col-md-8">
+									<input class="form-control" id="meta_description" name="meta_description" type="text">
+								</div>
+							</div>
 							<div class="form-group row">
 								<label class="col-xl-3 col-md-4">Status</label>
 								<div class="col-xl-9 col-md-8">
@@ -103,4 +124,4 @@
 	</div>
 	<!-- Container-fluid Ends-->
 </div>
-@endsection																
+@endsection
