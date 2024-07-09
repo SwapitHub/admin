@@ -127,8 +127,14 @@ class MenuController extends Controller
         if(!is_null($menu) && !is_null($category) && !is_null($subcategory) )
         {
            $menu_id =  Menu::where('slug',$menu)->first()['id'];
-           $cat_id =  Category::where('menu',$menu_id)->where('slug',$category)->first()['id'];
-           $metadata = Subcategory::where('menu_id',$menu_id)->where('category_id',$cat_id)->where('slug',$subcategory)->first();
+           $cat_id =  Category::where('menu',$menu_id)->where('slug',$category)->orWhere('alias',$category)->first()['id'];
+           $metadata = Subcategory::where('menu_id',$menu_id)->where('category_id',$cat_id)->where('slug',$subcategory)->orWhere('alias',$subcategory)->first();
+        }
+
+        if(!is_null($menu) && is_null($category) && !is_null($subcategory) )
+        {
+           $menu_id =  Menu::where('slug',$menu)->first()['id'];
+           $metadata = Subcategory::where('menu_id',$menu_id)->where('slug',$subcategory)->orWhere('alias',$subcategory)->first();
         }
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
