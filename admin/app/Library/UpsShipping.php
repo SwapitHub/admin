@@ -218,6 +218,7 @@ class UpsShipping
             $output['res'] = 'success';
             $output['msg'] = 'Shipment created';
             $output['data'] = ['TrackingNumber' => $shipment['TrackingNumber']];
+            $output['json_data'] = $shipment;
         } catch (Exception $e) {
             $output['msg'] = $e->getMessage();
         } finally {

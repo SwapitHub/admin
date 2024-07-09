@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="page-header-left">
-                            <h3>Order Details
+                            <h3>Shipment Details
                                 <small>Sama Admin panel</small>
                             </h3>
                         </div>
@@ -27,7 +27,7 @@
                                 </a>
                             </li>
                             <li class="breadcrumb-item"><a href="{{ route('sale.orders') }}">Orders</a></li>
-                            <li class="breadcrumb-item active">Order Details</li>
+                            <li class="breadcrumb-item active">Shipment Details</li>
                         </ol>
                     </div>
                 </div>
@@ -44,26 +44,10 @@
                         <div class="card-body">
                             <div class="bg-inner cart-section order-details-table">
                                 <div class="row g-4">
-                                    <div class="col-sm-12">
-                                        @if ($invoice_count == 0)
-                                            @if (empty($order->tracking_number))
-                                                <a href="{{ route('sale.orders.refund',['order_id'=>$order->order_id]) }}" class="btn btn-outline-primary">Refund</a>
-                                            @endif
-                                        @endif
-
-                                        @if ($invoice_count == 0)
-                                            <button class="btn btn btn-outline-secondary"
-                                                onclick="MakeInvoice('{{ $order->order_id }}')">Invoice</button>
-                                        @endif
-                                        @if (empty($order->tracking_number))
-                                            <button class="btn btn btn-outline-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">Ship</button>
-                                        @endif
-
-                                    </div>
                                     <div class="col-xl-8">
-                                        <div class="card-details-title">
-                                            <h3>Order Number <span>#{{ $order->order_id }}</span></h3>
+                                        <div class="card-title">
+                                            <h4 style="color: black">Shipment No.
+                                                :<span>{{ $shipping_data->ShipmentId }}</span></h4>
                                         </div>
                                         <div class="table-responsive table-details">
                                             <table class="table cart-table table-borderless">
@@ -72,7 +56,7 @@
                                                         <th colspan="2">Items</th>
                                                         <th class="text-end" colspan="2">
                                                             <a href="javascript:void(0)" class="theme-color">Grand Total -
-                                                                ${{ number_format(round($order->amount, 2),2,'.','') }}</a>
+                                                                ${{ number_format(round($order->amount, 2), 2, '.', '') }}</a>
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -189,7 +173,8 @@
                                                             <td>
                                                                 <p>Price</p>
                                                                 {{-- <h5>${{ round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2) }} </h5> --}}
-                                                                <h5>${{ number_format(round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2) ,2,'.','') }} </h5>
+                                                                <h5>${{ number_format(round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2), 2, '.', '') }}
+                                                                </h5>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -229,7 +214,8 @@
                                                             <h4 class="theme-color fw-bold">Total Price :</h4>
                                                         </td>
                                                         <td>
-                                                            <h4 class="theme-color fw-bold">${{ number_format(round($order->amount, 2),2,'.','') }}
+                                                            <h4 class="theme-color fw-bold">
+                                                                ${{ number_format(round($order->amount, 2), 2, '.', '') }}
                                                             </h4>
                                                         </td>
                                                     </tr>
@@ -242,13 +228,10 @@
                                         <div class="row g-4">
                                             <div class="col-12">
                                                 <div class="order-success bg-white">
-                                                    <h4>summary</h4>
+                                                    <h4>Customer</h4>
                                                     <ul class="order-details">
-                                                        <li>Order ID: {{ $order->order_id }}</li>
-                                                        <li>Order Date:
-                                                            {{ date('M d , Y', strtotime($order->created_at)) }}
-                                                        </li>
-                                                        <li>Order Total: ${{ number_format(round($order->amount, 2),2,'.','') }}</li>
+                                                        <li>Name: {{ $order->first_name }} {{ $order->last_name }}</li>
+                                                        <li>Email: {{ $order->email }}</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -290,39 +273,31 @@
                                             <div class="col-12">
                                                 <div class="order-success bg-white">
                                                     <div class="payment-mode">
+                                                        <h4>Order Information </h4>
+                                                        <p>OrderId: <a href="{{ route('sale.orders.detail',['id'=>$order->id]) }}">#{{ $order->order_id }}</a> </p>
+                                                        <p>Order Status: #{{ $order->order_id }} </p>
+                                                        <p>
+                                                            Order Date : {{ date('d M, Y H:i:sA', strtotime($order->created_at)) }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="order-success bg-white">
+                                                    <div class="payment-mode">
                                                         <h4>payment method</h4>
                                                         <p>Card Payment</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if ($invoice_count > 0)
-                                                <div class="col-12">
-                                                    <div class="order-success bg-white">
-                                                        <div class="payment-mode">
-                                                            <h4>Invoice ({{ $invoice_count }})</h4>
-                                                            <p>Invoice #{{ $invoice->id }} </p>
-                                                            <span>
-                                                                {{ date('d M, Y H:i:sA', strtotime($invoice->created_at)) }}
-                                                            </span>
-
-                                                            <p class="mt-2">
-                                                                <a
-                                                                    href="{{ route('order.invoices.view', ['order_id' => $order->order_id]) }}">View</a>
-                                                                &ensp;
-                                                                <a
-                                                                    href="{{ route('sale.orders.invoice.download', ['order_id' => $order->order_id]) }}">Download</a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
 
                                             <div class="col-12">
                                                 <div class="order-success bg-white">
                                                     <div class="delivery-sec">
                                                         <h3>expected date of delivery: <span>october 22,
                                                                 2021</span></h3>
-                                                        <a href="#">track order : {{ $order->tracking_number??''; }}</a>
+                                                        <a href="#">track order :
+                                                            {{ $order->tracking_number ?? '' }}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -337,75 +312,5 @@
             </div>
         </div>
         <!-- Container-fluid Ends-->
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Create new Shipment</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
-                    </div>
-                    <form action="{{ route('shipping.create', ['order_id' => $order->id]) }}" method="POST">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="">Carrier Name</label>
-                                <input type="text" name="carrier_name" required class="form-control"
-                                    placeholder="Carrier Name">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create Shipment</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
     </div>
-    @push('scripts')
-        <script>
-            // function refund(order_id) {
-            //     alert(order_id);
-            // }
-
-            function MakeInvoice(order_id) {
-                var url = "{{ url('/orders/invoice/') }}" + '/' + order_id;
-                swal({
-                        title: "Are you sure?",
-                        text: "You want to create invoice!",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            $.ajax({
-                                url: url,
-                                method: "GET",
-                                success: function(response) {
-                                    console.log(response);
-                                    if (response == 'true') {
-                                        swal("Good job!", "Invoice generated successfully!", "success");
-                                        // swal(jsonres.res, {
-                                        //     icon: "Invoice Created",
-                                        // });
-                                        setTimeout(function() {
-                                            window.location.reload();
-                                        }, 900);
-                                    }
-                                },
-                                error: function(response) {
-                                    console.log(response);
-                                }
-                            })
-                        } else {
-                            swal("OK");
-                        }
-                    });
-
-            }
-        </script>
-    @endpush
 @endsection

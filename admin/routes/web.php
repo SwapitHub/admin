@@ -278,6 +278,7 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
     Route::post('/order-status/update/{id}',[App\Http\Controllers\OrderController::class, 'updateOrderStatus'])->name('order.status.update');
 
 	Route::get('/shipments', [App\Http\Controllers\ShippingController::class, 'list'])->name('sale.shipments');
+    Route::get('/shipment/{id}', [App\Http\Controllers\ShippingController::class, 'shipmentDetail'])->name('shipment.detail');
 	Route::get('/invoices', [App\Http\Controllers\InvoiceController::class, 'index'])->name('sale.invoices');
 	Route::get('/invoices/view/{order_id}', [App\Http\Controllers\InvoiceController::class, 'viewInvoice'])->name('order.invoices.view');
 	Route::get('/transactions', [App\Http\Controllers\TransactionController::class, 'index'])->name('sale.transactions');

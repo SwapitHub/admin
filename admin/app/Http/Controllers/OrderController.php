@@ -220,7 +220,7 @@ class OrderController extends Controller
         if ($result['res'] == 'success') {
             ## make order closed and update order status and make refund in refund table
             $is_updated = OrderModel::where('order_id', $order_id)
-                ->update(['status' => 'CLOSED']);
+                ->update(['status' => 'CLOSED','order_status'=>4]);
 
             if ($is_updated) {
                 $refund = new RefundModel();

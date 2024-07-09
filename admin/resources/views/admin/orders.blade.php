@@ -105,9 +105,12 @@
                                                     } elseif ($order->name == 'Complete') {
                                                         $color = 'success';
                                                     } elseif ($order->name == 'Failed') {
-                                                        $color = 'warning';
-                                                    } elseif ($order->name = 'Refunded') {
                                                         $color = 'primary';
+                                                    } elseif ($order->name == 'Refunded') {
+                                                        $color = 'primary';
+                                                    }
+                                                    elseif ($order->name == 'Pending') {
+                                                        $color = 'warning';
                                                     } else {
                                                         $color = 'primary';
                                                     }
@@ -127,15 +130,13 @@
                                                     {{ number_format($order->amount,2,'.','') }} / {{ $order->method }}
                                                 </td>
                                                 <td data-field="number">
-                                                    {{ !empty($order->tracking_no) ? $order->tracking_no : 'N/A' }}
+                                                    {{ !empty($order->tracking_number) ? $order->tracking_number : 'N/A' }}
                                                 </td>
-                                                <td class="d-flex">
+                                                {{-- <td class="d-flex">
                                                     @foreach ($orderItem as $orderItem)
                                                         <?php
                                                         $products = json_decode($orderItem->order_data);
-                                                        // var_dump($products);
                                                         if ($products->product_type == 'diamond') {
-                                                            // echo 'diamond';
                                                             $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
                                                             ?>
                                                         <div class="d-flex border p-2">
@@ -185,19 +186,8 @@
 
                                                         }
                                                         ?>
-                                                        {{-- <div class="d-flex border p-2">
-                                                            @if ($ringImage)
-                                                                <img src="{{ $ringImage }}" alt="">
-                                                            @endif
-                                                            @if ($diamondImage)
-                                                                <img src="{{ $diamondImage->image_url }}" alt="">
-                                                            @endif
-                                                            @if ($gemstoneImage)
-                                                                <img src="{{ $gemstoneImage->image_url }}" alt="">
-                                                            @endif
-                                                        </div> --}}
                                                     @endforeach
-                                                </td>
+                                                </td> --}}
 
 
 
