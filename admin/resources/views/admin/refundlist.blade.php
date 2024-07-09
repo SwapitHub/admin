@@ -42,9 +42,14 @@
                                 <thead>
                                     <tr>
                                         <th>Order Id</th>
-                                        <th>Amount</th>
+                                        <th>Order Date</th>
+                                        <th>Return Status</th>
+                                        <th>Custome Name</th>
+                                        <th>Custome Email</th>
+                                        <th>Grand total</th>
+                                        <th>Payment Method</th>
                                         <th>Refund Date</th>
-                                        <th>Billed to</th>
+
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -53,13 +58,13 @@
                                     @foreach($list as $item)
                                     <tr>
                                         <td>{{ $item->order_id }}</td>
-
-                                        <td>{{ number_format($item->amount,2,'.','') }}</td>
-
-                                        {{-- <td>{{ $item->created_at }}</td> --}}
+                                        <td>{{ date('M d, Y', strtotime($item->order_created_at)) }}</td>
+                                        <td>Status</td>
+                                        <td>{{ $item->first_name }} {{ $item->last_name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ number_format($item->amount,2,'.','') }}/-</td>
+                                        <td>Card Payment</td>
                                         <td>{{ date('M d, Y', strtotime($item->created_at)) }}</td>
-                                        <td>{{ $item->first_name }}  {{ $item->last_name }}</td>
-
                                         <td><a href="{{ route('sale.orders.detail',['id'=>$item->order_id]) }}"><i class="fa fa-eye fa-2x"></i></a></td>
                                     </tr>
                                     @endforeach

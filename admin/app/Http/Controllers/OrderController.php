@@ -29,7 +29,8 @@ class OrderController extends Controller
         // $data = [];
         $query = DB::table('refund')
             ->join('users', 'refund.user_id', '=', 'users.id')
-            ->select('users.first_name', 'users.last_name', 'users.email', 'refund.*')
+            ->join('orders', 'refund.order_id', '=', 'orders.order_id')
+            ->select('users.first_name', 'users.last_name', 'users.email', 'refund.*','orders.created_at as order_created_at')
             ->orderBy('refund.id', 'desc')
             ->paginate(10);
 
@@ -227,6 +228,8 @@ class OrderController extends Controller
                 $refund->user_id = $transaction['user_id'];
                 $refund->order_id = $order_id;
                 $refund->amount = $transaction['amount'];
+                $refund->ref_num = $result['data']['metadata']['refNum'];
+                $refund->json_data = json_encode($result['data']);
                 $refund->save();
                 return redirect()->back()->with('success', $result['message']);
             }

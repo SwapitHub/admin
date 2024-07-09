@@ -42,10 +42,15 @@
                                     <thead>
                                         <tr>
                                             <th>Order Id</th>
-                                            <th>Transaction Id</th>
-                                            <th>Date</th>
+                                            <th>Custome Name</th>
+                                            <th>Custome Address</th>
+                                            <th>Tracking No</th>
+                                            <th>Shipping Status</th>
+                                            <th>Shipment Date</th>
+                                            {{-- <th>Transaction Id</th> --}}
                                             <th>Payment Method</th>
-                                            <th>Delivery Status</th>
+                                            <th>Estimated Date of Delivery </th>
+                                            {{-- <th>Delivery Status</th> --}}
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -57,16 +62,25 @@
                                                         style="text-decoration:underline;color:blue !important">{{ $item->order_id }}</a>
                                                 </td>
 
-                                                <td>{{ $item->transaction_id }}</td>
-                                                <td>{{ date('M d, Y', strtotime($item->created_at)) }}</td>
-
-                                                <td>Card Payment</td>
+                                                <td>{{ $item->username }}</td>
+                                                <td>{{  $item['useraddress']['address_line1'] }} {{ $item['useraddress']['city']  }} , {{ $item['useraddress']['state']  }} , {{ $item['useraddress']['country']  }}</td>
+                                                <td>{{ $item->tracking_number }}</td>
 
                                                 @if ($item->name == 'Pending')
                                                     @php $color = 'secondary';@endphp
                                                 @endif
                                                 <td><span class="badge badge-secondary">{{ $item->name }}</span>
                                                 </td>
+
+                                                {{-- <td>{{ $item->tracking_number }}</td> --}}
+                                                <td>{{ date('M d, Y', strtotime($item->created_at)) }}</td>
+                                                {{-- <td>{{ $item->transaction_id }}</td> --}}
+
+
+                                                <td>Card Payment</td>
+                                                <td>ss</td>
+
+
 
                                                 <td>${{ number_format($item->amount, 2, '.', '') }}/-</td>
                                             </tr>

@@ -128,7 +128,7 @@ class Clover
     public function createRefund($payload)
     {
         $authorization = 'Bearer' . ' ' . $this->authorizationKey;
-        $amount = $payload['amount'] * 100;
+        $amount = intval($payload['amount']);
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => "https://scl-sandbox.dev.clover.com/v1/refunds",
@@ -155,7 +155,6 @@ class Clover
         $err = curl_error($curl);
 
         curl_close($curl);
-
         if ($err) {
             // echo "cURL Error #:" . $err;
             return ['res' => 'error', 'type' => 'cURL Error.', 'message' => $err];

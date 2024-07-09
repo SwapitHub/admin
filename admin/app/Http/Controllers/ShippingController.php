@@ -9,6 +9,7 @@ use App\Models\OrderModel;
 use App\Models\AddresModel;
 use App\Models\TransactionModel;
 use App\Models\OrderStatus;
+use App\Models\User;
 use App\Models\InvoiceModel;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -75,12 +76,25 @@ class ShippingController extends Controller
     ## shipment list
     public function list()
     {
+        $collection = [];
         $list = ShipmentModel::select('shipments.*','order_status.name') // Adjust the select clause as needed
             ->join('order_status', 'shipments.delivery_status', '=', 'order_status.id')
             ->orderBy('shipments.id', 'desc')
             ->get();
+
+            foreach($list as $item)
+            {
+                $order_id = $item['order_id'];
+                $order_data = OrderModel::where('order_id',$order_id)->first();
+                $users = User::where('id',$order_data['user_id'])->first();
+                $address = AddresModel::where('user_id',$order_data['user_id'])->first();
+                $item['tracking_number'] = $order_data['tracking_number'];
+                $item['username'] = $users['first_name'] . ' ' . $users['last_name'];
+                $item['useraddress'] = $address;
+                $collection[] = $item;
+            }
         $data = [
-            'list' => $list,
+            'list' => $collection,
         ];
         return view('admin.shipments', $data);
     }
