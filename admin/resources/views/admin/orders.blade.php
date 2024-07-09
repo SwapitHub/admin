@@ -140,7 +140,9 @@
                                                             $diamondImage = getDiamondImages($products->diamond_id, $products->diamond_type);
                                                             ?>
                                                         <div class="d-flex border p-2">
+                                                            @if($diamondImage != null)
                                                             <img src="{{ $diamondImage->image_url }}" alt="">
+                                                            @endif
                                                         </div>
                                                         <?php
 
@@ -150,7 +152,10 @@
                                                             $gemstoneImage = getGemStoneImages($products->gemstone_id);
                                                             ?>
                                                             <div class="d-flex border p-2">
+                                                                @if($gemstoneImage != null)
                                                                 <img src="{{ $gemstoneImage->image_url }}" alt="">
+                                                                @endif
+
                                                             </div>
                                                             <?php
                                                         }
