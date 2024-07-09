@@ -132,7 +132,7 @@
                                                 <td data-field="number">
                                                     {{ !empty($order->tracking_number) ? $order->tracking_number : 'N/A' }}
                                                 </td>
-                                                {{-- <td class="d-flex">
+                                                <td class="d-flex">
                                                     @foreach ($orderItem as $orderItem)
                                                         <?php
                                                         $products = json_decode($orderItem->order_data);
@@ -187,7 +187,7 @@
                                                         }
                                                         ?>
                                                     @endforeach
-                                                </td> --}}
+                                                </td>
 
 
 
