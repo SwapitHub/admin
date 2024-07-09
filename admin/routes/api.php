@@ -16,7 +16,7 @@
 		return response()->json(['csrf_token' => csrf_token()]);
 	});
 	Route::prefix('v1')->group(function () {
-        Route::any('meta_data/{menu}/{category?}/{subcategory?}', [App\Http\Controllers\API\MenuController::class, 'getMetaData']);
+        Route::any('meta_data', [App\Http\Controllers\API\MenuController::class, 'getMetaData']);
 		Route::any('newsletter',[App\Http\Controllers\API\NewsletterController::class,'index']);
 		Route::get('token', [App\Http\Controllers\API\SiteinfoController::class, 'getCsrfToken']);
 		Route::post('user-registration', [App\Http\Controllers\API\RegisterController::class, 'registerUser']);
