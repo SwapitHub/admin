@@ -44,6 +44,9 @@
                         <div class="card-body">
                             <div class="bg-inner cart-section order-details-table">
                                 <div class="row g-4">
+                                    <?php
+                                      var_dump($order)
+                                    ?>
                                     <div class="col-sm-12">
                                         @if ($invoice_count == 0)
                                             @if (empty($order->tracking_number))
@@ -55,9 +58,11 @@
                                             <button class="btn btn btn-outline-secondary"
                                                 onclick="MakeInvoice('{{ $order->order_id }}')">Invoice</button>
                                         @endif
-                                        @if (empty($order->tracking_number))
-                                            <button class="btn btn btn-outline-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">Ship</button>
+                                        @if($order->order_status != '4' ||  $order->order_status != '5')
+                                            @if (empty($order->tracking_number))
+                                                <button class="btn btn btn-outline-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal">Ship</button>
+                                            @endif
                                         @endif
 
                                     </div>

@@ -22,32 +22,32 @@ class MenuController extends Controller
         // $menu_list = Cache::get($cacheKey);
         $menu_list = Cache::forget($cacheKey);
         // if (!$menu_list) {
-            $menus = Menu::orderBy('order_number', 'asc')->where('status', 'true')->get();
-            foreach ($menus as $menu) {
-                $cat = Category::orderBy('order_number', 'asc')->where('status', 'true')->where('menu', $menu->id)->get();
-                $menu['categories'] = $cat;
-                foreach ($menu['categories'] as $menucat) {
-                    $subcat = Subcategory::orderBy('order_number', 'asc')->where('status', 'true')->where('menu_id', $menucat->menu)->where('category_id', $menucat->id)->get();
-                    $subcategory_collection = [];
-                    foreach ($subcat as $subcategory) {
-                        if (($subcategory->image != null)) {
-                            if ($subcategory->img_status == 'true') {
-                                $subcategory->image = env('AWS_URL') . 'public/storage/' . $subcategory->image;
-                            } else {
-                                $subcategory->image = '';
-                            }
+        $menus = Menu::orderBy('order_number', 'asc')->where('status', 'true')->get();
+        foreach ($menus as $menu) {
+            $cat = Category::orderBy('order_number', 'asc')->where('status', 'true')->where('menu', $menu->id)->get();
+            $menu['categories'] = $cat;
+            foreach ($menu['categories'] as $menucat) {
+                $subcat = Subcategory::orderBy('order_number', 'asc')->where('status', 'true')->where('menu_id', $menucat->menu)->where('category_id', $menucat->id)->get();
+                $subcategory_collection = [];
+                foreach ($subcat as $subcategory) {
+                    if (($subcategory->image != null)) {
+                        if ($subcategory->img_status == 'true') {
+                            $subcategory->image = env('AWS_URL') . 'public/storage/' . $subcategory->image;
                         } else {
                             $subcategory->image = '';
                         }
-                        array_push($subcategory_collection, $subcategory);
+                    } else {
+                        $subcategory->image = '';
                     }
-                    $menucat['subcategories'] = $subcategory_collection;
+                    array_push($subcategory_collection, $subcategory);
                 }
+                $menucat['subcategories'] = $subcategory_collection;
             }
-            Cache::put($cacheKey, $menus, $minutes = 60);
-            $output['data'] = $menus;
-            $output['from'] = 'db';
-            return response()->json($output, 200);
+        }
+        Cache::put($cacheKey, $menus, $minutes = 60);
+        $output['data'] = $menus;
+        $output['from'] = 'db';
+        return response()->json($output, 200);
         // } else {
         //     $output['data'] = $menu_list;
         //     $output['from'] = 'cache';
@@ -55,46 +55,6 @@ class MenuController extends Controller
         // }
     }
 
-    // public function index()
-    // {
-    // 	$output['res'] = 'success';
-    // 	$output['msg'] = 'data retrieved successfully';
-    // 	$menus = Menu::orderBy('order_number','asc')->where('status','true')->get();
-    // 	foreach($menus as $menu)
-    // 	{
-    // 		$cat = Category::orderBy('order_number','asc')->where('status','true')->where('menu',$menu->id)->get();
-    // 		$menu['categories'] = $cat;
-    // 		foreach($menu['categories'] as $menucat)
-    // 		{
-    // 			$subcat = Subcategory::orderBy('order_number','asc')->where('status','true')->where('menu_id',$menucat->menu)->where('category_id',$menucat->id)->get();
-    // 			$subcategory_collection = [];
-    // 			foreach($subcat as $subcategory)
-    // 			{
-    // 			   if(($subcategory->image != null))
-    // 			   {
-    // 				  if($subcategory->img_status =='true')
-    // 				  {
-    // 					// $subcategory->image = url('/').'/storage/app/public/'.$subcategory->image;
-    // 					$subcategory->image = env('AWS_URL').'public/storage/'.$subcategory->image;
-    // 				  }
-    // 				  else
-    // 				  {
-    // 					$subcategory->image = '';
-    // 				  }
-
-    // 			   }
-    // 			   else
-    // 			   {
-    // 				   $subcategory->image ='';
-    // 			   }
-    // 			    array_push($subcategory_collection,$subcategory);
-    // 			}
-    // 			$menucat['subcategories'] = $subcategory_collection;
-    // 		}
-    // 	}
-    // 	$output['data'] = $menus;
-    // 	return response()->json($output, 200);
-    // }
 
     public function brand()
     {
@@ -150,5 +110,29 @@ class MenuController extends Controller
         $response = curl_exec($curl);
         curl_close($curl);
         return $response;
+    }
+
+    ## get meta data
+    public function getMetaData($menu, $category = null, $subcategory = null)
+    {
+        if(is_null($subcategory) && is_null($category) && !is_null($menu))
+        {
+           $metadata =  Menu::where('slug',$menu)->first();
+        }
+        if(!is_null($menu) && !is_null($category) && is_null($subcategory) )
+        {
+           $menu_id =  Menu::where('slug',$menu)->first()['id'];
+           $metadata = Category::where('menu',$menu_id)->where('slug',$category)->first();
+        }
+        if(!is_null($menu) && !is_null($category) && !is_null($subcategory) )
+        {
+           $menu_id =  Menu::where('slug',$menu)->first()['id'];
+           $cat_id =  Category::where('menu',$menu_id)->where('slug',$category)->first()['id'];
+           $metadata = Subcategory::where('menu_id',$menu_id)->where('category_id',$cat_id)->where('slug',$subcategory)->first();
+        }
+        $output['res'] = 'success';
+        $output['msg'] = 'data retrieved successfully';
+        $output['data'] = $metadata;
+        return response()->json($output, 200);
     }
 }
