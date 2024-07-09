@@ -151,7 +151,7 @@ class ReportController extends Controller
         $monthlyRevenue = new LaravelChart($chart_options3);
 
         $chart_options4 = [
-            'chart_title'           => 'Total Revenue (Monthly)',
+            'chart_title'           => 'Total Revenue (Yearly)',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\OrderModel', // Assuming your model is named Order
             'group_by_field'        => 'created_at',

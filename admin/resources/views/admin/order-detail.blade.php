@@ -44,21 +44,26 @@
                         <div class="card-body">
                             <div class="bg-inner cart-section order-details-table">
                                 <div class="row g-4">
-                                    <?php
-                                      var_dump($order)
-                                    ?>
                                     <div class="col-sm-12">
-                                        @if ($invoice_count == 0)
-                                            @if (empty($order->tracking_number))
-                                                <a href="{{ route('sale.orders.refund',['order_id'=>$order->order_id]) }}" class="btn btn-outline-primary">Refund</a>
+                                        @if ($order->order_status == '4')
+                                        <a href="javascript:void(0)"
+                                            class="btn btn-outline-primary">Refunded</a>
+                                        @endif
+                                        @if ($order->order_status != '4')
+                                            @if ($invoice_count == 0)
+                                                @if (empty($order->tracking_number))
+                                                    <a href="{{ route('sale.orders.refund', ['order_id' => $order->order_id]) }}"
+                                                        class="btn btn-outline-primary">Refund</a>
+                                                @endif
                                             @endif
                                         @endif
-
-                                        @if ($invoice_count == 0)
-                                            <button class="btn btn btn-outline-secondary"
-                                                onclick="MakeInvoice('{{ $order->order_id }}')">Invoice</button>
+                                        @if ($order->order_status != '4')
+                                            @if ($invoice_count == 0)
+                                                <button class="btn btn btn-outline-secondary"
+                                                    onclick="MakeInvoice('{{ $order->order_id }}')">Invoice</button>
+                                            @endif
                                         @endif
-                                        @if($order->order_status != '4' ||  $order->order_status != '5')
+                                        @if ($order->order_status != '4')
                                             @if (empty($order->tracking_number))
                                                 <button class="btn btn btn-outline-secondary" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal">Ship</button>
@@ -77,7 +82,7 @@
                                                         <th colspan="2">Items</th>
                                                         <th class="text-end" colspan="2">
                                                             <a href="javascript:void(0)" class="theme-color">Grand Total -
-                                                                ${{ number_format(round($order->amount, 2),2,'.','') }}</a>
+                                                                ${{ number_format(round($order->amount, 2), 2, '.', '') }}</a>
                                                         </th>
                                                     </tr>
                                                 </thead>
@@ -194,7 +199,8 @@
                                                             <td>
                                                                 <p>Price</p>
                                                                 {{-- <h5>${{ round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2) }} </h5> --}}
-                                                                <h5>${{ number_format(round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2) ,2,'.','') }} </h5>
+                                                                <h5>${{ number_format(round($products->ring_price + $products->diamond_price + $products->gemstone_price, 2), 2, '.', '') }}
+                                                                </h5>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -234,7 +240,8 @@
                                                             <h4 class="theme-color fw-bold">Total Price :</h4>
                                                         </td>
                                                         <td>
-                                                            <h4 class="theme-color fw-bold">${{ number_format(round($order->amount, 2),2,'.','') }}
+                                                            <h4 class="theme-color fw-bold">
+                                                                ${{ number_format(round($order->amount, 2), 2, '.', '') }}
                                                             </h4>
                                                         </td>
                                                     </tr>
@@ -253,7 +260,8 @@
                                                         <li>Order Date:
                                                             {{ date('M d , Y', strtotime($order->created_at)) }}
                                                         </li>
-                                                        <li>Order Total: ${{ number_format(round($order->amount, 2),2,'.','') }}</li>
+                                                        <li>Order Total:
+                                                            ${{ number_format(round($order->amount, 2), 2, '.', '') }}</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -327,7 +335,8 @@
                                                     <div class="delivery-sec">
                                                         <h3>expected date of delivery: <span>october 22,
                                                                 2021</span></h3>
-                                                        <a href="#">track order : {{ $order->tracking_number??''; }}</a>
+                                                        <a href="#">track order :
+                                                            {{ $order->tracking_number ?? '' }}</a>
                                                     </div>
                                                 </div>
                                             </div>
