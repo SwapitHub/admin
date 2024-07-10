@@ -286,6 +286,7 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 
 
 	Route::get('/revenue', [App\Http\Controllers\ReportController::class, 'revenue'])->name('sale.revenue');
+    Route::get('/aov-chart', [App\Http\Controllers\ReportController::class, 'showAOVChart']);
 
 
 	//gemstone filters
@@ -348,5 +349,6 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 
     Route::post('/shipping/{order_id}',[App\Http\Controllers\ShippingController::class, 'index'])->name('shipping.create');
     Route::get('/createCharge', [App\Http\Controllers\AdminController::class, 'createCharge']);
+    Route::post('/update/shipping-status', [App\Http\Controllers\ShippingController::class, 'updateStatus'])->name('update.order.status');
 });
 

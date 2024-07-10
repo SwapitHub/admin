@@ -112,7 +112,7 @@
                                                     elseif ($order->name == 'Pending') {
                                                         $color = 'warning';
                                                     } else {
-                                                        $color = 'primary';
+                                                        $color = 'secondary';
                                                     }
                                                     ?>
 

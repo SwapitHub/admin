@@ -16,7 +16,7 @@
 		return response()->json(['csrf_token' => csrf_token()]);
 	});
 	Route::prefix('v1')->group(function () {
-        Route::get('meta_data', [App\Http\Controllers\API\MenuController::class, 'getMetaData']);
+        // Route::get('meta_data', [App\Http\Controllers\API\MenuController::class, 'getMetaData']);
 		Route::any('newsletter',[App\Http\Controllers\API\NewsletterController::class,'index']);
 		Route::get('token', [App\Http\Controllers\API\SiteinfoController::class, 'getCsrfToken']);
 		Route::post('user-registration', [App\Http\Controllers\API\RegisterController::class, 'registerUser']);
@@ -68,6 +68,7 @@
 		Route::get('check-postal-code/{code}',[App\Http\Controllers\API\CheckOutController::class,'checkValidPosalCode']);
 		Route::get('coveted-products/{type}',[App\Http\Controllers\API\ProductController::class,'covetedProducts']);
         Route::get('/invoice/{order_id}',[App\Http\Controllers\InvoiceController::class, 'invoicePdf'])->name('sale.orders.invoice.download');
+        Route::get('meta_data', [App\Http\Controllers\API\MenuController::class, 'getMetaData']);
 
 	});
 

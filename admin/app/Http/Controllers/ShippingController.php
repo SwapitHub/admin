@@ -47,7 +47,7 @@ class ShippingController extends Controller
                         $result = $values['data'];
                         $json_data = $values['json_data'];
 
-                        $updateOrder = ['tracking_number' => $result['TrackingNumber'], 'status' => 'COMPLETED','order_status'=>3];
+                        $updateOrder = ['tracking_number' => $result['TrackingNumber'], 'status' => 'COMPLETED', 'order_status' => 3];
                         $uporder = OrderModel::find($order_id);
                         $updateSuccess = $uporder->update($updateOrder);
                         if ($updateSuccess) {
@@ -77,24 +77,24 @@ class ShippingController extends Controller
     public function list()
     {
         $collection = [];
-        $list = ShipmentModel::select('shipments.*','order_status.name') // Adjust the select clause as needed
+        $list = ShipmentModel::select('shipments.*', 'order_status.name') // Adjust the select clause as needed
             ->join('order_status', 'shipments.delivery_status', '=', 'order_status.id')
             ->orderBy('shipments.id', 'desc')
             ->get();
 
-            foreach($list as $item)
-            {
-                $order_id = $item['order_id'];
-                $order_data = OrderModel::where('order_id',$order_id)->first();
-                $users = User::where('id',$order_data['user_id'])->first();
-                $address = AddresModel::where('user_id',$order_data['user_id'])->first();
-                $item['tracking_number'] = $order_data['tracking_number'];
-                $item['username'] = $users['first_name'] . ' ' . $users['last_name'];
-                $item['useraddress'] = $address;
-                $collection[] = $item;
-            }
+        foreach ($list as $item) {
+            $order_id = $item['order_id'];
+            $order_data = OrderModel::where('order_id', $order_id)->first();
+            $users = User::where('id', $order_data['user_id'])->first();
+            $address = AddresModel::where('user_id', $order_data['user_id'])->first();
+            $item['tracking_number'] = $order_data['tracking_number'];
+            $item['username'] = $users['first_name'] . ' ' . $users['last_name'];
+            $item['useraddress'] = $address;
+            $collection[] = $item;
+        }
         $data = [
             'list' => $collection,
+            'order_status' => OrderStatus::where('status', 'true')->get(),
         ];
         return view('admin.shipments', $data);
     }
@@ -124,5 +124,31 @@ class ShippingController extends Controller
         $data['invoice'] = $invoiceData->first();
         $data['shipping_data'] = ShipmentModel::where('order_id', $order_data->order_id)->first();
         return view('admin.shipment-view', $data);
+    }
+
+    ## update order and shipping status
+
+    public function updateStatus(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required',
+            'order_status' => 'required',
+        ], [
+            'id.required' => 'The Id field is required.',
+            'order_status.required' => 'The Order status field is required.',
+        ]);
+
+        $shipment = ShipmentModel::find($request->id);
+
+        if (!$shipment) {
+            return redirect()->back()->with('error', 'Shipment not found.');
+        }
+
+        $is_update = $shipment->update(['delivery_status' => $request->order_status]);
+
+        if ($is_update) {
+            OrderModel::where('order_id', $shipment->order_id)->update(['order_status' => $request->order_status]);
+        }
+        return redirect()->back()->with('success', 'Order status updated successfully.');
     }
 }

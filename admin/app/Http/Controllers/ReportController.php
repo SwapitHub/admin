@@ -93,27 +93,6 @@ class ReportController extends Controller
 
     public function revenue()
     {
-        // $dailyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, DATE(created_at) as date')
-        //     ->groupBy('date')
-        //     ->pluck('total_revenue', 'date');
-
-        // $weeklyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, YEARWEEK(created_at) as week')
-        //     ->groupBy('week')
-        //     ->pluck('total_revenue', 'week');
-
-        // $monthlyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, MONTH(created_at) as month')
-        //     ->whereYear('created_at', Carbon::now()->year)
-        //     ->groupBy('month')
-        //     ->pluck('total_revenue', 'month');
-
-        // $yearlyRevenue = OrderModel::selectRaw('SUM(amount) as total_revenue, YEAR(created_at) as year')
-        //     ->groupBy('year')
-        //     ->pluck('total_revenue', 'year');
-
-        // return view('admin.revenue', compact('dailyRevenue', 'weeklyRevenue', 'monthlyRevenue', 'yearlyRevenue'));
-
-
-
         $chart_options1 = [
             'chart_title'           => 'Total Revenue (Daily)',
             'report_type'           => 'group_by_date',
@@ -162,7 +141,54 @@ class ReportController extends Controller
         ];
         $yearlyRevenue = new LaravelChart($chart_options4);
 
+        ## average order value
+        // Fetch data grouped by year
+        $orders = OrderModel::selectRaw('YEAR(created_at) as year, SUM(amount) as total_revenue, COUNT(*) as order_count')
+            ->groupBy('year')
+            ->get();
 
-        return view('admin.revenue', compact('dailyRevenue','weekleyRevenue','monthlyRevenue','yearlyRevenue'));
+        // Calculate average order value for each year
+        $averageOrderValues = $orders->map(function ($order) {
+            return [
+                'year' => $order->year,
+                'average_order_value' => $order->total_revenue / $order->order_count,
+            ];
+        });
+
+        ## average basket value
+        // Fetch data grouped by year
+        $aveorders = OrderModel::selectRaw('YEAR(created_at) as year, SUM(amount) as total_revenue, COUNT(*) as order_count')
+            ->groupBy('year')
+            ->get();
+
+        // Calculate average basket value for each year
+        $averageBasketValues = $orders->map(function ($aveorders) {
+            return [
+                'year' => $aveorders->year,
+                'average_basket_value' => $aveorders->total_revenue / $aveorders->order_count,
+            ];
+        });
+
+
+
+        return view('admin.revenue', compact('dailyRevenue', 'weekleyRevenue', 'monthlyRevenue', 'yearlyRevenue', 'averageOrderValues','averageBasketValues'));
+    }
+
+    public function showAOVChart()
+    {
+        // Fetch data grouped by year
+        $orders = OrderModel::selectRaw('YEAR(created_at) as year, SUM(amount) as total_revenue, COUNT(*) as order_count')
+            ->groupBy('year')
+            ->get();
+
+        // Calculate average order value for each year
+        $averageOrderValues = $orders->map(function ($order) {
+            return [
+                'year' => $order->year,
+                'average_order_value' => $order->total_revenue / $order->order_count,
+            ];
+        });
+
+        return view('admin.aov_chart', compact('averageOrderValues'));
     }
 }

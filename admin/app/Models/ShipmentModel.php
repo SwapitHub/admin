@@ -9,4 +9,5 @@ class ShipmentModel extends Model
 {
     use HasFactory;
     protected $table = 'shipments';
+    protected $guarded = [];
 }
