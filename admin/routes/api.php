@@ -69,7 +69,7 @@
 		Route::get('check-postal-code/{code}',[App\Http\Controllers\API\CheckOutController::class,'checkValidPosalCode']);
 		Route::get('coveted-products/{type}',[App\Http\Controllers\API\ProductController::class,'covetedProducts']);
         Route::get('/invoice/{order_id}',[App\Http\Controllers\InvoiceController::class, 'invoicePdf'])->name('sale.orders.invoice.download');
-        // Route::post('meta_data', [App\Http\Controllers\API\MenuController::class, 'getMetaData']);
+        Route::any('check', [App\Http\Controllers\API\MenuController::class, 'check']);
 
 	});
 
