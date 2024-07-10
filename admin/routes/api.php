@@ -26,6 +26,7 @@
 		Route::get('languages',[App\Http\Controllers\API\LocalizationController::class,'index']);
 		Route::get('banners',[App\Http\Controllers\API\BannerController::class,'index']);
 		Route::get('siteinfo',[App\Http\Controllers\API\SiteinfoController::class,'index']);
+		Route::any('get-data',[App\Http\Controllers\API\SiteinfoController::class,'getMetaData']);
 		Route::get('menu',[App\Http\Controllers\API\MenuController::class,'index']);
 		Route::get('brand',[App\Http\Controllers\API\MenuController::class,'brand']);
 		Route::get('get-menu/{slug}',[App\Http\Controllers\API\MenuController::class,'getMenuName']);
@@ -68,7 +69,7 @@
 		Route::get('check-postal-code/{code}',[App\Http\Controllers\API\CheckOutController::class,'checkValidPosalCode']);
 		Route::get('coveted-products/{type}',[App\Http\Controllers\API\ProductController::class,'covetedProducts']);
         Route::get('/invoice/{order_id}',[App\Http\Controllers\InvoiceController::class, 'invoicePdf'])->name('sale.orders.invoice.download');
-        Route::post('meta_data', [App\Http\Controllers\API\MenuController::class, 'getMetaData']);
+        // Route::post('meta_data', [App\Http\Controllers\API\MenuController::class, 'getMetaData']);
 
 	});
 

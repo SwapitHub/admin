@@ -45,13 +45,16 @@ class CartController extends Controller
 		} else {
 			$metalColorval = $request->metalColor;
 			switch ($metalColorval) {
-				case "18K WHITE GOLD":
+				// case "18K WHITE GOLD":
+				case "18k-white-gold":
 					$metalColor = 'White';
 					break;
-				case "18K YELLOW GOLD":
+				// case "18K YELLOW GOLD":
+				case "18k-yellow-gold":
 					$metalColor = 'Yellow';
 					break;
-				case "18K ROSE GOLD":
+				// case "18K ROSE GOLD":
+				case "18K-rose-gold":
 					$metalColor = 'Pink';
 					break;
 				default:

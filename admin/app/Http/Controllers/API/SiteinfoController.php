@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SiteInfo;
 use App\Models\HomeContent;
+use App\Models\Menu;
+use App\Models\Category;
+use App\Models\Subcategory;
 use App\Models\MetalColor;
 use App\Models\Widget;
 use App\Models\HomeSection1;
@@ -124,4 +127,34 @@ class SiteinfoController extends Controller
         $output['data'] = $collection;
         return response()->json($output, 200);
     }
+
+     ## get meta data
+     public function getMetaData(Request $request)
+     {
+         if(is_null($request->subcategory) && is_null($request->category) && !is_null($request->menu))
+         {
+            $metadata =  Menu::where('slug',$request->menu)->first();
+         }
+         if(!is_null($request->menu) && !is_null($request->category) && is_null($request->subcategory) )
+         {
+            $menu_id =  Menu::where('slug',$request->menu)->first()['id'];
+            $metadata = Category::where('menu',$menu_id)->where('slug',$request->category)->first();
+         }
+         if(!is_null($request->menu) && !is_null($request->category) && !is_null($request->subcategory) )
+         {
+            $menu_id =  Menu::where('slug',$request->menu)->first()['id'];
+            $cat_id =  Category::where('menu',$menu_id)->where('slug',$request->category)->orWhere('alias',$request->category)->first()['id'];
+            $metadata = Subcategory::where('menu_id',$menu_id)->where('category_id',$cat_id)->where('slug',$request->subcategory)->orWhere('alias',$request->subcategory)->first();
+         }
+
+         if(!is_null($request->menu) && is_null($request->category) && !is_null($request->subcategory) )
+         {
+            $menu_id =  Menu::where('slug',$request->menu)->first()['id'];
+            $metadata = Subcategory::where('menu_id',$menu_id)->where('slug',$request->subcategory)->orWhere('alias',$request->subcategory)->first();
+         }
+         $output['res'] = 'success';
+         $output['msg'] = 'data retrieved successfully';
+         $output['data'] = $metadata;
+         return response()->json($output, 200);
+     }
 }
