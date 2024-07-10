@@ -80,6 +80,17 @@
                     </div>
                 </div>
 
+                <div class="col-lg-12 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>NetRevenue</h5>
+                        </div>
+                        <div class="card-body expense-chart">
+                            <canvas id="netRevenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="col-lg-6 mx-auto">
                     <div class="card">
@@ -160,6 +171,33 @@
                     }
                 }
             });
+        });
+
+        var ctx = document.getElementById('netRevenueChart').getContext('2d');
+        var chartData = @json($netRevenue);
+
+        var labels = chartData.map(data => data.year);
+        var netRevenue = chartData.map(data => data.net_revenue);
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Net Revenue',
+                    data: netRevenue,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     </script>
     @endpush

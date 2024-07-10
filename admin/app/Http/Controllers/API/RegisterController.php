@@ -30,7 +30,8 @@
 			if($validator->fails())
 			{
 				$output['res'] = 'error';
-				$output['msg'] = $validator->errors();
+				// $output['msg'] = $validator->errors();
+				$output['msg'] = $validator->errors()->all();
 				$output['data'] =[];
 				return response()->json($output, 400);
 			}

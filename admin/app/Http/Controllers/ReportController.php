@@ -130,7 +130,7 @@ class ReportController extends Controller
         $monthlyRevenue = new LaravelChart($chart_options3);
 
         $chart_options4 = [
-            'chart_title'           => 'Total Revenue (Yearly)',
+            'chart_title'           => 'Total Revenue (Yearly/Gross)',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\OrderModel', // Assuming your model is named Order
             'group_by_field'        => 'created_at',
@@ -169,9 +169,24 @@ class ReportController extends Controller
             ];
         });
 
+        ## net revenue
+        $netRevenueData = OrderModel::leftJoin('refund', 'orders.order_id', '=', 'refund.order_id')
+            ->select(
+                DB::raw('YEAR(orders.created_at) as year'),
+                DB::raw('SUM(orders.amount) - IFNULL(SUM(refund.amount), 0) as net_revenue')
+            )
+            ->groupBy('year')
+            ->get();
+
+            $netRevenue = $netRevenueData->map(function($data) {
+                return [
+                    'year' => $data->year,
+                    'net_revenue' => $data->net_revenue,
+                ];
+            });
 
 
-        return view('admin.revenue', compact('dailyRevenue', 'weekleyRevenue', 'monthlyRevenue', 'yearlyRevenue', 'averageOrderValues','averageBasketValues'));
+        return view('admin.revenue', compact('dailyRevenue', 'weekleyRevenue', 'monthlyRevenue', 'yearlyRevenue', 'averageOrderValues', 'averageBasketValues','netRevenue'));
     }
 
     public function showAOVChart()
