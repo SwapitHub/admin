@@ -662,7 +662,7 @@
                                     <div class="digital-add needs-validation">
                                         <div class="placeholder-img">
                                             <center>
-                                                <img src="https://dev.demo-swapithub.com/bagisto/public/themes/admin/default/build/assets/icon-add-product-e3232d62.svg"
+                                                <img src="https://s3-sama.s3.us-east-2.amazonaws.com/public/icon-add-product.svg"
                                                     style="height:80px;width:80px"
                                                     class="height=80px; weight=80px dark:invert dark:mix-blend-exclusion"><br>
                                                 <span class="col-form-label">add similar product</span>

@@ -60,6 +60,7 @@
 											<th>
 												Sr. No
 											</th>
+											<th>Type</th>
 											<th>Name</th>
 											<th>Sku</th>
 											<th>status</th>
@@ -76,6 +77,7 @@
 										@foreach($list as $index=>$item)
 										<tr>
 											<td>{{ $index+1 }}</td>
+											<td>{{ $item->type }}</td>
 											<td>{{ $item->name }}</td>
 											<td>{{ $item->sku }}</td>
 											<td class="text-uppercase"> <span class="badge badge-{{ ($item->status=='true')?'success':'primary' }}">{{ $item->status }}</span> </td>

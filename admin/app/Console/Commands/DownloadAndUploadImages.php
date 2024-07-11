@@ -34,7 +34,7 @@ class DownloadAndUploadImages extends Command
             }
 
             // Create local folder for SKU if it doesn't exist
-            $localFolder = storage_path("app/public/$sku");
+            $localFolder = storage_path("app/public/products/$sku");
             if (!file_exists($localFolder)) {
                 mkdir($localFolder, 0777, true);
             }
