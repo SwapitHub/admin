@@ -12,6 +12,14 @@ use App\Models\CenterStone;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 
+if (!function_exists('getProductIdBasedOnSku')) {
+    function getProductIdBasedOnSku($sku)
+    {
+        $id = ProductModel::where('sku', $sku)->pluck('id')->first()??null;
+        return $id;
+    }
+}
+
 if (!function_exists('getCenterStoneValues')) {
     function getCenterStoneValues($id)
     {

@@ -143,7 +143,8 @@ class ProductController extends Controller
 
     public function dbProduct(Request $request)
     {
-        $products = ProductModel::orderBy('id', 'desc')->where('parent_sku','=',null)->paginate(30);
+        // $products = ProductModel::orderBy('id', 'desc')->where('parent_sku','=',null)->paginate(30);
+        $products = ProductModel::orderBy('id', 'desc')->paginate(30);
         if (isset($request->filter)) {
             $keyword = trim($request->filter);
             $products = ProductModel::orderBy('id', 'desc')
@@ -409,7 +410,8 @@ class ProductController extends Controller
 
     public function editProduct($id)
     {
-        $product = ProductModel::find($id);
+
+        $product = ProductModel::findOrFail($id);
         $category = $product['category'];
         $subcategory = $product['sub_category'];
         $centerStone = CenterStone::orderBy('id', 'desc')->get();
@@ -479,6 +481,8 @@ class ProductController extends Controller
             $data['variations'] = '';
         }
         return view('admin.configurable-product', $data);
+
+
     }
 
     public function postUpdateProduct(Request $request, $id)

@@ -609,7 +609,7 @@
                                     <h5>Variations</h5>
                                     <p> Variation products are depend on all possible combination of attribute</p>
 
-                                    {{-- <button class="btn btn-success">Add Variant</button> --}}
+                                    <button type="button" class="btn btn-success">Add Variant</button>
                                 </div>
                                 <div class="card-body">
                                     <div class="user-status table-responsive products-table">

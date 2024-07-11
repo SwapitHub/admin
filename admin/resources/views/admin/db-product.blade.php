@@ -61,6 +61,7 @@
 												Sr. No
 											</th>
 											<th>Type</th>
+											<th>Parent Sku</th>
 											<th>Name</th>
 											<th>Sku</th>
 											<th>status</th>
@@ -77,7 +78,8 @@
 										@foreach($list as $index=>$item)
 										<tr>
 											<td>{{ $index+1 }}</td>
-											<td>{{ $item->type }}</td>
+											<td>{{ $item->type =='parent_product'?'Parent Product':'Child Product'; }}</td>
+											<td><a href="{{ url('/db-product-list/edit') }}/{{ getProductIdBasedOnSku(!is_null($item->parent_sku)?$item->parent_sku:$item->sku) }}" style="text-decoration: underline; color:blue !important">{{ !is_null($item->parent_sku)?$item->parent_sku:$item->sku }}</a></td>
 											<td>{{ $item->name }}</td>
 											<td>{{ $item->sku }}</td>
 											<td class="text-uppercase"> <span class="badge badge-{{ ($item->status=='true')?'success':'primary' }}">{{ $item->status }}</span> </td>
