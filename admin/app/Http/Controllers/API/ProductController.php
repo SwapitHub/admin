@@ -168,33 +168,39 @@ class ProductController extends Controller
                 $product->name = ucwords($name);
 
                 // Get the prices based on different criteria
-                $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])
+                 $white_gold_price = ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'White')
                     ->where('diamond_type', 'natural')
                     ->first()
-                    ->price ?? 0,0);
+                    ->price ?? 0;
+                    $product->white_gold_price = round($white_gold_price,0);
 
-                $product->yellow_gold_price = round(ProductPrice::where('product_sku', $product['sku'])
+                 $yellow_gold_price= ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'Yellow')
                     ->where('diamond_type', 'natural')
                     ->first()
-                    ->price ?? 0,0);
+                    ->price ?? 0;
 
-                $product->rose_gold_price = round(ProductPrice::where('product_sku', $product['sku'])
+                    $product->yellow_gold_price = round($yellow_gold_price,0);
+
+                 $rose_gold_price = ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'Pink')
                     ->where('diamond_type', 'natural')
                     ->first()
-                    ->price ?? 0,0);
+                    ->price ?? 0;
+                    $product->rose_gold_price = round($rose_gold_price,0);
 
-                $product->platinum_price = round(ProductPrice::where('product_sku', $product['sku'])
+                 $platinum_price = ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', 'Platinum')
                     ->where('metalColor', 'White')
                     ->where('diamond_type', 'natural')
                     ->first()
-                    ->price ?? 0,0);
+                    ->price ?? 0;
+
+                    $product->platinum_price = round($platinum_price,0);
 
                 array_push($productList, $product);
             }
