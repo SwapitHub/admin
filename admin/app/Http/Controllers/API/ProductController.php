@@ -168,33 +168,33 @@ class ProductController extends Controller
                 $product->name = ucwords($name);
 
                 // Get the prices based on different criteria
-                $product->white_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'White')
                     ->where('diamond_type', 'natural')
                     ->first()
-                    ->price ?? 0;
+                    ->price ?? 0,0);
 
-                $product->yellow_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                $product->yellow_gold_price = round(ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'Yellow')
                     ->where('diamond_type', 'natural')
                     ->first()
-                    ->price ?? 0;
+                    ->price ?? 0,0);
 
-                $product->rose_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                $product->rose_gold_price = round(ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'Pink')
                     ->where('diamond_type', 'natural')
                     ->first()
-                    ->price ?? 0;
+                    ->price ?? 0,0);
 
-                $product->platinum_price = ProductPrice::where('product_sku', $product['sku'])
+                $product->platinum_price = round(ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', 'Platinum')
                     ->where('metalColor', 'White')
                     ->where('diamond_type', 'natural')
                     ->first()
-                    ->price ?? 0;
+                    ->price ?? 0,0);
 
                 array_push($productList, $product);
             }
@@ -229,9 +229,9 @@ class ProductController extends Controller
             $product['videos'] = json_decode($product['videos']);
             $priceData = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first();
             $product['white_gold_price'] = $priceData['price'] ?? 0;
-            $product['yellow_gold_price'] = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Yellow')->where('diamond_type', 'natural')->first()['price'] ?? 0;
-            $product['rose_gold_price'] = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Pink')->where('diamond_type', 'natural')->first()['price'] ?? 0;
-            $product['platinum_price'] = ProductPrice::where('product_sku', $product['sku'])->where('metalType', 'Platinum')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
+            $product['yellow_gold_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Yellow')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
+            $product['rose_gold_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Pink')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
+            $product['platinum_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', 'Platinum')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
             $product['diamond_type'] = 'natural';
             $product['diamondQuality'] = $priceData['diamondQuality'] ?? 0;
             $product['metalType'] = '18KT Gold';
@@ -240,7 +240,7 @@ class ProductController extends Controller
                 $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
                 if ($is_matchingset->exists()) {
                     $matching_bands_product = $is_matchingset->first();
-                    $matching_bands_product->price = ProductPrice::where('product_sku', $matching_bands_product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0;
+                    $matching_bands_product->price = round(ProductPrice::where('product_sku', $matching_bands_product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
 
                     $product['matching_wedding_band'] = $matching_bands_product;
                 } else {
