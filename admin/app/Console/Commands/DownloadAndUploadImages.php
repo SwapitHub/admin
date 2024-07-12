@@ -88,7 +88,7 @@ class DownloadAndUploadImages extends Command
     //             $image = filter_var($image, FILTER_SANITIZE_URL);
 
     //             $imageName = basename($image);
-    //             $s3Path = "products/$sku/$imageName";
+    //             $s3Path = env('AWS_URL')."public/products/images/$sku/$imageName";
 
     //             // Check if the image already exists in the S3 bucket
     //             if (Storage::disk('s3')->exists($s3Path)) {
