@@ -609,7 +609,8 @@
                                     <h5>Variations</h5>
                                     <p> Variation products are depend on all possible combination of attribute</p>
 
-                                    <button type="button" class="btn btn-success">Add Variant</button>
+                                    <button type="button" data-bs-toggle="modal"
+                                    data-bs-target="#addVariantProductModal" class="btn btn-success">Add Variant</button>
                                 </div>
                                 <div class="card-body">
                                     <div class="user-status table-responsive products-table">
@@ -653,7 +654,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="col-form-label">Choose Similar Products</h5>
-                                <button class="btn btn-small btn-outline-primary" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-small btn-outline-primary" data-bs-toggle="modal"
                                     data-bs-target="#addSimilarProductModal">Add Product</button>
                             </div>
                             <div class="card-body" id="similar-table">
@@ -789,6 +790,63 @@
             </div>
         </div>
     </div>
+
+
+     <!-- Variant Modal -->
+     <div class="modal fade" id="addVariantProductModal" tabindex="-1" aria-labelledby="addVariantProductModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog modal-lg">
+         <form action="#" method="POST" id="submit-variant">
+             @csrf
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="addSimilarProductModalLabel">Choose Variant</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                 </div>
+                 <div class="modal-body">
+                     <div class="form-group">
+                         <label for="" class="col-form-label"><span class="text-danger">*</span> Manu</label>
+                         <select class="custom-select form-control" name="variant-menu" required=""
+                             id="variant-menu">
+                             <option value="">--Select--</option>
+                             @foreach ($Menus as $pmenu)
+                                 <option value="{{ $pmenu['id'] }}">{{ $pmenu['name'] }}</option>
+                             @endforeach
+                         </select>
+                         <input type="hidden" name="baseproduct_id" value="{{ $product['id'] }}" class="form-control">
+                     </div>
+                     <div class="form-group">
+                         <label for="" class="col-form-label"><span class="text-danger">*</span>
+                             categories</label>
+                         <select class="custom-select form-control" name="variant-category" required=""
+                             id="variant-category">
+                             <option value="">--Select--</option>
+                         </select>
+                     </div>
+                     <div class="form-group">
+                         <label for="" class="col-form-label">Subcategory</label>
+                         <select class="custom-select form-control" name="variant-subcategory"
+                             id="variant-subcategory">
+                             <option value="">--Select--</option>
+                         </select>
+                     </div>
+                     <div class="form-group" id="multichoice-pro">
+                         <label for="" class="col-form-label"><span class="text-danger">*</span>
+                             Products</label>
+                         <select class="custom-select form-control multichoose" multiple name="variant-product[]"
+                             id="" required="">
+                             <option value="">--Select--</option>
+                         </select>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-primary">Add</button>
+                 </div>
+             </div>
+         </form>
+     </div>
+ </div>
 
     @push('scripts')
         <script>
@@ -942,6 +1000,64 @@
                 var sub_category_id = ''
                 getProductBasedOnValues(menuid, catid, sub_category_id);
             });
+
+
+           // show product for variant
+           $("#variant-menu").change(function() {
+                var menuid = $("#variant-menu").val();
+                var baseUrl = "{{ url('/') }}";
+                var url = baseUrl + '/filter-category/' + menuid;
+                $("#variant-category").load(url);
+            });
+
+            $("#variant-category").change(function() {
+                var menuid = $("#variant-menu").val();
+                var catid = $("#variant-category").val();
+                var baseUrl = "{{ url('/') }}";
+                var url = baseUrl + '/filter-subcategory/' + menuid + "/" + catid;
+                $("#variant-subcategory").load(url);
+                var sub_category_id = ''
+                getProductBasedOnValues(menuid, catid, sub_category_id);
+            });
+            $("#variant-subcategory").change(function() {
+                var menuid = $("#variant-menu").val();
+                var catid = $("#variant-category").val();
+                var subcategory = $("#variant-subcategory").val();
+                getProductBasedOnValues(menuid, catid, subcategory);
+            });
+
+            function getProductBasedOnValues(menu_id, category_id, sub_category_id) {
+                var product_id = {{ $product->id }};
+                category_id = category_id || '';
+                sub_category_id = sub_category_id || '';
+                var jsondata = {
+                    product_id: product_id,
+                    menu_id: menu_id,
+                    category_id: category_id,
+                    sub_category_id: sub_category_id
+                };
+                var csrfToken = '{{ csrf_token() }}';
+                $.ajax({
+                    url: "{{ url('filter-product') }}",
+                    method: "POST",
+                    data: {
+                        _token: csrfToken,
+                        data: jsondata
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(res) {
+                        // console.log(res);
+                        $("#multichoice-pro").html(res);
+                    },
+                    error: function(res) {
+                        console.log(res);
+                    }
+                });
+            }
+
+
         </script>
     @endpush
 @endsection
