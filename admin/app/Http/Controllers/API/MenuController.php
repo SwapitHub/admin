@@ -133,6 +133,10 @@ class MenuController extends Controller
 
         if(!empty($request->menu) && empty($request->category) && !empty($request->subcategory) )
         {
+            if($request->menu == 'gemstone' || $request->menu =='gemstones')
+            {
+                $request->menu = 'gemstones';
+            }
            $menu_id =  Menu::where('slug',$request->menu)->first()['id'];
            $metadata = Subcategory::where('menu_id',$menu_id)->where('slug',$request->subcategory)->orWhere('alias',$request->subcategory)->first();
         }
