@@ -152,9 +152,11 @@ class MenuController extends Controller
         // {
         //    $metadata =  Cmscategory::where('name',$request->route)->first();
         // }
+
+
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
-        $output['data'] = "OK";
+        $output['data'] = $request->all();
         return response()->json($output, 200);
     }
 }
