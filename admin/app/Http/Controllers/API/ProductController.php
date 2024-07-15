@@ -52,7 +52,7 @@ class ProductController extends Controller
             if ($product_price) {
                 $output['res'] = 'success';
                 $output['msg'] = 'product price is :';
-                $output['data'] = ['price'=>round($product_price->price,0)];
+                $output['data'] = ['price'=>round($product_price->price,0),'diamond_type'=>$product_price->diamond_type];
             } else {
                 $output['res'] = 'error';
                 $output['msg'] = 'product price not found';
