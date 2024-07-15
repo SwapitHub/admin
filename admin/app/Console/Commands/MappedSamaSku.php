@@ -61,7 +61,8 @@ class MappedSamaSku extends Command
             }
 
             // Generate the internal SKU
-            $internal_sku = "SA" . $sku . $metal .'-'.$fractionsemimount;
+            // $internal_sku = "SA" . $sku . $metal .'-'.$fractionsemimount;
+            $internal_sku = "SA" . str_replace('/', '', $sku) . $metal .'-'.$fractionsemimount;
 
             // Update the product record with the new internal SKU
             $skuupdate = ProductModel::find($product->id);
