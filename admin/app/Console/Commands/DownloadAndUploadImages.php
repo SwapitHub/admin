@@ -20,50 +20,59 @@ class DownloadAndUploadImages extends Command
 
     ## script to download images on loacl storage
     public function handle()
-    {
-        $products = DB::table('products')->select('id', 'sku', 'images')->get();
-        $client = new \GuzzleHttp\Client();
+{
+    $products = DB::table('products')->select('id', 'sku', 'internal_sku', 'images')->get();
+    $client = new \GuzzleHttp\Client();
 
-        foreach ($products as $product) {
-            $sku = $product->sku;
-            $images = json_decode($product->images);
+    foreach ($products as $product) {
+        $sku = $product->sku;
+        $internalSku = $product->internal_sku;
+        $images = json_decode($product->images);
 
-            if (!is_array($images)) {
-                $this->error("Invalid image data for SKU: $sku");
+        if (!is_array($images)) {
+            $this->error("Invalid image data for SKU: $internalSku");
+            continue;
+        }
+
+        $localFolder = storage_path("app/public/products/$internalSku");
+        if (!file_exists($localFolder)) {
+            mkdir($localFolder, 0777, true);
+        }
+
+        foreach ($images as $image) {
+            // Trim whitespace and sanitize the URL
+            $image = trim($image);
+            $image = filter_var($image, FILTER_SANITIZE_URL);
+
+            $imageName = basename($image);
+            // Replace the SKU in the image name
+            $modifiedImageName = str_replace($sku, $internalSku, $imageName);
+            $localPath = "$localFolder/$modifiedImageName";
+
+            // Check if the image already exists
+            if (file_exists($localPath)) {
+                $this->info("Image $localPath already exists. Skipping download.");
                 continue;
             }
 
-            $localFolder = storage_path("app/public/products/$sku");
-            if (!file_exists($localFolder)) {
-                mkdir($localFolder, 0777, true);
-            }
+            try {
+                // Download the image using the original URL
+                $response = $client->get($image);
+                file_put_contents($localPath, $response->getBody());
 
-            foreach ($images as $image) {
-                // Trim whitespace and sanitize the URL
-                $image = trim($image);
-                $image = filter_var($image, FILTER_SANITIZE_URL);
+                // Update the database
+                ProductImageModel::updateOrCreate(
+                    ['product_id' => $product->id, 'product_sku' => $internalSku, 'image_path' => $modifiedImageName]
+                );
 
-                $imageName = basename($image);
-                $localPath = "$localFolder/$imageName";
-                if (file_exists($localPath)) {
-                    $this->info("Image $localPath already exists. Skipping download.");
-                    continue;
-                }
-
-                try {
-                    $response = $client->get($image);
-                    file_put_contents($localPath, $response->getBody());
-                    // Update the database
-                    ProductImageModel::updateOrCreate(
-                        ['product_id' => $product->id, 'product_sku' => $sku, 'image_path' => $imageName]
-                    );
-                    $this->info("Downloaded $image to $localPath.");
-                } catch (\Exception $e) {
-                    $this->error("Failed to download image: $image. Error: " . $e->getMessage());
-                }
+                $this->info("Downloaded $image to $localPath.");
+            } catch (\Exception $e) {
+                $this->error("Failed to download image: $image. Error: " . $e->getMessage());
             }
         }
     }
+}
+
 
     ## script to upload image directoly on s3 bucket
     // public function handle()
