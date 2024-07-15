@@ -8,6 +8,7 @@ use App\Models\Menu;
 use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\Widget;
+use App\Models\Cmscategory;
 use Illuminate\Support\Facades\Cache;
 
 class MenuController extends Controller
@@ -136,6 +137,19 @@ class MenuController extends Controller
 
            $menu_id =  Menu::where('slug',$request->menu)->orWhere('alias',$request->menu)->first()['id'];
            $metadata = Subcategory::where('menu_id',$menu_id)->where('slug',$request->subcategory)->orWhere('alias',$request->subcategory)->first();
+        }
+        $output['res'] = 'success';
+        $output['msg'] = 'data retrieved successfully';
+        $output['data'] = $metadata;
+        return response()->json($output, 200);
+    }
+
+    ## get meta data
+    public function cmsMetaData(Request $request)
+    {
+        if(empty($request->route))
+        {
+           $metadata =  Cmscategory::where('name',$request->route)->first();
         }
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
