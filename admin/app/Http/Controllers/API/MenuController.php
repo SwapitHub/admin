@@ -147,10 +147,21 @@ class MenuController extends Controller
     ## get meta data
     public function cmsMetaData(Request $request)
     {
-        $metadata =  Cmscategory::where('name',$request->route)->first();
-        $output['res'] = 'success';
-        $output['msg'] = 'data retrieved successfully';
-        $output['data'] = $metadata;
-        return response()->json($output, 200);
+        if(!is_null($request->route))
+        {
+            $metadata =  Cmscategory::where('name',$request->route)->first();
+            $output['res'] = 'success';
+            $output['msg'] = 'data retrieved successfully';
+            $output['data'] = $metadata;
+            return response()->json($output, 200);
+        }else
+        {
+            $output['res'] = 'error';
+            $output['msg'] = 'Route name is required';
+            $output['data'] = [];
+            return response()->json($output, 401);
+        }
+
+
     }
 }
