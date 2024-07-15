@@ -117,7 +117,7 @@ class MenuController extends Controller
     {
         if(empty($request->subcategory) && empty($request->category) && !empty($request->menu))
         {
-           $metadata =  Menu::where('slug',$request->menu)->first();
+           $metadata =  Menu::where('slug',$request->menu)->orWhere('alias',$request->menu)->first();
         }
         if(!empty($request->menu) && !empty($request->category) && empty($request->subcategory) )
         {
