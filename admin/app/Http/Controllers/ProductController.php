@@ -340,6 +340,7 @@ class ProductController extends Controller
         $product->product_browse_pg_name = $request->product_browse_pg_name;
         $product->menu = $request->menu;
         $product->slug = $slug;
+        $product->internal_sku = $request->internal_sku;
         $product->description = $request->description;
         $product->category = $request->category;
         $product->sub_category = $request->subcatagory;

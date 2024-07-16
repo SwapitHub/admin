@@ -240,15 +240,15 @@ class DownloadAndUploadImages extends Command
                     if ($e->hasResponse()) {
                         $response = $e->getResponse();
                         $this->error("Failed to download image1: $image. HTTP Status Code: " . $response->getStatusCode() . " - " . $response->getReasonPhrase());
-                        // exit;
+                        exit;
                     } else {
                         $this->error("Failed to download image2: $image. Error: " . $e->getMessage());
-                        // exit;
+                        exit;
                     }
                 } catch (\Exception $e) {
                     $this->error("Failed to download image3: $image. Error: " . $e->getMessage());
-                    // echo $localPath;
-                    // exit;
+                    echo $localPath;
+                    exit;
                 }
             }
         }

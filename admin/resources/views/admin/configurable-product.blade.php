@@ -77,7 +77,17 @@
                                             SKU</label>
                                         <input class="form-control" id="validationCustomtitle"
                                             value="{{ old('internal_sku', $product['sku']) }}" type="text"
-                                            required="">
+                                            required="" readonly>
+                                        @error('sku')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="validationCustomtitle" class="col-form-label pt-0"><span>*</span>
+                                            Internal SKU</label>
+                                        <input class="form-control" id="validationCustomtitle"
+                                            value="{{ old('internal_sku', $product['internal_sku']) }}" type="text"
+                                            required="" name="internal_sku">
                                         @error('sku')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
