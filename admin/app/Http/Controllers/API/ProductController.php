@@ -423,6 +423,7 @@ class ProductController extends Controller
                 $name = strtolower($product->product_browse_pg_name);
                 // $product->name = ucwords($name);
                 $product->name = ucfirst($name . ' ' .$product->fractionsemimount);
+                $product->menu = Menu::find($product->menu)['slug'];
                 $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
                 array_push($searched_product, $product);
             }
