@@ -79,17 +79,24 @@ class ProductController extends Controller
         $output['msg'] = 'data retrieved successfully';
 
         // Initialize the query with the base conditions and join with product_price table
+        // $products = ProductModel::query()
+        //     ->leftJoin('product_price', 'products.sku', '=', 'product_price.product_sku')
+        //     ->where('products.status', 'true')
+        //     ->where('products.menu', 7)
+        //     ->whereNull('products.parent_sku')
+        //     ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
+        //     ->where('product_price.metalColor', 'White')
+        //     ->where('product_price.metalType', '18kt')
+        //     ->select('products.*','product_price.price')
+        //     ## ->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) ASC")
+        //     ->distinct(); // Ensure distinct products
+
         $products = ProductModel::query()
             ->leftJoin('product_price', 'products.sku', '=', 'product_price.product_sku')
-            ->where('products.status', 'true')
             ->where('products.menu', 7)
+            ->where('products.status', 'true')
             ->whereNull('products.parent_sku')
-            ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
-            ->where('product_price.metalColor', 'White')
-            ->where('product_price.metalType', '18kt')
-            ->select('products.*','product_price.price')
-            // ->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) ASC")
-            ->distinct(); // Ensure distinct products
+            ->select('products.*', DB::raw('IFNULL(product_price.price, 0) as price'));
 
         // Apply the bridal sets filter
         if ($request->bridal_sets == 'true') {
