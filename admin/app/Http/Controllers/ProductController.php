@@ -168,6 +168,7 @@ class ProductController extends Controller
         $data['carats'] = Carat::orderBy('id', 'desc')
             ->where('status', 'true')
             ->get();
+        $data['info'] = ['meta_title'=>'Sama Product Listing', 'meta_keyword'=>'Sama Product Listing','meta_description'=>'Sama Product Listing'];
         return view('admin.db-product', $data);
     }
 
@@ -354,6 +355,7 @@ class ProductController extends Controller
         $product->shippingDay = $request->shippingDay;
         $product->NoOfGemstones1 = $request->NoOfGemstones1;
         $product->CenterShape = $request->center_shape;
+        $product->default_image_alt = $request->default_image_alt;
         ##center stone name and value
         $product->center_stones = $centerstones;
         ##center stone name and value
@@ -363,49 +365,50 @@ class ProductController extends Controller
         $product->meta_description = $request->meta_description;
         $product->is_bestseller = $is_bestseller;
         $product->is_newest = $is_newest;
-        if ($product->save()) {
+        $product->save();
+        // if ($product->save()) {
             ## check if product variation exist then update them also
-            $query = ProductModel::orderBy('id', 'asc')->where('status', 'true')->where('parent_sku', $product['sku']);
-            $variations = $query->exists();
-            if ($variations) {
-                $variation = $query->get();
-                foreach ($variation as $var) {
-                    //  var_dump($var->id);
-                    $child_product = ProductModel::find($var->id);
-                    if ($request->slug) {
-                        $slug = $product->generateUniqueSlug($request->slug);
-                    } else {
-                        if (empty($child_product->slug)) {
-                            $slug = $product->generateUniqueSlug($request->name);
-                        } else {
-                            $slug = $child_product->slug;
-                        }
-                    }
-                    $centerstones = implode(',', $request->center_stone);
-                    $child_product->name = $request->name;
-                    $child_product->product_browse_pg_name = $request->product_browse_pg_name;
-                    $child_product->menu = $request->menu;
-                    $child_product->slug = $slug;
-                    // $product->category = $request->category;
-                    $child_product->metalType_id = $request->metalType_id;
-                    $child_product->metalType = getMetalTypeByID($request->metalType);
-                    $child_product->metalColor_id = $request->metalColor_id;
-                    $child_product->metalColor = getMetalColorByID($request->metalColor);
-                    $child_product->metalWeight = $request->metalWeight;
-                    $child_product->diamondQuality = $request->diamond_quality;
-                    $child_product->NoOfGemstones1 = $request->NoOfGemstones1;
-                    $child_product->CenterShape = $request->center_shape;
-                    $child_product->SideDiamondNumber = $request->SideDiamondNumber;
-                    $child_product->shippingDay = $request->shippingDay;
-                    $child_product->description = $request->description;
-                    ##center stone name and value
-                    $child_product->center_stones = $centerstones;
-                    ##center stone name and value
-                    $child_product->FingerSize = $request->finger_size;
-                    $child_product->save();
-                }
-            }
-        }
+            // $query = ProductModel::orderBy('id', 'asc')->where('status', 'true')->where('parent_sku', $product['sku']);
+            // $variations = $query->exists();
+            // if ($variations) {
+            //     $variation = $query->get();
+            //     foreach ($variation as $var) {
+            //         ## var_dump($var->id);
+            //         $child_product = ProductModel::find($var->id);
+            //         if ($request->slug) {
+            //             $slug = $product->generateUniqueSlug($request->slug);
+            //         } else {
+            //             if (empty($child_product->slug)) {
+            //                 $slug = $product->generateUniqueSlug($request->name);
+            //             } else {
+            //                 $slug = $child_product->slug;
+            //             }
+            //         }
+            //         $centerstones = implode(',', $request->center_stone);
+            //         $child_product->name = $request->name;
+            //         $child_product->product_browse_pg_name = $request->product_browse_pg_name;
+            //         $child_product->menu = $request->menu;
+            //         $child_product->slug = $slug;
+            //         ## $product->category = $request->category;
+            //         $child_product->metalType_id = $request->metalType_id;
+            //         $child_product->metalType = getMetalTypeByID($request->metalType);
+            //         $child_product->metalColor_id = $request->metalColor_id;
+            //         $child_product->metalColor = getMetalColorByID($request->metalColor);
+            //         $child_product->metalWeight = $request->metalWeight;
+            //         $child_product->diamondQuality = $request->diamond_quality;
+            //         $child_product->NoOfGemstones1 = $request->NoOfGemstones1;
+            //         $child_product->CenterShape = $request->center_shape;
+            //         $child_product->SideDiamondNumber = $request->SideDiamondNumber;
+            //         $child_product->shippingDay = $request->shippingDay;
+            //         $child_product->description = $request->description;
+            //         ##center stone name and value
+            //         $child_product->center_stones = $centerstones;
+            //         ##center stone name and value
+            //         $child_product->FingerSize = $request->finger_size;
+            //         $child_product->save();
+            //     }
+            // }
+        // }
         return redirect()->back()->with('success', 'Product added successfully');
     }
 
@@ -481,6 +484,7 @@ class ProductController extends Controller
         } else {
             $data['variations'] = '';
         }
+        $data['info'] = ['meta_title'=>$product['name'], 'meta_keyword'=>!empty($product['meta_keyword'])?$product['meta_keyword']:$product['description'],'meta_description'=>!empty($product['meta_description'])?$product['meta_description']:$product['description']];
         return view('admin.configurable-product', $data);
 
 

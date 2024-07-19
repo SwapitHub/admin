@@ -26,7 +26,7 @@
                     <div class="col-lg-6">
                         <ol class="breadcrumb pull-right">
                             <li class="breadcrumb-item">
-                                <a href="index.html">
+                                <a href="{{ route('admin.dashboard') }}">
                                     <i data-feather="home"></i>
                                 </a>
                             </li>
@@ -53,6 +53,19 @@
                             </div>
                             <div class="card-body">
                                 <div class="digital-add needs-validation">
+                                    <div class="form-group">
+                                        <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
+                                            Product Type</label>
+                                            <select name="type" id="type" class="form-control">
+                                                <option value="parent_product" {{ $product['type'] =='parent_product'?'selected':'';}}>Parent Product</option>
+                                                <option value="child_product" {{ $product['type'] =='child_product'?'selected':'';}}>Child Product</option>
+                                            </select>
+                                        {{-- <input class="form-control" name="type" id="validationCustom01" type="text"
+                                            value="{{ old('type', $product['type']) }}" required=""> --}}
+                                        @error('type')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                     <div class="form-group">
                                         <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
                                             Name</label>
@@ -446,6 +459,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                            Default Image alt</label>
+                                        <input class="form-control" id="validationCustom02" type="text"
+                                            name="default_image_alt" value="{{ old('default_image_alt', $product->default_image_alt) }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             shippingDay</label>
                                         <input class="form-control" name="shippingDay" id="validationCustom02"
                                             type="number" required=""
@@ -616,7 +635,7 @@
                         @if (!empty($variations))
                             <div class="card">
                                 <div class="card-header" style="display:block">
-                                    <h5>Variations</h5>
+                                    <h5>Variations (Child products)</h5>
                                     <p> Variation products are depend on all possible combination of attribute</p>
 
                                     <button type="button" data-bs-toggle="modal"
@@ -649,7 +668,7 @@
                                                         <td class="digits"><a href="#"><i class="fa fa-eye"
                                                                     title="view Price"><i></i></td>
                                                         <td class="action">
-                                                            <a href="#"><i class="fa fa-edit"></i></a>
+                                                            <a href="{{ route('admin.product.edit',['id'=>$variation['id']]) }}"><i class="fa fa-edit"></i></a>
                                                             {{-- <a href="javascript:void(0)" onclick="deleteItem('{{ url('db-product-list/delete/') }}/{{ $variation['id'] }}')"><i class="fa fa-trash"></i></a> --}}
                                                         </td>
                                                     </tr>

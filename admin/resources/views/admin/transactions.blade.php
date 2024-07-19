@@ -28,7 +28,7 @@
                                 <i data-feather="home"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">Localization</li>
+                        <li class="breadcrumb-item">Order management</li>
                         <li class="breadcrumb-item active">Transactions</li>
                     </ol>
                 </div>
@@ -100,7 +100,7 @@
 
                                         <td><span class="badge badge-{{ $transaction->status =='SUCCESS'?'success':'primary'; }}">{{ $transaction->status }}</span></td>
 
-                                        <td>${{ number_format($transaction->amount,2,'.','') }}/-</td>
+                                        <td>${{ number_format($transaction->amount,0,'.','') }}/-</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

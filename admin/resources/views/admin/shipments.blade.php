@@ -86,7 +86,7 @@
 
 
 
-                                                <td>${{ number_format($item->amount, 2, '.', '') }}/-</td>
+                                                <td>${{ number_format($item->amount, 0, '.', '') }}/-</td>
                                             </tr>
                                         @endforeach
 

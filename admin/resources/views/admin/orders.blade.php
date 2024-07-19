@@ -127,7 +127,7 @@
                                                 </td>
 
                                                 <td data-field="number">$
-                                                    {{ number_format($order->amount,2,'.','') }} / {{ $order->method }}
+                                                    {{ number_format($order->amount,0,'.','') }} /- <br> {{ $order->method }}
                                                 </td>
                                                 <td data-field="number">
                                                     {{ !empty($order->tracking_number) ? $order->tracking_number : 'N/A' }}

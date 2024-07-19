@@ -62,7 +62,7 @@
                                         <td>Status</td>
                                         <td>{{ $item->first_name }} {{ $item->last_name }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ number_format($item->amount,2,'.','') }}/-</td>
+                                        <td>{{ number_format($item->amount,0,'.','') }}/-</td>
                                         <td>Card Payment</td>
                                         <td>{{ date('M d, Y', strtotime($item->created_at)) }}</td>
                                         <td><a href="{{ route('sale.orders.detail',['id'=>$item->order_id]) }}"><i class="fa fa-eye fa-2x"></i></a></td>
