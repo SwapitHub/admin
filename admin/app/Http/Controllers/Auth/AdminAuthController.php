@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Models\SiteInfo;
 use Auth;
 
 class AdminAuthController extends Controller
@@ -13,7 +14,8 @@ class AdminAuthController extends Controller
         if (Auth::guard('admin')->check()) {
             return redirect()->route('admin.dashboard');
         }
-        return view('admin.login');
+        $data['info'] = SiteInfo::first();
+        return view('admin.login',$data);
     }
 
     public function authenticate(Request $request) {

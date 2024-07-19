@@ -29,23 +29,17 @@ class DownloadProductVideos extends Command
             $internalSku = $product->internal_sku;
             $videos = json_decode($product->videos);
 
-            // Check if images data is valid
+            ## Check if images data is valid
             if (!is_object($videos)) {
                 $this->error("Invalid or empty video data for SKU: $internalSku");
                 continue;
             }
-            // echo $internalSku;
+            ## echo $internalSku;
             $localFolder = storage_path("app/public/videos/$internalSku");
             if (!file_exists($localFolder)) {
                 mkdir($localFolder, 0777, true);
             }
             var_dump($videos);
-
-            // foreach($videos as $video)
-            // {
-            //     var_dump($video->rose);
-
-            // }
 
         }
     }
