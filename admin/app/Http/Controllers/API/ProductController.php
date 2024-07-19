@@ -87,9 +87,9 @@ class ProductController extends Controller
             ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
             ->where('product_price.metalColor', 'White')
             ->where('product_price.metalType', '18kt')
-            ->select('products.*','product_price.price')
+            ->select('products.*','product_price.price');
             // ->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) ASC")
-            ->distinct(); // Ensure distinct products
+            // ->distinct(); // Ensure distinct products
 
         // Apply the bridal sets filter
         if ($request->bridal_sets == 'true') {
