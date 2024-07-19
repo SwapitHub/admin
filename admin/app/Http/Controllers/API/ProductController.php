@@ -80,7 +80,7 @@ class ProductController extends Controller
 
         // Initialize the query with the base conditions and join with product_price table
         $products = ProductModel::query()
-            ->join('product_price', 'products.sku', '=', 'product_price.product_sku')
+            ->leftJoin('product_price', 'products.sku', '=', 'product_price.product_sku')
             ->where('products.status', 'true')
             ->where('products.menu', 7)
             ->whereNull('products.parent_sku')
