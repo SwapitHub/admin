@@ -91,12 +91,15 @@ class ProductController extends Controller
         //     ## ->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) ASC")
         //     ->distinct(); // Ensure distinct products
 
+          ####### new script start #######
         $products = ProductModel::query()
             ->leftJoin('product_price', 'products.sku', '=', 'product_price.product_sku')
             ->where('products.menu', 7)
             ->where('products.status', 'true')
             ->whereNull('products.parent_sku')
             ->select('products.*', DB::raw('IFNULL(product_price.price, 0) as price'));
+
+        ####### new script end #######
 
         // Apply the bridal sets filter
         if ($request->bridal_sets == 'true') {
