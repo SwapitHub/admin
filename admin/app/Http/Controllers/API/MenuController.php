@@ -22,6 +22,7 @@ class MenuController extends Controller
         $cacheKey = 'menu_list';
         // $menu_list = Cache::get($cacheKey);
         $menu_list = Cache::forget($cacheKey);
+        exit;
         // if (!$menu_list) {
         $menus = Menu::orderBy('order_number', 'asc')->where('status', 'true')->get();
         foreach ($menus as $menu) {
@@ -45,7 +46,7 @@ class MenuController extends Controller
                 $menucat['subcategories'] = $subcategory_collection;
             }
         }
-        Cache::put($cacheKey, $menus, $minutes = 60);
+        // Cache::put($cacheKey, $menus, $minutes = 60);
         $output['data'] = $menus;
         $output['from'] = 'db';
         return response()->json($output, 200);

@@ -97,9 +97,7 @@ class ProductController extends Controller
             ->where('products.menu', 7)
             ->where('products.status', 'true')
             ->whereNull('products.parent_sku')
-            ->select('products.*', DB::raw('IFNULL(product_price.price, 0) as price'))
-            ->groupBy('products.id')
-            ->distinct();
+            ->select('products.*', DB::raw('IFNULL(product_price.price, 0) as price'));
 
         ####### new script end #######
 
