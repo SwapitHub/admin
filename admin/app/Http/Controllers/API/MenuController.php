@@ -28,7 +28,11 @@ class MenuController extends Controller
             $cat = Category::orderBy('order_number', 'asc')->where('status', 'true')->where('menu', $menu->id)->get();
             $menu['categories'] = $cat;
             foreach ($menu['categories'] as $menucat) {
-                $subcat = Subcategory::orderBy('order_number', 'asc')->where('status', 'true')->where('menu_id', $menucat->menu)->where('category_id', $menucat->id)->get();
+                $subcat = Subcategory::orderBy('order_number', 'asc')
+                    ->where('status', 'true')
+                    ->where('menu_id', $menucat->menu)
+                    ->where('category_id', $menucat->id)
+                    ->get();
                 $subcategory_collection = [];
                 foreach ($subcat as $subcategory) {
                     if (($subcategory->image != null)) {
@@ -116,27 +120,23 @@ class MenuController extends Controller
     ## get meta data
     public function check(Request $request)
     {
-        if(empty($request->subcategory) && empty($request->category) && !empty($request->menu))
-        {
-           $metadata =  Menu::where('slug',$request->menu)->orWhere('alias',$request->menu)->first();
+        if (empty($request->subcategory) && empty($request->category) && !empty($request->menu)) {
+            $metadata =  Menu::where('slug', $request->menu)->orWhere('alias', $request->menu)->first();
         }
-        if(!empty($request->menu) && !empty($request->category) && empty($request->subcategory) )
-        {
-           $menu_id =  Menu::where('slug',$request->menu)->first()['id'];
-           $metadata = Category::where('menu',$menu_id)->where('slug',$request->category)->first();
+        if (!empty($request->menu) && !empty($request->category) && empty($request->subcategory)) {
+            $menu_id =  Menu::where('slug', $request->menu)->first()['id'];
+            $metadata = Category::where('menu', $menu_id)->where('slug', $request->category)->first();
         }
-        if(!empty($request->menu) && !empty($request->category) && !empty($request->subcategory) )
-        {
-           $menu_id =  Menu::where('slug',$request->menu)->first()['id'];
-           $cat_id =  Category::where('menu',$menu_id)->where('slug',$request->category)->orWhere('alias',$request->category)->first()['id'];
-           $metadata = Subcategory::where('menu_id',$menu_id)->where('category_id',$cat_id)->where('slug',$request->subcategory)->orWhere('alias',$request->subcategory)->first();
+        if (!empty($request->menu) && !empty($request->category) && !empty($request->subcategory)) {
+            $menu_id =  Menu::where('slug', $request->menu)->first()['id'];
+            $cat_id =  Category::where('menu', $menu_id)->where('slug', $request->category)->orWhere('alias', $request->category)->first()['id'];
+            $metadata = Subcategory::where('menu_id', $menu_id)->where('category_id', $cat_id)->where('slug', $request->subcategory)->orWhere('alias', $request->subcategory)->first();
         }
 
-        if(!empty($request->menu) && empty($request->category) && !empty($request->subcategory) )
-        {
+        if (!empty($request->menu) && empty($request->category) && !empty($request->subcategory)) {
 
-           $menu_id =  Menu::where('slug',$request->menu)->orWhere('alias',$request->menu)->first()['id'];
-           $metadata = Subcategory::where('menu_id',$menu_id)->where('slug',$request->subcategory)->orWhere('alias',$request->subcategory)->first();
+            $menu_id =  Menu::where('slug', $request->menu)->orWhere('alias', $request->menu)->first()['id'];
+            $metadata = Subcategory::where('menu_id', $menu_id)->where('slug', $request->subcategory)->orWhere('alias', $request->subcategory)->first();
         }
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
@@ -147,21 +147,17 @@ class MenuController extends Controller
     ## get meta data
     public function cmsMetaData(Request $request)
     {
-        if(!is_null($request->route))
-        {
-            $metadata =  Cmscategory::where('name',$request->route)->first();
+        if (!is_null($request->route)) {
+            $metadata =  Cmscategory::where('name', $request->route)->first();
             $output['res'] = 'success';
             $output['msg'] = 'data retrieved successfully';
             $output['data'] = $metadata;
             return response()->json($output, 200);
-        }else
-        {
+        } else {
             $output['res'] = 'error';
             $output['msg'] = 'Route name is required';
             $output['data'] = [];
             return response()->json($output, 401);
         }
-
-
     }
 }
