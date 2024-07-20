@@ -25,22 +25,45 @@ class DownloadProductVideos extends Command
 
         foreach ($products as $product) {
             $sku = $product->sku;
-            echo $product_id = $product->id;
+            $product_id = $product->id;
             $internalSku = $product->internal_sku;
-            $videos = json_decode($product->videos);
+            if (!is_null($product->videos)) {
+                $videos = json_decode($product->videos);
+                ## Check if images data is valid
+                if (!is_object($videos)) {
+                    $this->error("Invalid or empty video data for SKU: $internalSku");
+                    continue;
+                } else {
+                    ## make logic here to download videos
+                    $localFolder = storage_path("app/public/videos/$internalSku");
+                    if (!file_exists($localFolder)) {
+                        mkdir($localFolder, 0777, true);
+                    }
+                    if (isset($videos->white)) {
+                        $white =  basename($videos->white);
+                        $extension = pathinfo($white, PATHINFO_EXTENSION);
+                        $whiteVidName = $internalSku .'.'.'video'.'.'.'white'.'.'.$extension;
+                        ## download this white video in the $localFolder this folder
+                    }
 
-            ## Check if images data is valid
-            if (!is_object($videos)) {
-                $this->error("Invalid or empty video data for SKU: $internalSku");
+                    if (isset($videos->yellow)) {
+                        $yellow = basename($videos->yellow);
+                        $extension = pathinfo($yellow, PATHINFO_EXTENSION);
+                        $yellowVidName = $internalSku .'.'.'video'.'.'.'yellow'.'.'.$extension;
+                        ## download this white video in the $localFolder this folder
+                    }
+
+                    if (isset($videos->rose)) {
+                        $reso = basename($videos->rose);
+                        $extension = pathinfo($reso, PATHINFO_EXTENSION);
+                        $rosewVidName = $internalSku .'.'.'video'.'.'.'rose'.'.'.$extension;
+                        ## download this white video in the $localFolder this folder
+                    }
+                }
+            } else {
+                $this->error("Empty videos for SKU: $internalSku");
                 continue;
             }
-            ## echo $internalSku;
-            $localFolder = storage_path("app/public/videos/$internalSku");
-            if (!file_exists($localFolder)) {
-                mkdir($localFolder, 0777, true);
-            }
-            var_dump($videos);
-
         }
     }
 }
