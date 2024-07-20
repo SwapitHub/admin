@@ -21,8 +21,7 @@ class MenuController extends Controller
 
         $cacheKey = 'menu_list';
         // $menu_list = Cache::get($cacheKey);
-        $menu_list = Cache::forget($cacheKey);
-        exit;
+        // $menu_list = Cache::forget($cacheKey);
         // if (!$menu_list) {
         $menus = Menu::orderBy('order_number', 'asc')->where('status', 'true')->get();
         foreach ($menus as $menu) {
