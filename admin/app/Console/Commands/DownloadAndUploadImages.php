@@ -51,25 +51,32 @@ class DownloadAndUploadImages extends Command
                     $this->info("Empty image URL for SKU: $internalSku. Skipping.");
                     continue;
                 }
+                $seg = explode('/',$image);
+                $replacableText = $seg[6];
 
                 // Get the base name of the image
                 $imageName = basename($image);
 
+                // Define the old SKU part of the image name
+                $oldSku = $replacableText;
+                // Replace the old SKU with the new SKU
+                $modifiedImageName = str_replace($oldSku, $internalSku, $imageName);
+
                 // Split the image name by the period to handle different naming patterns
-                $splitImage = explode('.', $imageName);
+                // $splitImage = explode('.', $imageName);
 
                 // Construct the modified image name based on the internal SKU
-                if (count($splitImage) >= 3) {
-                    // Handle names with more than one period
-                    $extension = array_pop($splitImage);
-                    $baseName = implode('.', $splitImage);
-                    $extension = str_replace(']', '', $extension);
-                    $modifiedImageName = $internalSku . '.' . $baseName . '.' . $extension;
-                } else {
-                    // Handle names with one period
-                    $extension = str_replace(']', '', $splitImage[1]);
-                    $modifiedImageName = $internalSku . '.' . $extension;
-                }
+                // if (count($splitImage) >= 3) {
+                //     // Handle names with more than one period
+                //     $extension = array_pop($splitImage);
+                //     $baseName = implode('.', $splitImage);
+                //     $extension = str_replace(']', '', $extension);
+                //     $modifiedImageName = $internalSku . '.' . $baseName . '.' . $extension;
+                // } else {
+                //     // Handle names with one period
+                //     $extension = str_replace(']', '', $splitImage[1]);
+                //     $modifiedImageName = $internalSku . '.' . $extension;
+                // }
 
                 // Create the full local path for the image
                 $localPath = "$localFolder/$modifiedImageName";
@@ -101,15 +108,15 @@ class DownloadAndUploadImages extends Command
                     if ($e->hasResponse()) {
                         $response = $e->getResponse();
                         $this->error("Failed to download image1: $image. HTTP Status Code: " . $response->getStatusCode() . " - " . $response->getReasonPhrase());
-                        exit;
+                        // exit;
                     } else {
                         $this->error("Failed to download image2: $image. Error: " . $e->getMessage());
-                        exit;
+                        // exit;
                     }
                 } catch (\Exception $e) {
                     $this->error("Failed to download image3: $image. Error: " . $e->getMessage());
                     echo $localPath;
-                    exit;
+                    // exit;
                 }
             }
         }

@@ -17,6 +17,7 @@ use App\Models\HomeSection2;
 use App\Models\HomeSection3;
 use App\Models\HomeSection4;
 use App\Models\HomeSection5;
+use App\Models\Banner;
 use App\Models\ShopByCategoryHomePage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cache;
@@ -156,5 +157,17 @@ class SiteinfoController extends Controller
          $output['msg'] = 'data retrieved successfully';
          $output['data'] = $metadata;
          return response()->json($output, 200);
+     }
+
+     public function ourstoryMission()
+     {
+        $values = [
+            'ourstory'=>Banner::where('title','Our Story')->first(),
+            'mission'=>Banner::where('title','Mission')->first(),
+        ];
+        $output['res'] = 'success';
+        $output['msg'] = 'data retrieved successfully';
+        $output['data'] = $values;
+        return response()->json($output, 200);
      }
 }

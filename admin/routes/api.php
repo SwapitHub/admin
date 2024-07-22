@@ -36,6 +36,7 @@
 		Route::get('product/{entity_id}',[App\Http\Controllers\API\ProductController::class,'productDetails']);
 		Route::get('faq',[App\Http\Controllers\API\FaqController::class,'index']);
 		Route::get('homecontent',[App\Http\Controllers\API\SiteinfoController::class,'homeContent']);
+		Route::get('homecontent-bottom',[App\Http\Controllers\API\SiteinfoController::class,'ourstoryMission']);
 		Route::get('metalcolor',[App\Http\Controllers\API\SiteinfoController::class,'metalColor']);
 		Route::post('findimage',[App\Http\Controllers\API\ProductController::class,'getImageForListing']);
 		Route::any('getactiveproduct',[App\Http\Controllers\API\ProductController::class,'getActiveProductDetails']);
