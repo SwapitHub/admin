@@ -42,8 +42,9 @@ class SiteinfoController extends Controller
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
         $cacheKey = 'site_info';
-        $siteinfo = Cache::get($cacheKey);
-        // $siteinfo = Cache::forget($cacheKey);
+        // $siteinfo = Cache::get($cacheKey);
+        $siteinfo = Cache::forget($cacheKey);
+        exit;
         if (!$siteinfo) {
             $collection = [];
             $section1 =  HomeSection1::first();
@@ -70,9 +71,9 @@ class SiteinfoController extends Controller
             $collection['section5'] = $section5;
 
             $section6 =  HomeSection6::first();
-            $section5['image1'] =  env('AWS_URL') . 'public/' . $section6['image1'];
-            $section5['image2'] =  env('AWS_URL') . 'public/' . $section6['image2'];
-            $collection['section5'] = $section5;
+            $section6['image1'] =  env('AWS_URL') . 'public/' . $section6['image1'];
+            $section6['image2'] =  env('AWS_URL') . 'public/' . $section6['image2'];
+            $collection['section6'] = $section6;
 
             $shopbycat = [];
             $q = ShopByCategoryHomePage::orderBy('order_number', 'asc')->where('status', 'true');
