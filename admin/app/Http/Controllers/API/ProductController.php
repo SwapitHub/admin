@@ -8,6 +8,7 @@ use App\Models\ProductModel;
 use App\Models\Subcategory;
 use App\Models\DiamondShape;
 use App\Models\ProductPrice;
+use App\Models\ProductImageModel;
 use App\Models\CenterStone;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Validator;
@@ -241,7 +242,8 @@ class ProductController extends Controller
             $product =  ProductModel::where('entity_id', $entity_id)->orWhere('slug', $entity_id)->first();
             $product['name'] = ucfirst(strtolower(!empty($product['name']) ? $product['name'] : $product['product_browse_pg_name']));
             $product['description'] = ucfirst(strtolower($product['description']));
-            $product['images'] = json_decode($product['images']);
+            // $product['images'] = json_decode($product['images']);
+            $product['images'] = ProductImageModel::where('product_id',$product['id'])->get()->toArray();
             $product['videos'] = json_decode($product['videos']);
             $priceData = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first();
             $product['white_gold_price'] =round($priceData['price'] ?? 0,0);
