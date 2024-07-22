@@ -248,12 +248,11 @@ class ProductController extends Controller
             if (count($pro_images) > 0) {
                 foreach ($pro_images as $product_img) {
                     // var_dump($product_img);
-                  $pimg =   env('AWS_URL') . 'products/images/'.$product['internal_sku'].'/'. $product_img['image_path'];
-                  $images_arr[] = $pimg;
+                    $pimg =   env('AWS_URL') . 'products/images/' . $product['internal_sku'] . '/' . $product_img['image_path'];
+                    $images_arr[] = $pimg;
                 }
-            }else
-            {
-               $images_arr = json_decode($product['images']);
+            } else {
+                $images_arr = json_decode($product['images']);
             }
             $product['images'] = $images_arr;
             // $product['images'] = json_decode($product['images']);
@@ -266,6 +265,13 @@ class ProductController extends Controller
             $product['diamond_type'] = 'natural';
             $product['diamondQuality'] = $priceData['diamondQuality'] ?? 0;
             $product['metalType'] = '18KT Gold';
+            $center_stone_options = explode('/', $product['center_stone_options']);
+            if (in_array('Princess', $center_stone_options)) {
+                $center_stone_options = array_diff($center_stone_options, ['Princess']);
+            }
+            $product['center_stone_options'] = implode('/', $center_stone_options);
+
+            // $product['center_stone_options'] = $product['center_stone_options'];
             if (!is_null($product['matching_wedding_band']) || !empty($product['matching_wedding_band'])) {
                 ## if matching set exist then reterive tha details and send them
                 $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
@@ -276,12 +282,11 @@ class ProductController extends Controller
                     $matching_images_arr = [];
                     if (count($matching_images) > 0) {
                         foreach ($matching_images as $mproduct_img) {
-                          $mimg =   env('AWS_URL') . 'products/images' .$mproduct_img->internal_sku.'/'. $mproduct_img->image_path;
-                          $matching_images_arr[] = $mimg;
+                            $mimg =   env('AWS_URL') . 'products/images' . $mproduct_img->internal_sku . '/' . $mproduct_img->image_path;
+                            $matching_images_arr[] = $mimg;
                         }
-                    }else
-                    {
-                       $matching_images_arr = json_decode($matching_images->images);
+                    } else {
+                        $matching_images_arr = json_decode($matching_images->images);
                     }
                     #####IMAGES MATCHING BANDS######
                     // $matching_bands_product->images = $matching_bands_product;
