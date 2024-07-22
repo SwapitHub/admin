@@ -99,6 +99,7 @@
                                                     @endphp
 
                                                     @foreach ($orderItems as $orderItem)
+
                                                         @php
                                                             $products = json_decode($orderItem->order_data);
                                                             if (

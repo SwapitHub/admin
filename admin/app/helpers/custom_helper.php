@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductModel;
+use App\Models\ProductImageModel;
 use App\Models\Menu;
 use App\Models\Category;
 use App\Models\Subcategory;
@@ -106,6 +107,7 @@ if (!function_exists('getProductImages')) {
         return  $image;
     }
 }
+
 
 
 if (!function_exists('getDiamondImages')) {

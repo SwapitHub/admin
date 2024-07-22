@@ -243,19 +243,22 @@ class ProductController extends Controller
             $product['name'] = ucfirst(strtolower(!empty($product['name']) ? $product['name'] : $product['product_browse_pg_name']));
             $product['description'] = ucfirst(strtolower($product['description']));
             ## fetch images
-            $pro_images =  ProductImageModel::where('product_id', $product['id'])->get();
-            $images_arr = [];
-            if (count($pro_images) > 0) {
-                foreach ($pro_images as $product_img) {
-                    // var_dump($product_img);
-                    $pimg =   env('AWS_URL') . 'products/images/' . $product['internal_sku'] . '/' . $product_img['image_path'];
-                    $images_arr[] = $pimg;
-                }
-            } else {
-                $images_arr = json_decode($product['images']);
-            }
-            $product['images'] = $images_arr;
-            // $product['images'] = json_decode($product['images']);
+            // $pro_images =  ProductImageModel::where('product_id', $product['id'])->get();
+            // count($pro_images);
+
+            // $images_arr = [];
+            // if (count($pro_images) > 0) {
+            //     foreach ($pro_images as $product_img) {
+            //         // var_dump($product_img);
+            //         $pimg =   env('AWS_URL') . 'products/images/' . $product['internal_sku'] . '/' . $product_img['image_path'];
+            //         $images_arr[] = $pimg;
+            //     }
+            // } else {
+            //     $images_arr = json_decode($product['images']);
+            // }
+            // var_dump($images_arr);
+            // $product['images'] = $images_arr;
+            $product['images'] = json_decode($product['images']);
             $product['videos'] = json_decode($product['videos']);
             $priceData = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first();
             $product['white_gold_price'] = round($priceData['price'] ?? 0, 0);
@@ -278,19 +281,19 @@ class ProductController extends Controller
                 if ($is_matchingset->exists()) {
                     $matching_bands_product = $is_matchingset->first();
                     #####IMAGES MATCHING BANDS######
-                    $matching_images =  ProductImageModel::where('product_id', $matching_bands_product->id)->get();
-                    $matching_images_arr = [];
-                    if (count($matching_images) > 0) {
-                        foreach ($matching_images as $mproduct_img) {
-                            $mimg =   env('AWS_URL') . 'products/images' . $mproduct_img->internal_sku . '/' . $mproduct_img->image_path;
-                            $matching_images_arr[] = $mimg;
-                        }
-                    } else {
-                        $matching_images_arr = json_decode($matching_images->images);
-                    }
+                    // $matching_images =  ProductImageModel::where('product_id', $matching_bands_product->id)->get();
+                    // $matching_images_arr = [];
+                    // if (count($matching_images) > 0) {
+                    //     foreach ($matching_images as $mproduct_img) {
+                    //         $mimg =   env('AWS_URL') . 'products/images' . $mproduct_img->internal_sku . '/' . $mproduct_img->image_path;
+                    //         $matching_images_arr[] = $mimg;
+                    //     }
+                    // } else {
+                    //     $matching_images_arr = json_decode($matching_images->images);
+                    // }
                     #####IMAGES MATCHING BANDS######
                     // $matching_bands_product->images = $matching_bands_product;
-                    $matching_bands_product->images = $matching_images_arr;
+                    // $matching_bands_product->images = $matching_images_arr;
                     $matching_bands_product->price = round(ProductPrice::where('product_sku', $matching_bands_product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
 
                     $product['matching_wedding_band'] = $matching_bands_product;
