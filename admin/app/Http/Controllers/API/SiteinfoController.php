@@ -161,9 +161,22 @@ class SiteinfoController extends Controller
 
      public function ourstoryMission()
      {
+        $outstory = Banner::where('title','Our Story')->first();
+        $outstory['banner'] = env('AWS_URL') . 'public/' . $outstory->banner;
+        $mission = Banner::where('title','Mission')->first();
+        $mission['banner'] = env('AWS_URL') . 'public/' . $mission->banner;
+
+        $q = ShopByCategoryHomePage::orderBy('order_number', 'asc')->where('status', 'true');
+            if ($q->exists()) {
+                foreach ($q->get() as $sp) {
+                    $sp->image =
+                    $shopbycat[] = $sp;
+                }
+            }
+
         $values = [
-            'ourstory'=>Banner::where('title','Our Story')->first(),
-            'mission'=>Banner::where('title','Mission')->first(),
+            'ourstory'=>$outstory,
+            'mission'=>$mission,
         ];
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
