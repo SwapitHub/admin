@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Cache;
 if (!function_exists('getProductIdBasedOnSku')) {
     function getProductIdBasedOnSku($sku)
     {
-        $id = ProductModel::where('sku', $sku)->pluck('id')->first()??null;
+        $id = ProductModel::where('sku', $sku)->pluck('id')->first() ?? null;
         return $id;
     }
 }
@@ -91,6 +91,17 @@ if (!function_exists('getProductImages')) {
                 $color = 'alt1';
                 $image =  $img[0] . '.' . $color . '.' . $extension;
                 break;
+            case '18k-white-gold':
+                $image = $image;
+                break;
+            case '18k-yelloe-gold':
+                $color = 'alt';
+                $image = $img[0] . '.' . $color . '.' . $extension;
+                break;
+            case '18k-rose-gold':
+                $color = 'alt1';
+                $image =  $img[0] . '.' . $color . '.' . $extension;
+                break;
         }
         return  $image;
     }
@@ -98,7 +109,7 @@ if (!function_exists('getProductImages')) {
 
 
 if (!function_exists('getDiamondImages')) {
-    function getDiamondImages($stock_number,$type)
+    function getDiamondImages($stock_number, $type)
     {
         if ($stock_number != null) {
             try {
@@ -132,8 +143,6 @@ if (!function_exists('getDiamondImages')) {
                     } else {
                         return null;
                     }
-
-
                 }
 
 
@@ -173,13 +182,12 @@ if (!function_exists('getGemStoneImages')) {
                 curl_close($curl);
                 $jsn_data = json_decode($response);
 
-                 // Check if the response is successful and contains diamonds
-                 if (isset($jsn_data->response->body->gemstones[0])) {
+                // Check if the response is successful and contains diamonds
+                if (isset($jsn_data->response->body->gemstones[0])) {
                     return $jsn_data->response->body->gemstones[0];
                 } else {
                     return null;
                 }
-
             } catch (Exception $e) {
                 return null;
             }
