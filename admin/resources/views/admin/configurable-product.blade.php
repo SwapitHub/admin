@@ -511,7 +511,7 @@
                                         <label for="validationCustom02" class="col-form-label">
                                             Meta Title</label>
                                         <input class="form-control" name="meta_title" id="validationCustom02"
-                                            type="text" value="{{ $product->meta_title }}" placeholder="Meta Title">
+                                            type="text" value="{{ !empty($product->meta_title)?$product->meta_title:$product->name }}" placeholder="Meta Title">
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label">
@@ -524,7 +524,7 @@
                                         <label for="validationCustom02" class="col-form-label">
                                             Meta Description</label>
                                         <input class="form-control" name="meta_description" id="validationCustom02"
-                                            type="text" value="{{ $product->meta_description }}"
+                                            type="text" value="{{ !empty($product->meta_description)?$product->meta_description:$product->description }}"
                                             placeholder="Meta Description">
                                     </div>
                                     <!--meta data--->

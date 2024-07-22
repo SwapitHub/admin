@@ -32,7 +32,7 @@ class FetchProductPrices extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->discount_amount = ProductPrecentageDiscount::first()['amount'] ?? 0;
+		$this->discount_amount = ProductPrecentageDiscount::first()['amount']??0;
     }
 
     /**
@@ -49,12 +49,12 @@ class FetchProductPrices extends Command
             foreach ($products as $product) {
                 try {
                     $productData = [
-                        'sku' => $product['sku'],
-                        'metalType' => $product['metalType'],
-                        'metalColor' => $product['metalColor'],
-                        'finishLevel' => $product['finishLevel'],
-                        'fractionsemimount' => $product['fractionsemimount'],
-                        'diamondQuality' => $product['diamondQuality'],
+                           'sku'=>$product['sku'],
+                           'metalType'=>$product['metalType'],
+                           'metalColor'=>$product['metalColor'],
+                           'finishLevel'=>$product['finishLevel'],
+                           'fractionsemimount'=>$product['fractionsemimount'],
+                           'diamondQuality'=>$product['diamondQuality'],
                     ];
                     $price = $this->fetchPriceFromAPI($productData);
                     $sku = $product['sku'];
@@ -70,18 +70,21 @@ class FetchProductPrices extends Command
         $this->info('Product prices fetched successfully.');
     }
 
-    // Method to fetch price from third-party API
-    private function fetchPriceFromAPI($data)
-    {
+     // Method to fetch price from third-party API
+     private function fetchPriceFromAPI($data)
+     {
         $metalColors = ['White', 'Yellow', 'Pink'];
         $metalTypes = ['18kt', 'Platinum'];
         $diamondQualities = ['SI1, G', 'LAB GROWN VS-SI1, E/F/G'];
 
 
 
-        if ($data['finishLevel'] == 'Semi-mount (no center)') {
+        if($data['finishLevel'] =='Semi-mount (no center)')
+        {
             $data['finishLevel'] = 'Semi-mount';
-        } else if ($data['finishLevel'] == 'Polished Blank (no stones)') {
+        }
+        else if($data['finishLevel'] =='Polished Blank (no stones)')
+        {
             $data['finishLevel'] = 'Polished Blank (no stones)';
         }
 
@@ -130,46 +133,35 @@ class FetchProductPrices extends Command
                             'diamond_type' => $type,
                             'diamondQuality' => $diamondQuality,
                             'finishLevel' => $finishLevel,
-                        ]
-                    );
-                    try {
-                        if ($metalColor == 'White' && $metalType == '18kt' && $diamondQuality == 'SI1, G') {
-                            ProductModel::where('sku', $sku)->update(['white_gold_price' => $this->calculatePriceDiscount($price)]);
-                            // Log::info("Updated ProductModel for SKU: $sku with white_gold_price: " . $this->calculatePriceDiscount($price));
-                        } elseif ($metalColor == 'Yellow' && $metalType == '18kt' && $diamondQuality == 'SI1, G') {
-                            ProductModel::where('sku', $sku)->update(['yellow_gold_price' => $this->calculatePriceDiscount($price)]);
-                            // Log::info("Updated ProductModel for SKU: $sku with yellow_gold_price: " . $this->calculatePriceDiscount($price));
-                        } elseif ($metalColor == 'Pink' && $metalType == '18kt' && $diamondQuality == 'SI1, G') {
-                            ProductModel::where('sku', $sku)->update(['rose_gold_price' => $this->calculatePriceDiscount($price)]);
-                            // Log::info("Updated ProductModel for SKU: $sku with pink_gold_price: " . $this->calculatePriceDiscount($price));
-                        } elseif ($metalColor == 'White' && $metalType == 'Platinum' && $diamondQuality == 'SI1, G') {
-                            ProductModel::where('sku', $sku)->update(['platinum_price' => $this->calculatePriceDiscount($price)]);
-                            // Log::info("Updated ProductModel for SKU: $sku with platinum_price: " . $this->calculatePriceDiscount($price));
-                        }
-                    } catch (Exception $e) {
-                        Log::error("Failed to update ProductModel for SKU: $sku. Error: " . $e->getMessage());
-                    }
-                    if (!$insertorupdate) {
+                       ]
+                   );
+                    if(!$insertorupdate)
+                    {
                         $stat = 'false';
                     }
                 }
             }
         }
 
-        if ($stat == 'true') {
+        if($stat =='true')
+        {
             return true;
-        } else {
+        }else{
             return false;
         }
-    }
 
-    public function calculatePriceDiscount($price)
-    {
-        if ($price != 0 || $price != null) {
-            $discount_amount = $price * ($this->discount_amount / 100);
-            $final_price = $price - $discount_amount;
-            $final_price = round($final_price); // Format to 2 decimal places
-            return $final_price;
-        }
-    }
+
+     }
+
+	 public function calculatePriceDiscount($price)
+	 {
+	     if($price != 0 || $price != null)
+		 {
+			 $discount_amount = $price * ($this->discount_amount / 100);
+			 $final_price = $price - $discount_amount;
+             $final_price = number_format($final_price, 2); // Format to 2 decimal places
+             return $final_price;
+		 }
+
+	 }
 }
