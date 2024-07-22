@@ -46,15 +46,18 @@
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-contact" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Bridal Jewelry</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Bridal
+                                        Jewelry</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section2" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Celebrate Love with Timeless Elegance</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Celebrate
+                                        Love with Timeless Elegance</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section3" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Discover Matching Sets</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Discover
+                                        Matching Sets</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section4" role="tab" aria-controls="top-contact"
@@ -62,7 +65,13 @@
                                 </li>
                                 <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                         href="#top-section5" role="tab" aria-controls="top-contact"
-                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Love’s Brilliance</a>
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Love’s
+                                        Brilliance</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
+                                        href="#top-section6" role="tab" aria-controls="top-contact"
+                                        aria-selected="false"><i data-feather="plus-square" class="me-2"></i>Sama
+                                        Difference</a>
                                 </li>
                             </ul>
 
@@ -230,8 +239,8 @@
                                 <div class="tab-pane fade" id="top-contact" role="tabpanel"
                                     aria-labelledby="contact-top-tab">
                                     <h5 class="f-w-600">Section 1</h5>
-                                    <form action="{{ route('home.section1') }}" method="POST" enctype="multipart/form-data"
-                                        class="needs-validation" novalidate>
+                                    <form action="{{ route('home.section1') }}" method="POST"
+                                        enctype="multipart/form-data" class="needs-validation" novalidate>
                                         @csrf
 
                                         <div class="form-group row">
@@ -239,7 +248,8 @@
                                                 class="col-xl-3 col-md-4"><span>*</span>Heading</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control @error('heading') is-invalid @enderror"
-                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section1']->heading) }}"
+                                                    id="heading" name="heading"
+                                                    value="{{ old('heading', $sectionList['section1']->heading) }}"
                                                     type="text" placeholder="Heading">
                                                 @error('heading')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -250,7 +260,7 @@
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Description</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section1']->description) }}</textarea>
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section1']->description) }}</textarea>
                                                 @error('description')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -260,7 +270,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
                                                 image</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="file" name="image" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section1']->image }}">
+                                                <input type="file" name="image" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section1']->image }}">
                                                 @error('image')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -270,7 +281,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 image alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image_alt" class="form-control" value="{{ old('image_alt',$sectionList['section1']->image_alt) }}">
+                                                <input type="text" name="image_alt" class="form-control"
+                                                    value="{{ old('image_alt', $sectionList['section1']->image_alt) }}">
                                                 @error('image_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -280,7 +292,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section1']->btn_name) }}">
+                                                <input type="text" name="btn_name" class="form-control"
+                                                    value="{{ old('btn_name', $sectionList['section1']->btn_name) }}">
                                                 @error('btn_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -290,7 +303,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 link</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section1']->link) }}">
+                                                <input type="text" name="link" class="form-control"
+                                                    value="{{ old('link', $sectionList['section1']->link) }}">
                                                 @error('link')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -315,15 +329,16 @@
                                 <div class="tab-pane fade" id="top-section2" role="tabpanel"
                                     aria-labelledby="contact-top-tab">
                                     <h5 class="f-w-600">Section 2</h5>
-                                    <form action="{{ route('home.section2') }}" method="POST" enctype="multipart/form-data"
-                                        class="needs-validation" novalidate>
+                                    <form action="{{ route('home.section2') }}" method="POST"
+                                        enctype="multipart/form-data" class="needs-validation" novalidate>
                                         @csrf
                                         <div class="form-group row">
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Heading</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control @error('heading') is-invalid @enderror"
-                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section2']->heading) }}"
+                                                    id="heading" name="heading"
+                                                    value="{{ old('heading', $sectionList['section2']->heading) }}"
                                                     type="text" placeholder="Heading">
                                                 @error('heading')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -334,7 +349,7 @@
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Description</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section2']->description) }}</textarea>
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section2']->description) }}</textarea>
                                                 @error('description')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -344,7 +359,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
                                                 image</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="file" name="image" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section2']->image }}">
+                                                <input type="file" name="image" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section2']->image }}">
                                                 @error('image')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -354,7 +370,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 image alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image_alt" class="form-control" value="{{ old('image_alt',$sectionList['section2']->image_alt) }}">
+                                                <input type="text" name="image_alt" class="form-control"
+                                                    value="{{ old('image_alt', $sectionList['section2']->image_alt) }}">
                                                 @error('image_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -364,7 +381,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section2']->btn_name) }}">
+                                                <input type="text" name="btn_name" class="form-control"
+                                                    value="{{ old('btn_name', $sectionList['section2']->btn_name) }}">
                                                 @error('btn_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -374,7 +392,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 link</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section2']->link) }}">
+                                                <input type="text" name="link" class="form-control"
+                                                    value="{{ old('link', $sectionList['section2']->link) }}">
                                                 @error('link')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -399,15 +418,16 @@
                                 <div class="tab-pane fade" id="top-section3" role="tabpanel"
                                     aria-labelledby="contact-top-tab">
                                     <h5 class="f-w-600">Section 3</h5>
-                                    <form action="{{ route('home.section3') }}" method="POST" enctype="multipart/form-data"
-                                        class="needs-validation" novalidate>
+                                    <form action="{{ route('home.section3') }}" method="POST"
+                                        enctype="multipart/form-data" class="needs-validation" novalidate>
                                         @csrf
                                         <div class="form-group row">
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Heading</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control @error('heading') is-invalid @enderror"
-                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section3']->heading) }}"
+                                                    id="heading" name="heading"
+                                                    value="{{ old('heading', $sectionList['section3']->heading) }}"
                                                     type="text" placeholder="Heading">
                                                 @error('heading')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -418,7 +438,7 @@
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Description</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section3']->description) }}</textarea>
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section3']->description) }}</textarea>
                                                 @error('description')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -428,7 +448,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
                                                 image</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="file" name="image" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section3']->image }}">
+                                                <input type="file" name="image" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section3']->image }}">
                                                 @error('image')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -438,7 +459,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 image alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image_alt" class="form-control" value="{{ old('image_alt',$sectionList['section3']->image_alt) }}">
+                                                <input type="text" name="image_alt" class="form-control"
+                                                    value="{{ old('image_alt', $sectionList['section3']->image_alt) }}">
                                                 @error('image_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -448,7 +470,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section3']->btn_name) }}">
+                                                <input type="text" name="btn_name" class="form-control"
+                                                    value="{{ old('btn_name', $sectionList['section3']->btn_name) }}">
                                                 @error('btn_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -458,7 +481,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 link</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section3']->link) }}">
+                                                <input type="text" name="link" class="form-control"
+                                                    value="{{ old('link', $sectionList['section3']->link) }}">
                                                 @error('link')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -483,15 +507,16 @@
                                 <div class="tab-pane fade" id="top-section4" role="tabpanel"
                                     aria-labelledby="contact-top-tab">
                                     <h5 class="f-w-600">Section 4</h5>
-                                    <form action="{{ route('home.section4')  }}" method="POST" enctype="multipart/form-data"
-                                        class="needs-validation" novalidate>
+                                    <form action="{{ route('home.section4') }}" method="POST"
+                                        enctype="multipart/form-data" class="needs-validation" novalidate>
                                         @csrf
                                         <div class="form-group row">
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Heading</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control @error('heading') is-invalid @enderror"
-                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section4']->heading) }}"
+                                                    id="heading" name="heading"
+                                                    value="{{ old('heading', $sectionList['section4']->heading) }}"
                                                     type="text" placeholder="Heading">
                                                 @error('heading')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -502,7 +527,7 @@
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Description</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section4']->description) }}</textarea>
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section4']->description) }}</textarea>
                                                 @error('description')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -512,7 +537,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
                                                 image</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="file" name="image1" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section4']->image1 }}">
+                                                <input type="file" name="image1" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section4']->image1 }}">
                                                 @error('image1')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -522,7 +548,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 image alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image1_alt" class="form-control" value="{{ old('image1_alt',$sectionList['section3']->image1_alt) }}">
+                                                <input type="text" name="image1_alt" class="form-control"
+                                                    value="{{ old('image1_alt', $sectionList['section3']->image1_alt) }}">
                                                 @error('image1_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -532,7 +559,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
                                                 image</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="file" name="image2" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section4']->image2 }}">
+                                                <input type="file" name="image2" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section4']->image2 }}">
                                                 @error('image2')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -542,7 +570,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 image alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image2_alt" class="form-control" value="{{ old('image2_alt',$sectionList['section4']->image2_alt) }}">
+                                                <input type="text" name="image2_alt" class="form-control"
+                                                    value="{{ old('image2_alt', $sectionList['section4']->image2_alt) }}">
                                                 @error('image2_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -552,7 +581,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section4']->btn_name) }}">
+                                                <input type="text" name="btn_name" class="form-control"
+                                                    value="{{ old('btn_name', $sectionList['section4']->btn_name) }}">
                                                 @error('btn_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -562,7 +592,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 link</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section4']->link) }}">
+                                                <input type="text" name="link" class="form-control"
+                                                    value="{{ old('link', $sectionList['section4']->link) }}">
                                                 @error('link')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -587,15 +618,16 @@
                                 <div class="tab-pane fade" id="top-section5" role="tabpanel"
                                     aria-labelledby="contact-top-tab">
                                     <h5 class="f-w-600">Section 5</h5>
-                                    <form action="{{ route('home.section5') }}" method="POST" enctype="multipart/form-data"
-                                        class="needs-validation" novalidate>
+                                    <form action="{{ route('home.section5') }}" method="POST"
+                                        enctype="multipart/form-data" class="needs-validation" novalidate>
                                         @csrf
                                         <div class="form-group row">
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Heading</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control @error('heading') is-invalid @enderror"
-                                                    id="heading" name="heading" value="{{ old('heading',$sectionList['section5']->heading) }}"
+                                                    id="heading" name="heading"
+                                                    value="{{ old('heading', $sectionList['section5']->heading) }}"
                                                     type="text" placeholder="Heading">
                                                 @error('heading')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -603,11 +635,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="validationCustom0"
-                                                class="col-xl-3 col-md-4"><span>*</span>Sub heading</label>
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Sub
+                                                heading</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input class="form-control @error('subheading') is-invalid @enderror"
-                                                    id="subheading" name="subheading" value="{{ old('subheading',$sectionList['section5']->subheading) }}"
+                                                    id="subheading" name="subheading"
+                                                    value="{{ old('subheading', $sectionList['section5']->subheading) }}"
                                                     type="text" placeholder="subheading">
                                                 @error('subheading')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -618,7 +651,7 @@
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Description</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description',$sectionList['section5']->description) }}</textarea>
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section5']->description) }}</textarea>
                                                 @error('description')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -628,7 +661,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 image (desktop)</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="file" name="image_desktop" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_desktop }}">
+                                                <input type="file" name="image_desktop" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_desktop }}">
                                                 @error('image_desktop')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -638,7 +672,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 Image desktop alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image_desktop_alt" class="form-control" value="{{ old('image_desktop_alt',$sectionList['section5']->image_desktop_alt) }}">
+                                                <input type="text" name="image_desktop_alt" class="form-control"
+                                                    value="{{ old('image_desktop_alt', $sectionList['section5']->image_desktop_alt) }}">
                                                 @error('image_desktop_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -648,7 +683,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
                                                 image (mobile)</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="file" name="image_mobile" class="dropify" data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_mobile }}">
+                                                <input type="file" name="image_mobile" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_mobile }}">
                                                 @error('image_mobile')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -658,7 +694,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 Image mobile alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image_mobile_alt" class="form-control" value="{{ old('image_mobile_alt',$sectionList['section5']->image_mobile_alt) }}">
+                                                <input type="text" name="image_mobile_alt" class="form-control"
+                                                    value="{{ old('image_mobile_alt', $sectionList['section5']->image_mobile_alt) }}">
                                                 @error('image_mobile_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -668,7 +705,8 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="btn_name" class="form-control" value="{{ old('btn_name',$sectionList['section5']->btn_name) }}">
+                                                <input type="text" name="btn_name" class="form-control"
+                                                    value="{{ old('btn_name', $sectionList['section5']->btn_name) }}">
                                                 @error('btn_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -678,7 +716,165 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 link</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="link" class="form-control" value="{{ old('link',$sectionList['section5']->link) }}">
+                                                <input type="text" name="link" class="form-control"
+                                                    value="{{ old('link', $sectionList['section5']->link) }}">
+                                                @error('link')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-xl-3 col-md-4">Status</label>
+                                            <div class="col-md-7">
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox-primary-2" type="checkbox" checked name="status"
+                                                        value="true" data-original-title="">
+                                                    <label for="checkbox-primary-2">Enable the Section</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pull-left">
+                                            <button type="submit" class="btn btn-primary submitBtn">Save <i
+                                                    class="fa fa-spinner fa-spin main-spinner d-none"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="top-section6" role="tabpanel"
+                                    aria-labelledby="contact-top-tab">
+                                    <h5 class="f-w-600">The Sama Difference</h5>
+                                    <form action="{{ route('home.section6') }}" method="POST"
+                                        enctype="multipart/form-data" class="needs-validation" novalidate>
+                                        @csrf
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Heading</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control @error('heading') is-invalid @enderror"
+                                                    id="heading" name="heading"
+                                                    value="{{ old('heading', $sectionList['section5']->heading) }}"
+                                                    type="text" placeholder="Heading">
+                                                @error('heading')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4">Sub
+                                                heading</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input class="form-control @error('subheading') is-invalid @enderror"
+                                                    id="subheading" name="subheading"
+                                                    value="{{ old('subheading', $sectionList['section5']->subheading) }}"
+                                                    type="text" placeholder="subheading">
+                                                @error('subheading')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                Our story Image</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image_desktop" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_desktop }}">
+                                                @error('image_desktop')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                our story alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image_desktop_alt" class="form-control"
+                                                    value="{{ old('image_desktop_alt', $sectionList['section5']->image_desktop_alt) }}">
+                                                @error('image_desktop_alt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Description</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section5']->description) }}</textarea>
+                                                @error('description')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                name</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="btn_name" class="form-control"
+                                                    value="{{ old('btn_name', $sectionList['section5']->btn_name) }}">
+                                                @error('btn_name')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                link</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="link" class="form-control"
+                                                    value="{{ old('link', $sectionList['section5']->link) }}">
+                                                @error('link')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                                Mission Image</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="file" name="image_mobile" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_mobile }}">
+                                                @error('image_mobile')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                                                Mission image alt</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="image_mobile_alt" class="form-control"
+                                                    value="{{ old('image_mobile_alt', $sectionList['section5']->image_mobile_alt) }}">
+                                                @error('image_mobile_alt')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0"
+                                                class="col-xl-3 col-md-4"><span>*</span>Description</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section5']->description) }}</textarea>
+                                                @error('description')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                name</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="btn_name" class="form-control"
+                                                    value="{{ old('btn_name', $sectionList['section5']->btn_name) }}">
+                                                @error('btn_name')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
+                                                link</label>
+                                            <div class="col-xl-8 col-md-7">
+                                                <input type="text" name="link" class="form-control"
+                                                    value="{{ old('link', $sectionList['section5']->link) }}">
                                                 @error('link')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror

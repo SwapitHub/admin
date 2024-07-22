@@ -13,6 +13,7 @@ use App\Models\HomeSection2;
 use App\Models\HomeSection3;
 use App\Models\HomeSection4;
 use App\Models\HomeSection5;
+use App\Models\HomeSection6;
 use App\Models\ShopByCategoryHomePage;
 
 class HomeContentController extends Controller
@@ -25,6 +26,7 @@ class HomeContentController extends Controller
             'section3' => HomeSection3::first(),
             'section4' => HomeSection4::first(),
             'section5' => HomeSection5::first(),
+            'section6' => HomeSection6::first(),
         ];
         $banner = Banner::orderBy('id', 'desc')->where('type', 'Home')->get();
         $data = [
@@ -243,6 +245,79 @@ class HomeContentController extends Controller
     }
 
     public function section5(Request $request)
+    {
+        $homecontant =  HomeSection5::find(1);
+        $this->validate($request, [
+            'heading' => 'required',
+            'subheading' => 'required',
+            'description' => 'required',
+            'btn_name' => 'required',
+            'link' => 'required',
+        ], [
+            'heading.required' => 'The heading field is required.',
+            'subheading.required' => 'The subheading field is required.',
+            'description.required' => 'The description field is required.',
+            'btn_name.required' => 'The button name field is required.',
+            'link.required' => 'The button link field is required.',
+        ]);
+
+
+        if ($request->file('image_desktop') != NULL) {
+            if (!is_null($homecontant)) {
+
+                if ($homecontant->image_desktop) {
+                    $oldImagePath = 'public/' . $homecontant->image_desktop;
+                    Storage::disk('s3')->delete($oldImagePath);
+                }
+            }
+
+            $extension = $request->file('image_desktop')->getClientOriginalExtension();
+            $fileName = "section5_desktop_" . time() . '.' . $extension;
+            $path1 = $request->file('image_desktop')->storeAs('public/images/home', $fileName, 's3');
+            Storage::disk('s3')->setVisibility($path1, 'public');
+            $bannerpath1 = 'images/home/' . $fileName;
+        } else {
+            $bannerpath1 = $homecontant->image_desktop;
+        }
+
+        // second image
+        if ($request->file('image_mobile') != NULL) {
+
+            if (!is_null($homecontant)) {
+                if ($homecontant->image_mobile) {
+                    $oldImage2Path = 'public/' . $homecontant->image_mobile;
+                    Storage::disk('s3')->delete($oldImage2Path);
+                }
+            }
+
+            $extension = $request->file('image_mobile')->getClientOriginalExtension();
+            $fileName = "section5_mobile_" . time() . '.' . $extension;
+            $path2 = $request->file('image_mobile')->storeAs('public/images/home', $fileName, 's3');
+            Storage::disk('s3')->setVisibility($path2, 'public');
+            $bannerpath2 = 'images/home/' . $fileName;
+        } else {
+            $bannerpath2 = $homecontant->image_mobile;
+        }
+
+
+        $conditions = ['id' => 1];
+        $values = [
+            'heading' => $request->heading,
+            'subheading' => $request->subheading,
+            'description' => $request->description,
+            'btn_name' => $request->btn_name,
+            'link' => $request->link,
+            'image_desktop' => $bannerpath1,
+            'image_desktop_alt' => $request->image_desktop_alt,
+            'image_mobile' => $bannerpath2,
+            'image_mobile_alt' => $request->image_mobile_alt,
+            'status' => $request->status ?? 'false',
+        ];
+        HomeSection5::updateOrInsert($conditions, $values);
+        return redirect()->back()->with('success', 'Data added successfully');
+    }
+
+    public function section6(Request $request)
     {
         $homecontant =  HomeSection5::find(1);
         $this->validate($request, [

@@ -344,6 +344,7 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
     Route::post('/section3',[App\Http\Controllers\HomeContentController::class, 'section3'])->name('home.section3');
     Route::post('/section4',[App\Http\Controllers\HomeContentController::class, 'section4'])->name('home.section4');
     Route::post('/section5',[App\Http\Controllers\HomeContentController::class, 'section5'])->name('home.section5');
+    Route::post('/section6',[App\Http\Controllers\HomeContentController::class, 'section5'])->name('home.section6');
 
 
 

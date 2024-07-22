@@ -68,6 +68,11 @@ class SiteinfoController extends Controller
             $section5['image_mobile'] =  env('AWS_URL') . 'public/' . $section5['image_mobile'];
             $collection['section5'] = $section5;
 
+            $section6 =  HomeSection6::first();
+            $section5['image1'] =  env('AWS_URL') . 'public/' . $section6['image1'];
+            $section5['image2'] =  env('AWS_URL') . 'public/' . $section6['image2'];
+            $collection['section5'] = $section5;
+
             $shopbycat = [];
             $q = ShopByCategoryHomePage::orderBy('order_number', 'asc')->where('status', 'true');
             if ($q->exists()) {
