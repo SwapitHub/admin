@@ -319,74 +319,84 @@ class HomeContentController extends Controller
 
     public function section6(Request $request)
     {
-        $homecontant =  HomeSection5::find(1);
+        $homecontant =  HomeSection6::find(1);
         $this->validate($request, [
-            'heading' => 'required',
-            'subheading' => 'required',
-            'description' => 'required',
+            'heading1' => 'required',
+            'heading2' => 'required',
+            'description1' => 'required',
+            'description2' => 'required',
             'btn_name' => 'required',
-            'link' => 'required',
+            'btn_name2' => 'required',
+            'btn_link' => 'required',
+            'btn_link2' => 'required',
         ], [
-            'heading.required' => 'The heading field is required.',
-            'subheading.required' => 'The subheading field is required.',
-            'description.required' => 'The description field is required.',
+            'heading1.required' => 'The ourstory heading field is required.',
+            'heading2.required' => 'The mission heading  field is required.',
+            'description1.required' => 'The description1 field is required.',
+            'description2.required' => 'The description2 field is required.',
             'btn_name.required' => 'The button name field is required.',
-            'link.required' => 'The button link field is required.',
+            'btn_name2.required' => 'The button name2 field is required.',
+            'btn_link.required' => 'The button link field is required.',
+            'btn_link2.required' => 'The button link2 field is required.',
         ]);
 
 
-        if ($request->file('image_desktop') != NULL) {
+        if ($request->file('image1') != NULL) {
             if (!is_null($homecontant)) {
 
-                if ($homecontant->image_desktop) {
-                    $oldImagePath = 'public/' . $homecontant->image_desktop;
+                if ($homecontant->image1) {
+                    $oldImagePath = 'public/' . $homecontant->image1;
                     Storage::disk('s3')->delete($oldImagePath);
                 }
             }
 
-            $extension = $request->file('image_desktop')->getClientOriginalExtension();
-            $fileName = "section5_desktop_" . time() . '.' . $extension;
-            $path1 = $request->file('image_desktop')->storeAs('public/images/home', $fileName, 's3');
+            $extension = $request->file('image1')->getClientOriginalExtension();
+            $fileName = "section6_ourstory_" . time() . '.' . $extension;
+            $path1 = $request->file('image')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path1, 'public');
             $bannerpath1 = 'images/home/' . $fileName;
         } else {
-            $bannerpath1 = $homecontant->image_desktop;
+            $bannerpath1 = $homecontant->image;
         }
 
         // second image
-        if ($request->file('image_mobile') != NULL) {
+        if ($request->file('image2') != NULL) {
 
             if (!is_null($homecontant)) {
-                if ($homecontant->image_mobile) {
-                    $oldImage2Path = 'public/' . $homecontant->image_mobile;
+                if ($homecontant->image2) {
+                    $oldImage2Path = 'public/' . $homecontant->image2;
                     Storage::disk('s3')->delete($oldImage2Path);
                 }
             }
 
-            $extension = $request->file('image_mobile')->getClientOriginalExtension();
-            $fileName = "section5_mobile_" . time() . '.' . $extension;
-            $path2 = $request->file('image_mobile')->storeAs('public/images/home', $fileName, 's3');
+            $extension = $request->file('image2')->getClientOriginalExtension();
+            $fileName = "section6_mission_" . time() . '.' . $extension;
+            $path2 = $request->file('image2')->storeAs('public/images/home', $fileName, 's3');
             Storage::disk('s3')->setVisibility($path2, 'public');
             $bannerpath2 = 'images/home/' . $fileName;
         } else {
-            $bannerpath2 = $homecontant->image_mobile;
+            $bannerpath2 = $homecontant->image2;
         }
 
 
         $conditions = ['id' => 1];
         $values = [
-            'heading' => $request->heading,
-            'subheading' => $request->subheading,
-            'description' => $request->description,
+            'heading1' => $request->heading,
+            'subheading1' => $request->subheading,
+            'image1' => $bannerpath1,
+            'image1_alt' => $request->image1_alt,
             'btn_name' => $request->btn_name,
-            'link' => $request->link,
-            'image_desktop' => $bannerpath1,
-            'image_desktop_alt' => $request->image_desktop_alt,
-            'image_mobile' => $bannerpath2,
-            'image_mobile_alt' => $request->image_mobile_alt,
-            'status' => $request->status ?? 'false',
+            'btn_link' => $request->btn_link,
+            'description1' => $request->description,
+            'heading2' => $request->heading2,
+            'subheading2' => $request->subheading2,
+            'image2' => $bannerpath2,
+            'image2_alt' => $request->image2_alt,
+            'btn_name2' => $request->btn_name2,
+            'btn_link2' => $request->btn_link2,
+            'description2' => $request->description2,
         ];
-        HomeSection5::updateOrInsert($conditions, $values);
+        HomeSection6::updateOrInsert($conditions, $values);
         return redirect()->back()->with('success', 'Data added successfully');
     }
 

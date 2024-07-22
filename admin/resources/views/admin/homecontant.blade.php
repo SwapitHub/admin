@@ -749,11 +749,11 @@
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Heading</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input class="form-control @error('heading') is-invalid @enderror"
-                                                    id="heading" name="heading"
-                                                    value="{{ old('heading', $sectionList['section5']->heading) }}"
+                                                <input class="form-control @error('heading1') is-invalid @enderror"
+                                                    id="heading1" name="heading1"
+                                                    value="{{ old('heading1', $sectionList['section6']->heading1) }}"
                                                     type="text" placeholder="Heading">
-                                                @error('heading')
+                                                @error('heading1')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -762,9 +762,9 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4">Sub
                                                 heading</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input class="form-control @error('subheading') is-invalid @enderror"
-                                                    id="subheading" name="subheading"
-                                                    value="{{ old('subheading', $sectionList['section5']->subheading) }}"
+                                                <input class="form-control @error('subheading1') is-invalid @enderror"
+                                                    id="subheading1" name="subheading1"
+                                                    value="{{ old('subheading1', $sectionList['section6']->subheading1) }}"
                                                     type="text" placeholder="subheading">
                                                 @error('subheading')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -777,8 +777,8 @@
                                                 Our story Image</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input type="file" name="image_desktop" class="dropify"
-                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_desktop }}">
-                                                @error('image_desktop')
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section6']->image1 }}">
+                                                @error('image1')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -787,9 +787,9 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 our story alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image_desktop_alt" class="form-control"
-                                                    value="{{ old('image_desktop_alt', $sectionList['section5']->image_desktop_alt) }}">
-                                                @error('image_desktop_alt')
+                                                <input type="text" name="image1_alt" class="form-control"
+                                                    value="{{ old('image1_alt', $sectionList['section6']->image1_alt) }}">
+                                                @error('image1_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -798,8 +798,8 @@
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Description</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section5']->description) }}</textarea>
-                                                @error('description')
+                                                <textarea name="description1" class="summernote" cols="30" rows="10">{{ old('description1', $sectionList['section6']->description1) }}</textarea>
+                                                @error('description1')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -809,7 +809,7 @@
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
                                                 <input type="text" name="btn_name" class="form-control"
-                                                    value="{{ old('btn_name', $sectionList['section5']->btn_name) }}">
+                                                    value="{{ old('btn_name', $sectionList['section6']->btn_name) }}">
                                                 @error('btn_name')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -819,20 +819,20 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 link</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="link" class="form-control"
-                                                    value="{{ old('link', $sectionList['section5']->link) }}">
-                                                @error('link')
+                                                <input type="text" name="btn_link" class="form-control"
+                                                    value="{{ old('btn_link', $sectionList['section6']->btn_link) }}">
+                                                @error('btn_link')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Banner
+                                            <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 Mission Image</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="file" name="image_mobile" class="dropify"
-                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section5']->image_mobile }}">
-                                                @error('image_mobile')
+                                                <input type="file" name="image2" class="dropify"
+                                                    data-default-file="{{ env('AWS_URL') }}public/{{ $sectionList['section6']->image2 }}">
+                                                @error('image2')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -841,9 +841,9 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                                                 Mission image alt</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="image_mobile_alt" class="form-control"
-                                                    value="{{ old('image_mobile_alt', $sectionList['section5']->image_mobile_alt) }}">
-                                                @error('image_mobile_alt')
+                                                <input type="text" name="image2_alt" class="form-control"
+                                                    value="{{ old('image2_alt', $sectionList['section6']->image2_alt) }}">
+                                                @error('image2_alt')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -852,8 +852,8 @@
                                             <label for="validationCustom0"
                                                 class="col-xl-3 col-md-4"><span>*</span>Description</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <textarea name="description" class="summernote" cols="30" rows="10">{{ old('description', $sectionList['section5']->description) }}</textarea>
-                                                @error('description')
+                                                <textarea name="description2" class="summernote" cols="30" rows="10">{{ old('description2', $sectionList['section6']->description2) }}</textarea>
+                                                @error('description2')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -862,9 +862,9 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 name</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="btn_name" class="form-control"
-                                                    value="{{ old('btn_name', $sectionList['section5']->btn_name) }}">
-                                                @error('btn_name')
+                                                <input type="text" name="btn_name2" class="form-control"
+                                                    value="{{ old('btn_name2', $sectionList['section6']->btn_name2) }}">
+                                                @error('btn_name2')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -873,9 +873,9 @@
                                             <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>Button
                                                 link</label>
                                             <div class="col-xl-8 col-md-7">
-                                                <input type="text" name="link" class="form-control"
-                                                    value="{{ old('link', $sectionList['section5']->link) }}">
-                                                @error('link')
+                                                <input type="text" name="btn_link2" class="form-control"
+                                                    value="{{ old('btn_link2', $sectionList['section6']->btn_link2) }}">
+                                                @error('btn_link2')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
