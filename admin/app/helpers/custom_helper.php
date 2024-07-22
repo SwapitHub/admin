@@ -94,7 +94,7 @@ if (!function_exists('getProductImages')) {
             case '18k-white-gold':
                 $image = $image;
                 break;
-            case '18k-yelloe-gold':
+            case '18k-yellow-gold':
                 $color = 'alt';
                 $image = $img[0] . '.' . $color . '.' . $extension;
                 break;
