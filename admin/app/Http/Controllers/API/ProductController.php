@@ -53,7 +53,7 @@ class ProductController extends Controller
             if ($product_price) {
                 $output['res'] = 'success';
                 $output['msg'] = 'product price is :';
-                $output['data'] = ['price'=>round($product_price->price,0),'diamond_type'=>$product_price->diamond_type];
+                $output['data'] = ['price' => round($product_price->price, 0), 'diamond_type' => $product_price->diamond_type];
             } else {
                 $output['res'] = 'error';
                 $output['msg'] = 'product price not found';
@@ -92,7 +92,7 @@ class ProductController extends Controller
         //     ## ->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) ASC")
         //     ->distinct(); // Ensure distinct products
 
-          ####### new script start #######
+        ####### new script start #######
         $products = ProductModel::query()
             ->leftJoin('product_price', 'products.sku', '=', 'product_price.product_sku')
             ->where('products.menu', 7)
@@ -179,39 +179,39 @@ class ProductController extends Controller
                 $product->name = ucwords($name);
 
                 // Get the prices based on different criteria
-                 $white_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                $white_gold_price = ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'White')
                     ->where('diamond_type', 'natural')
                     ->first()
                     ->price ?? 0;
-                    $product->white_gold_price = round($white_gold_price,0);
+                $product->white_gold_price = round($white_gold_price, 0);
 
-                 $yellow_gold_price= ProductPrice::where('product_sku', $product['sku'])
+                $yellow_gold_price = ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'Yellow')
                     ->where('diamond_type', 'natural')
                     ->first()
                     ->price ?? 0;
 
-                    $product->yellow_gold_price = round($yellow_gold_price,0);
+                $product->yellow_gold_price = round($yellow_gold_price, 0);
 
-                 $rose_gold_price = ProductPrice::where('product_sku', $product['sku'])
+                $rose_gold_price = ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', '18kt')
                     ->where('metalColor', 'Pink')
                     ->where('diamond_type', 'natural')
                     ->first()
                     ->price ?? 0;
-                    $product->rose_gold_price = round($rose_gold_price,0);
+                $product->rose_gold_price = round($rose_gold_price, 0);
 
-                 $platinum_price = ProductPrice::where('product_sku', $product['sku'])
+                $platinum_price = ProductPrice::where('product_sku', $product['sku'])
                     ->where('metalType', 'Platinum')
                     ->where('metalColor', 'White')
                     ->where('diamond_type', 'natural')
                     ->first()
                     ->price ?? 0;
 
-                    $product->platinum_price = round($platinum_price,0);
+                $product->platinum_price = round($platinum_price, 0);
 
                 array_push($productList, $product);
             }
@@ -242,14 +242,26 @@ class ProductController extends Controller
             $product =  ProductModel::where('entity_id', $entity_id)->orWhere('slug', $entity_id)->first();
             $product['name'] = ucfirst(strtolower(!empty($product['name']) ? $product['name'] : $product['product_browse_pg_name']));
             $product['description'] = ucfirst(strtolower($product['description']));
-            // $product['images'] = json_decode($product['images']);
-            $product['images'] = ProductImageModel::where('product_id',$product['id'])->get()->toArray();
+            ## fetch images
+            // $pro_images =  ProductImageModel::where('product_id', $product['id'])->get();
+            // $images_arr = [];
+            // if (count($pro_images) > 0) {
+            //     foreach ($pro_images as $product_img) {
+            //       $pimg =   env('AWS_URL') . 'products/images/' .$product['internal_sku'].'/'. $product_img['image_path'];
+            //       $images_arr[] = $pimg;
+            //     }
+            // }else
+            // {
+            //    $images_arr = json_decode($product['images']);
+            // }
+            // $product['images'] = $images_arr;
+            $product['images'] = json_decode($product['images']);
             $product['videos'] = json_decode($product['videos']);
             $priceData = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first();
-            $product['white_gold_price'] =round($priceData['price'] ?? 0,0);
-            $product['yellow_gold_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Yellow')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
-            $product['rose_gold_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Pink')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
-            $product['platinum_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', 'Platinum')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
+            $product['white_gold_price'] = round($priceData['price'] ?? 0, 0);
+            $product['yellow_gold_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Yellow')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
+            $product['rose_gold_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Pink')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
+            $product['platinum_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', 'Platinum')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
             $product['diamond_type'] = 'natural';
             $product['diamondQuality'] = $priceData['diamondQuality'] ?? 0;
             $product['metalType'] = '18KT Gold';
@@ -258,7 +270,22 @@ class ProductController extends Controller
                 $is_matchingset = ProductModel::where('sku', $product['matching_wedding_band']);
                 if ($is_matchingset->exists()) {
                     $matching_bands_product = $is_matchingset->first();
-                    $matching_bands_product->price = round(ProductPrice::where('product_sku', $matching_bands_product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
+                    #####IMAGES MATCHING BANDS######
+                    // $matching_images =  ProductImageModel::where('product_id', $matching_bands_product->id)->get();
+                    // $matching_images_arr = [];
+                    // if (count($matching_images) > 0) {
+                    //     foreach ($matching_images as $mproduct_img) {
+                    //       $mimg =   env('AWS_URL') . 'products/images' .$mproduct_img->internal_sku.'/'. $mproduct_img->image_path;
+                    //       $matching_images_arr[] = $mimg;
+                    //     }
+                    // }else
+                    // {
+                    //    $matching_images_arr = json_decode($matching_images->images);
+                    // }
+                    #####IMAGES MATCHING BANDS######
+                    // $matching_bands_product->images = $matching_bands_product;
+                    // $matching_bands_product->images = $matching_images_arr;
+                    $matching_bands_product->price = round(ProductPrice::where('product_sku', $matching_bands_product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
 
                     $product['matching_wedding_band'] = $matching_bands_product;
                 } else {
@@ -351,7 +378,7 @@ class ProductController extends Controller
                         ->orWhere('metalWeight', 'like', "$q%")
                         ->orWhere('finishLevel', 'like', "$q%");
                 })
-                ->select('name','product_browse_pg_name','fractionsemimount','slug','menu','default_image_url', 'white_gold_price', 'sku')
+                ->select('name', 'product_browse_pg_name', 'fractionsemimount', 'slug', 'menu', 'default_image_url', 'white_gold_price', 'sku')
                 ->limit(5)
                 ->get();
             $searched_product = [];
@@ -362,7 +389,7 @@ class ProductController extends Controller
                 $name = strtolower($product->product_browse_pg_name);
                 $product->name = ucfirst($name);
                 $product->menu = Menu::find($product->menu)['slug'];
-                $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
+                $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
                 array_push($searched_product, $product);
             }
         } else {
@@ -434,9 +461,9 @@ class ProductController extends Controller
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->product_browse_pg_name);
                 // $product->name = ucwords($name);
-                $product->name = ucfirst($name . ' ' .$product->fractionsemimount);
+                $product->name = ucfirst($name . ' ' . $product->fractionsemimount);
                 $product->menu = Menu::find($product->menu)['slug'];
-                $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0,0);
+                $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
                 array_push($searched_product, $product);
             }
         } else {
@@ -490,25 +517,22 @@ class ProductController extends Controller
     {
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
-        if($menu_name =='engagement-rings')
-        {
+        if ($menu_name == 'engagement-rings') {
             $menu = 7;
             $query = ProductModel::where('menu', $menu)
-                                  ->where('status', 'true')
-                                  ->orwhere('is_newest', 1)
-                                  ->orwhere('is_bestseller', 1)
-                                  ->limit(5)
-                                  ->get();
-        }
-        else
-        {
+                ->where('status', 'true')
+                ->orwhere('is_newest', 1)
+                ->orwhere('is_bestseller', 1)
+                ->limit(5)
+                ->get();
+        } else {
             $menu = 2;
             $query = ProductModel::where('menu', $menu)
-                                  ->where('status', 'true')
-                                  ->where('is_newest', 1)
-                                  ->orwhere('is_bestseller', 1)
-                                  ->limit(5)
-                                  ->get();
+                ->where('status', 'true')
+                ->where('is_newest', 1)
+                ->orwhere('is_bestseller', 1)
+                ->limit(5)
+                ->get();
         }
         $output['data'] = $query;
         return response()->json($output, 200);
