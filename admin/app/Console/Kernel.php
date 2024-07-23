@@ -17,11 +17,9 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('fetch:product-prices')
-        ->daily()
-        ->at('00:00')
-        ->appendOutputTo(storage_path('logs/fetch_price.log'));
-        // $schedule->command('fetch:product-prices')->weekly()->sundays()->at('00:00')->appendOutputTo(storage_path('logs/fetch_price.log'));
-
+                 ->weeklyOn(2) // 3 represents Wednesday
+                 ->at('00:00')
+                 ->appendOutputTo(storage_path('logs/fetch_price.log'));
     }
 
     /**
