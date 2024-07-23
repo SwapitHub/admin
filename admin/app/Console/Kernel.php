@@ -16,7 +16,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('fetch:product-prices')->weekly()->sundays()->at('00:00')->appendOutputTo(storage_path('logs/fetch_price.log'));
+        $schedule->command('fetch:product-prices')
+        ->daily()
+        ->at('00:00')
+        ->appendOutputTo(storage_path('logs/fetch_price.log'));
+        // $schedule->command('fetch:product-prices')->weekly()->sundays()->at('00:00')->appendOutputTo(storage_path('logs/fetch_price.log'));
+
     }
 
     /**
