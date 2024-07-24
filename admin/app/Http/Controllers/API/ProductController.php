@@ -132,12 +132,12 @@ class ProductController extends Controller
             $range = explode(',', $request->query('price_range'));
             $min = $range[0];
             $max = $range[1];
-            $products->whereBetween('product_price.white_gold_price', [$min, $max]);
+            $products->whereBetween('products.white_gold_price', [$min, $max]);
         }
 
         ## Apply filters for diamond_type and metalColor
-        // $products->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
-            // ->where('product_price.metalColor', 'White');    // Filter for White metalColor
+        // $products->where('products.diamond_type', 'natural')  // Filter for natural diamond_type
+        //     ->where('products.metalColor', 'White');    // Filter for White metalColor
 
         ## Count the filtered results
         $actual_count = $products->count();
