@@ -167,9 +167,9 @@ class WeddingBandProducts extends Controller
                 ->first();
         }
 
-        $query = ProductModel::where('menu',2)
-                ->whereNull('products.parent_sku')
-                ->where('products.status', 'true');
+        $query = ProductModel::where('menu', 2)
+            ->whereNull('products.parent_sku')
+            ->where('products.status', 'true');
 
         if ($cat_id) {
             $query->where('products.category', $cat_id);
@@ -195,10 +195,16 @@ class WeddingBandProducts extends Controller
         }
 
         // Apply sorting based on request
-        if ($request->query('sortby')) {
+        // Apply sorting based on request
+        if (!is_null($request->query('sortby'))) {
             $sortBy = $request->query('sortby');
-
-            if ($sortBy == 'Newest') {
+            if ($sortBy == 'low_to_high') {
+                // $products->orderBy('product_price.price', 'asc');
+                $query->orderByRaw("CAST(products.white_gold_price AS DECIMAL(12, 4)) ASC");
+            } elseif ($sortBy == 'high_to_low') {
+                // $products->orderBy('product_price.price', 'desc');
+                $query->orderByRaw("CAST(products.white_gold_price AS DECIMAL(12, 4)) DESC");
+            } elseif ($sortBy == 'Newest') {
                 $query->orderBy('products.created_at', 'desc');
             } elseif ($sortBy == 'best_seller') {
                 $query->where('products.is_bestseller', '1');
@@ -255,10 +261,7 @@ class WeddingBandProducts extends Controller
             $output['count'] = $count;
             $output['product_count'] = $actual_count;
             $output['data'] = $productList;
-
-        }
-        else
-        {
+        } else {
             $output['res'] = 'error';
             $output['msg'] = 'No product found!';
             $output['data'] = [];
