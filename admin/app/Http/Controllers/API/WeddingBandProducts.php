@@ -167,12 +167,9 @@ class WeddingBandProducts extends Controller
                 ->first();
         }
 
-        $query = ProductModel::query()
-            ->leftJoin('product_price', 'products.sku', '=', 'product_price.product_sku')
-            ->where('products.menu', 2)
-            ->where('products.status', 'true')
-            ->whereNull('products.parent_sku')
-            ->select('products.*', DB::raw('IFNULL(product_price.price, 0) as price'));
+        $query = ProductModel::where('menu',2)
+                ->whereNull('products.parent_sku')
+                ->where('products.status', 'true');
 
         if ($cat_id) {
             $query->where('products.category', $cat_id);
@@ -193,7 +190,7 @@ class WeddingBandProducts extends Controller
             if (count($range) == 2) {
                 $min = $range[0];
                 $max = $range[1];
-                $query->whereBetween(DB::raw('IFNULL(product_price.price, 0)'), [$min, $max]);
+                $query->whereBetween(DB::raw('IFNULL(products.white_gold_price, 0)'), [$min, $max]);
             }
         }
 
