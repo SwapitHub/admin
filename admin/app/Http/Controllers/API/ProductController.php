@@ -81,20 +81,6 @@ class ProductController extends Controller
         $products = ProductModel::where('menu',7)
                         ->whereNull('products.parent_sku')
                         ->where('products.status', 'true');
-        #Initialize the query with the base conditions and join with product_price table
-        // $products = ProductModel::query()
-            // ->leftJoin('product_price', 'products.sku', '=', 'product_price.product_sku')
-            // ->where('products.status', 'true')
-            // ->where('products.menu', 7)
-            // ->whereNull('products.parent_sku')
-            // ->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
-            // ->where('product_price.metalColor', 'White')
-            // ->where('product_price.metalType', '18kt')
-            // ->select('products.*','product_price.price')
-            // ## ->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) ASC")
-            // ->distinct(); // Ensure distinct products
-
-
         // Apply the bridal sets filter
         if ($request->bridal_sets == 'true') {
             $products->whereNotNull('products.matching_wedding_band');
@@ -105,10 +91,10 @@ class ProductController extends Controller
             $sortBy = $request->query('sortby');
             if ($sortBy == 'low_to_high') {
                 // $products->orderBy('product_price.price', 'asc');
-                $products->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) ASC");
+                $products->orderByRaw("CAST(products.white_gold_price AS DECIMAL(12, 4)) ASC");
             } elseif ($sortBy == 'high_to_low') {
                 // $products->orderBy('product_price.price', 'desc');
-                $products->orderByRaw("CAST(product_price.price AS DECIMAL(12, 4)) DESC");
+                $products->orderByRaw("CAST(products.white_gold_price AS DECIMAL(12, 4)) DESC");
             } elseif ($sortBy == 'Newest') {
                 $products->orderBy('products.created_at', 'desc');
             } elseif ($sortBy == 'best_seller') {
@@ -142,12 +128,12 @@ class ProductController extends Controller
             $products->where('products.metalColor_id', $metalcolor_id);
         }
 
-        // if (!is_null($request->query('price_range'))) {
-        //     $range = explode(',', $request->query('price_range'));
-        //     $min = $range[0];
-        //     $max = $range[1];
-        //     $products->whereBetween('product_price.price', [$min, $max]);
-        // }
+        if (!is_null($request->query('price_range'))) {
+            $range = explode(',', $request->query('price_range'));
+            $min = $range[0];
+            $max = $range[1];
+            $products->whereBetween('product_price.white_gold_price', [$min, $max]);
+        }
 
         ## Apply filters for diamond_type and metalColor
         // $products->where('product_price.diamond_type', 'natural')  // Filter for natural diamond_type
