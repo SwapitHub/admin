@@ -241,23 +241,19 @@ class ProductController extends Controller
             // $product['images'] = $images_arr;
 
             ## fetch videos from database
-            $pro_videos = ProductVideosModel::where('product_id',$product['id'])->get();
-
-            if(count($pro_videos) > 0)
-            {
+            $pro_videos = ProductVideosModel::where('product_id', $product['id'])->get();
+            if (count($pro_videos) > 0) {
                 $videos_by_color  = [];
-                foreach($pro_videos as $product_vid)
-                {
+                foreach ($pro_videos as $product_vid) {
                     $color = $product_vid['color'];
                     $video_path = env('AWS_URL') . 'products/videos/' . $product['internal_sku'] . '/' . $product_vid['video_path'];
 
                     $videos_by_color[$color] = $video_path;
                 }
-            }else {
+            } else {
                 $videos_by_color  = json_decode($product['videos']);
             };
-
-              $product['videos'] = $videos_by_color;
+            $product['videos'] = $videos_by_color;
 
             $priceData = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first();
             $product['white_gold_price'] = round($priceData['price'] ?? 0, 0);
