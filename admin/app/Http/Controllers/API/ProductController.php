@@ -9,6 +9,7 @@ use App\Models\Subcategory;
 use App\Models\DiamondShape;
 use App\Models\ProductPrice;
 use App\Models\ProductImageModel;
+use App\Models\ProductVideosModel;
 use App\Models\CenterStone;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Validator;
@@ -78,9 +79,9 @@ class ProductController extends Controller
 
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
-        $products = ProductModel::where('menu',7)
-                        ->whereNull('products.parent_sku')
-                        ->where('products.status', 'true');
+        $products = ProductModel::where('menu', 7)
+            ->whereNull('products.parent_sku')
+            ->where('products.status', 'true');
         // Apply the bridal sets filter
         if ($request->bridal_sets == 'true') {
             $products->whereNotNull('products.matching_wedding_band');
@@ -198,7 +199,6 @@ class ProductController extends Controller
             $output['count'] = $count;
             $output['product_count'] = $actual_count;
             $output['data'] = $productList;
-
         } else {
             $output['res'] = 'error';
             $output['msg'] = 'No product found!';
@@ -226,7 +226,39 @@ class ProductController extends Controller
             $product['name'] = ucfirst(strtolower(!empty($product['name']) ? $product['name'] : $product['product_browse_pg_name']));
             $product['description'] = ucfirst(strtolower($product['description']));
             $product['images'] = json_decode($product['images']);
-            $product['videos'] = json_decode($product['videos']);
+            // $product['videos'] = json_decode($product['videos']);
+            ## fetch images from s3 and database
+            // $pro_images =  ProductImageModel::where('product_id', $product['id'])->get();
+            // $images_arr = [];
+            // if (count($pro_images) > 0) {
+            //     foreach ($pro_images as $product_img) {
+            //         $pimg =   env('AWS_URL') . 'products/images/' . $product['internal_sku'] . '/' . $product_img['image_path'];
+            //         $images_arr[] = $pimg;
+            //     }
+            // } else {
+            //     $images_arr = json_decode($product['images']);
+            // };
+            // $product['images'] = $images_arr;
+
+            ## fetch videos from database
+            $pro_videos = ProductVideosModel::where('product_id',$product['id'])->get();
+
+            if(count($pro_videos) > 0)
+            {
+                $videos_by_color  = [];
+                foreach($pro_videos as $product_vid)
+                {
+                    $color = $product_vid['color'];
+                    $video_path = env('AWS_URL') . 'products/videos/' . $product['internal_sku'] . '/' . $product_vid['video_path'];
+
+                    $videos_by_color[$color] = $video_path;
+                }
+            }else {
+                $videos_by_color  = json_decode($product['videos']);
+            };
+
+              $product['videos'] = $videos_by_color;
+
             $priceData = ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first();
             $product['white_gold_price'] = round($priceData['price'] ?? 0, 0);
             $product['yellow_gold_price'] = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'Yellow')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
