@@ -225,20 +225,20 @@ class ProductController extends Controller
             $product =  ProductModel::where('entity_id', $entity_id)->orWhere('slug', $entity_id)->first();
             $product['name'] = ucfirst(strtolower(!empty($product['name']) ? $product['name'] : $product['product_browse_pg_name']));
             $product['description'] = ucfirst(strtolower($product['description']));
-            // $product['images'] = json_decode($product['images']);
+            $product['images'] = json_decode($product['images']);
             // $product['videos'] = json_decode($product['videos']);
             ## fetch images from s3 and database
-            $pro_images =  ProductImageModel::where('product_id', $product['id'])->get();
-            $images_arr = [];
-            if (count($pro_images) > 0) {
-                foreach ($pro_images as $product_img) {
-                    $pimg =   env('AWS_URL') . 'products/images/' . $product['internal_sku'] . '/' . $product_img['image_path'];
-                    $images_arr[] = $pimg;
-                }
-            } else {
-                $images_arr = json_decode($product['images']);
-            };
-            $product['images'] = $images_arr;
+            // $pro_images =  ProductImageModel::where('product_id', $product['id'])->get();
+            // $images_arr = [];
+            // if (count($pro_images) > 0) {
+            //     foreach ($pro_images as $product_img) {
+            //         $pimg =   env('AWS_URL') . 'products/images/' . $product['internal_sku'] . '/' . $product_img['image_path'];
+            //         $images_arr[] = $pimg;
+            //     }
+            // } else {
+            //     $images_arr = json_decode($product['images']);
+            // };
+            // $product['images'] = $images_arr;
 
             ## fetch videos from database
             $pro_videos = ProductVideosModel::where('product_id', $product['id'])->get();
