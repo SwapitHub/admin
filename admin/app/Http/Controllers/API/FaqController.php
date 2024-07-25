@@ -49,7 +49,7 @@
 					 $contact->status = 'true';
 					 $contact->save();
 					 $output['res'] = 'success';
-					 $output['msg'] = 'You message have been submitted';
+					 $output['msg'] = 'Your message have been submitted';
 					 $output['data'] =[];
 					 return response()->json($output, 200);
 				}
