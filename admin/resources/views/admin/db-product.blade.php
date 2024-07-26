@@ -64,8 +64,7 @@
                                             <th>Type/Parent sku</th>
 											{{-- <th>status</th> --}}
 											<th>Menu</th>
-											<th>Categories</th>
-											<th>Sub Categories</th>
+											<th>Categories/SubCategories</th>
 											{{-- <th>Description</th> --}}
 											{{-- <th>Metal Color</th> --}}
 											<th>Options</th>
@@ -84,8 +83,7 @@
                                             <a href="{{ url('/db-product-list/edit') }}/{{ getProductIdBasedOnSku(!is_null($item->parent_sku)?$item->parent_sku:$item->sku) }}" style="text-decoration: underline; color:blue !important">{{ !is_null($item->parent_sku)?$item->parent_sku:$item->sku }}</a></td>
 											{{-- <td class="text-uppercase"> <span class="badge badge-{{ ($item->status=='true')?'success':'primary' }}">{{ $item->status }}</span> </td> --}}
 											<td>{{ getMenu($item->menu) }}</td>
-											<td>{{ getCategories($item->category) }}</td>
-											<td> {{ ($item->sub_category != null)?getSubCategories($item->sub_category):"NA"; }} </td>
+											<td>{{ getCategories($item->category) }} / {{ ($item->sub_category != null)?getSubCategories($item->sub_category):"NA"; }}</td>
 											{{-- <td>{{ substr($item->description,0,30) }} ...</td> --}}
 											{{-- <td>{{ $item->metalColor }}</td> --}}
 											<td>
