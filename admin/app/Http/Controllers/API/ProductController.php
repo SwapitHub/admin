@@ -151,19 +151,18 @@ class ProductController extends Controller
         if ($count) {
             $productList = [];
             foreach ($productsList as $product) {
-                // $product->name = (!empty($product->product_browse_pg_name)) ? ucfirst(strtolower($product->product_browse_pg_name)) : ucfirst(strtolower($product->name));
+                ## $product->name = (!empty($product->product_browse_pg_name)) ? ucfirst(strtolower($product->product_browse_pg_name)) : ucfirst(strtolower($product->name));
                 $product->name = ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
-                // Parse the URL and get the path
-                $path = parse_url($product->default_image_url, PHP_URL_PATH);
-                // Get the file extension
-                $extension = pathinfo($path, PATHINFO_EXTENSION);
-                  ## create image
-                $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku .'/'.$product->internal_sku.'.'.$extension;
+                ## Parse the URL and get the path
+                // $path = parse_url($product->default_image_url, PHP_URL_PATH);
+                // $extension = pathinfo($path, PATHINFO_EXTENSION);
+                // ## create image
+                // $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
 
 
 
-                $product->default_image_url = $defaulImg;
+                // $product->default_image_url = $defaulImg;
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->name);
