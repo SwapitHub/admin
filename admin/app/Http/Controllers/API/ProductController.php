@@ -159,9 +159,6 @@ class ProductController extends Controller
                 // $extension = pathinfo($path, PATHINFO_EXTENSION);
                 // ## create image
                 // $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
-
-
-
                 // $product->default_image_url = $defaulImg;
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
@@ -385,7 +382,7 @@ class ProductController extends Controller
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
-                $name = strtolower($product->product_browse_pg_name);
+                $name = strtolower($product->name);
                 $product->name = ucfirst($name);
                 $product->menu = Menu::find($product->menu)['slug'];
                 array_push($searched_product, $product);
@@ -460,7 +457,8 @@ class ProductController extends Controller
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->product_browse_pg_name);
                 $product->type = $product->type;
-                $product->name = ucfirst($name . ' ' . $product->fractionsemimount);
+                // $product->name = ucfirst($name . ' ' . $product->fractionsemimount);
+                $product->name = ucfirst($name);
                 $product->menu = Menu::find($product->menu)['slug'];
                 $product->white_gold_price = $product->white_gold_price;
                 array_push($searched_product, $product);
