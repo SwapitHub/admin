@@ -56,10 +56,14 @@
                                     <div class="form-group">
                                         <label for="validationCustom01" class="col-form-label pt-0"><span>*</span>
                                             Product Type</label>
-                                            <select name="type" id="type" class="form-control">
-                                                <option value="parent_product" {{ $product['type'] =='parent_product'?'selected':'';}}>Parent Product</option>
-                                                <option value="child_product" {{ $product['type'] =='child_product'?'selected':'';}}>Child Product</option>
-                                            </select>
+                                        <select name="type" id="type" class="form-control">
+                                            <option value="parent_product"
+                                                {{ $product['type'] == 'parent_product' ? 'selected' : '' }}>Parent Product
+                                            </option>
+                                            <option value="child_product"
+                                                {{ $product['type'] == 'child_product' ? 'selected' : '' }}>Child Product
+                                            </option>
+                                        </select>
                                         {{-- <input class="form-control" name="type" id="validationCustom01" type="text"
                                             value="{{ old('type', $product['type']) }}" required=""> --}}
                                         @error('type')
@@ -461,7 +465,8 @@
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             Default Image alt</label>
                                         <input class="form-control" id="validationCustom02" type="text"
-                                            name="default_image_alt" value="{{ old('default_image_alt', $product->default_image_alt) }}">
+                                            name="default_image_alt"
+                                            value="{{ old('default_image_alt', $product->default_image_alt) }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
@@ -511,20 +516,23 @@
                                         <label for="validationCustom02" class="col-form-label">
                                             Meta Title</label>
                                         <input class="form-control" name="meta_title" id="validationCustom02"
-                                            type="text" value="{{ !empty($product->meta_title)?$product->meta_title:$product->name }}" placeholder="Meta Title">
+                                            type="text"
+                                            value="{{ !empty($product->meta_title) ? $product->meta_title : $product->name }}"
+                                            placeholder="Meta Title">
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label">
                                             Meta Keyword</label>
                                         <input class="form-control" name="meta_keyword" id="validationCustom02"
                                             type="text" value="{{ $product->meta_keyword }}"
                                             placeholder="Meta Keyword">
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label">
                                             Meta Description</label>
                                         <input class="form-control" name="meta_description" id="validationCustom02"
-                                            type="text" value="{{ !empty($product->meta_description)?$product->meta_description:$product->description }}"
+                                            type="text"
+                                            value="{{ !empty($product->meta_description) ? $product->meta_description : $product->description }}"
                                             placeholder="Meta Description">
                                     </div>
                                     <!--meta data--->
@@ -639,7 +647,8 @@
                                     <p> Variation products are depend on all possible combination of attribute</p>
 
                                     <button type="button" data-bs-toggle="modal"
-                                    data-bs-target="#addVariantProductModal" class="btn btn-success">Add Variant</button>
+                                        data-bs-target="#addVariantProductModal" class="btn btn-success">Add
+                                        Variant</button>
                                 </div>
                                 <div class="card-body">
                                     <div class="user-status table-responsive products-table">
@@ -668,7 +677,9 @@
                                                         <td class="digits"><a href="#"><i class="fa fa-eye"
                                                                     title="view Price"><i></i></td>
                                                         <td class="action">
-                                                            <a href="{{ route('admin.product.edit',['id'=>$variation['id']]) }}"><i class="fa fa-edit"></i></a>
+                                                            <a
+                                                                href="{{ route('admin.product.edit', ['id' => $variation['id']]) }}"><i
+                                                                    class="fa fa-edit"></i></a>
                                                             {{-- <a href="javascript:void(0)" onclick="deleteItem('{{ url('db-product-list/delete/') }}/{{ $variation['id'] }}')"><i class="fa fa-trash"></i></a> --}}
                                                         </td>
                                                     </tr>
@@ -728,13 +739,13 @@
 
 
                         </div>
-                        <br>
-                        <div class="digital-add needs-validation" style=" float: right;">
-                            <div class="form-group mb-0">
-                                <div class="product-buttons">
-                                    <button type="submit" class="btn btn-primary">Add</button>
-                                    <button type="button" class="btn btn-dark">Discard</button>
-                                </div>
+
+                    </div>
+                    <div class="digital-add needs-validation mb-3" style="display: flex;flex-direction: row-reverse;">
+                        <div class="form-group mb-0">
+                            <div class="product-buttons">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="reset" class="btn btn-dark">Discard</button>
                             </div>
                         </div>
                     </div>
@@ -821,61 +832,62 @@
     </div>
 
 
-     <!-- Variant Modal -->
-     <div class="modal fade" id="addVariantProductModal" tabindex="-1" aria-labelledby="addVariantProductModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog modal-lg">
-         <form action="#" method="POST" id="submit-variant">
-             @csrf
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <h5 class="modal-title" id="addSimilarProductModalLabel">Choose Variant</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
-                 </div>
-                 <div class="modal-body">
-                     <div class="form-group">
-                         <label for="" class="col-form-label"><span class="text-danger">*</span> Manu</label>
-                         <select class="custom-select form-control" name="variant-menu" required=""
-                             id="variant-menu">
-                             <option value="">--Select--</option>
-                             @foreach ($Menus as $pmenu)
-                                 <option value="{{ $pmenu['id'] }}">{{ $pmenu['name'] }}</option>
-                             @endforeach
-                         </select>
-                         <input type="hidden" name="baseproduct_id" value="{{ $product['id'] }}" class="form-control">
-                     </div>
-                     <div class="form-group">
-                         <label for="" class="col-form-label"><span class="text-danger">*</span>
-                             categories</label>
-                         <select class="custom-select form-control" name="variant-category" required=""
-                             id="variant-category">
-                             <option value="">--Select--</option>
-                         </select>
-                     </div>
-                     <div class="form-group">
-                         <label for="" class="col-form-label">Subcategory</label>
-                         <select class="custom-select form-control" name="variant-subcategory"
-                             id="variant-subcategory">
-                             <option value="">--Select--</option>
-                         </select>
-                     </div>
-                     <div class="form-group" id="multichoice-pro">
-                         <label for="" class="col-form-label"><span class="text-danger">*</span>
-                             Products</label>
-                         <select class="custom-select form-control multichoose" multiple name="variant-product[]"
-                             id="" required="">
-                             <option value="">--Select--</option>
-                         </select>
-                     </div>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                     <button type="submit" class="btn btn-primary">Add</button>
-                 </div>
-             </div>
-         </form>
-     </div>
- </div>
+    <!-- Variant Modal -->
+    <div class="modal fade" id="addVariantProductModal" tabindex="-1" aria-labelledby="addVariantProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form action="#" method="POST" id="submit-variant">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addSimilarProductModalLabel">Choose Variant</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="" class="col-form-label"><span class="text-danger">*</span> Manu</label>
+                            <select class="custom-select form-control" name="variant-menu" required=""
+                                id="variant-menu">
+                                <option value="">--Select--</option>
+                                @foreach ($Menus as $pmenu)
+                                    <option value="{{ $pmenu['id'] }}">{{ $pmenu['name'] }}</option>
+                                @endforeach
+                            </select>
+                            <input type="hidden" name="baseproduct_id" value="{{ $product['id'] }}"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-form-label"><span class="text-danger">*</span>
+                                categories</label>
+                            <select class="custom-select form-control" name="variant-category" required=""
+                                id="variant-category">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-form-label">Subcategory</label>
+                            <select class="custom-select form-control" name="variant-subcategory"
+                                id="variant-subcategory">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="multichoice-pro">
+                            <label for="" class="col-form-label"><span class="text-danger">*</span>
+                                Products</label>
+                            <select class="custom-select form-control multichoose" multiple name="variant-product[]"
+                                id="" required="">
+                                <option value="">--Select--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     @push('scripts')
         <script>
@@ -1031,8 +1043,8 @@
             });
 
 
-           // show product for variant
-           $("#variant-menu").change(function() {
+            // show product for variant
+            $("#variant-menu").change(function() {
                 var menuid = $("#variant-menu").val();
                 var baseUrl = "{{ url('/') }}";
                 var url = baseUrl + '/filter-category/' + menuid;
@@ -1085,8 +1097,6 @@
                     }
                 });
             }
-
-
         </script>
     @endpush
 @endsection

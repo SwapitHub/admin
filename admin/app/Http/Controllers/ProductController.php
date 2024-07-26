@@ -409,7 +409,7 @@ class ProductController extends Controller
             //     }
             // }
         // }
-        return redirect()->back()->with('success', 'Product added successfully');
+        return redirect()->back()->with('success', 'Product saved successfully');
     }
 
     public function editProduct($id)

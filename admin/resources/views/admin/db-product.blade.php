@@ -57,19 +57,17 @@
 								<table class="all-package coupon-table table table-striped">
 									<thead>
 										<tr>
-											<th>
-												Sr. No
-											</th>
-											<th>Type</th>
-											<th>Parent Sku</th>
+
+											{{-- <th>Parent Sku</th> --}}
 											<th>Name</th>
 											<th>Sku</th>
-											<th>status</th>
+                                            <th>Type/Parent sku</th>
+											{{-- <th>status</th> --}}
 											<th>Menu</th>
 											<th>Categories</th>
 											<th>Sub Categories</th>
-											<th>Description</th>
-											<th>Metal Color</th>
+											{{-- <th>Description</th> --}}
+											{{-- <th>Metal Color</th> --}}
 											<th>Options</th>
 
 										</tr>
@@ -77,20 +75,22 @@
 									<tbody>
 										@foreach($list as $index=>$item)
 										<tr>
-											<td>{{ $index+1 }}</td>
-											<td>{{ $item->type =='parent_product'?'Parent Product':'Child Product'; }}</td>
-											<td><a href="{{ url('/db-product-list/edit') }}/{{ getProductIdBasedOnSku(!is_null($item->parent_sku)?$item->parent_sku:$item->sku) }}" style="text-decoration: underline; color:blue !important">{{ !is_null($item->parent_sku)?$item->parent_sku:$item->sku }}</a></td>
+
+											{{-- <td><a href="{{ url('/db-product-list/edit') }}/{{ getProductIdBasedOnSku(!is_null($item->parent_sku)?$item->parent_sku:$item->sku) }}" style="text-decoration: underline; color:blue !important">{{ !is_null($item->parent_sku)?$item->parent_sku:$item->sku }}</a></td> --}}
 											<td>{{ $item->name }}</td>
-											<td>{{ $item->sku }}</td>
-											<td class="text-uppercase"> <span class="badge badge-{{ ($item->status=='true')?'success':'primary' }}">{{ $item->status }}</span> </td>
+											<td>{{ $item->internal_sku }}</td>
+										    <td>{{ $item->type =='parent_product'?'Parent Product':'Child Product'; }}
+                                             <br>
+                                            <a href="{{ url('/db-product-list/edit') }}/{{ getProductIdBasedOnSku(!is_null($item->parent_sku)?$item->parent_sku:$item->sku) }}" style="text-decoration: underline; color:blue !important">{{ !is_null($item->parent_sku)?$item->parent_sku:$item->sku }}</a></td>
+											{{-- <td class="text-uppercase"> <span class="badge badge-{{ ($item->status=='true')?'success':'primary' }}">{{ $item->status }}</span> </td> --}}
 											<td>{{ getMenu($item->menu) }}</td>
 											<td>{{ getCategories($item->category) }}</td>
 											<td> {{ ($item->sub_category != null)?getSubCategories($item->sub_category):"NA"; }} </td>
-											<td>{{ substr($item->description,0,30) }} ...</td>
-											<td>{{ $item->metalColor }}</td>
+											{{-- <td>{{ substr($item->description,0,30) }} ...</td> --}}
+											{{-- <td>{{ $item->metalColor }}</td> --}}
 											<td>
 												<a href="{{ url('/db-product-list/edit') }}/{{ $item->id }}" title="Edit"><i class="fa fa-edit"></i></a>
-												<a href="{{ url('/db-product-list/edit') }}/{{ $item->id }}" title="Edit"><i class="fa fa-trash"></i></a>
+												{{-- <a href="{{ url('/db-product-list/edit') }}/{{ $item->id }}" title="Edit"><i class="fa fa-trash"></i></a> --}}
 											</td>
 
 										</tr>

@@ -54,7 +54,7 @@ class ProductController extends Controller
             if ($product_price) {
                 $output['res'] = 'success';
                 $output['msg'] = 'product price is :';
-                $output['data'] = ['price' => round($product_price->price, 0), 'diamond_type' => $product_price->diamond_type,'metalType'=>$product_price->metalType];
+                $output['data'] = ['price' => round($product_price->price, 0), 'diamond_type' => $product_price->diamond_type, 'metalType' => $product_price->metalType];
             } else {
                 $output['res'] = 'error';
                 $output['msg'] = 'product price not found';
@@ -72,6 +72,7 @@ class ProductController extends Controller
         }
     }
 
+    ## product listing
     public function index(Request $request)
     {
 
@@ -153,6 +154,16 @@ class ProductController extends Controller
                 // $product->name = (!empty($product->product_browse_pg_name)) ? ucfirst(strtolower($product->product_browse_pg_name)) : ucfirst(strtolower($product->name));
                 $product->name = ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
+                // Parse the URL and get the path
+                $path = parse_url($product->default_image_url, PHP_URL_PATH);
+                // Get the file extension
+                $extension = pathinfo($path, PATHINFO_EXTENSION);
+                  ## create image
+                $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku .'/'.$product->internal_sku.'.'.$extension;
+
+
+
+                $product->default_image_url = $defaulImg;
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->name);
@@ -215,7 +226,7 @@ class ProductController extends Controller
 
 
 
-
+    ## product details
     public function productDetails($entity_id)
     {
         $output['res'] = 'success';
@@ -350,6 +361,7 @@ class ProductController extends Controller
         $q = $request->input('q');
         if (!empty($q)) {
             $products = ProductModel::orderBy('entity_id', 'desc')
+                ->whereNull('parent_sku')
                 ->where('status', 'true')
                 ->where(function ($query) use ($q) {
                     $query->where('name', 'like', "$q%")
@@ -366,7 +378,7 @@ class ProductController extends Controller
                         ->orWhere('metalWeight', 'like', "$q%")
                         ->orWhere('finishLevel', 'like', "$q%");
                 })
-                ->select('name', 'product_browse_pg_name', 'fractionsemimount', 'slug', 'menu', 'default_image_url', 'white_gold_price', 'sku')
+                ->select('name', 'product_browse_pg_name', 'fractionsemimount', 'slug', 'menu', 'default_image_url', 'white_gold_price', 'sku', 'type')
                 ->limit(5)
                 ->get();
             $searched_product = [];
@@ -377,7 +389,6 @@ class ProductController extends Controller
                 $name = strtolower($product->product_browse_pg_name);
                 $product->name = ucfirst($name);
                 $product->menu = Menu::find($product->menu)['slug'];
-                $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
                 array_push($searched_product, $product);
             }
         } else {
@@ -394,6 +405,7 @@ class ProductController extends Controller
         $q = $request->input('q');
         if (!empty($q)) {
             $products = ProductModel::orderBy('entity_id', 'desc')
+                ->whereNull('parent_sku')
                 ->where('status', 'true')
                 ->where(function ($query) use ($q) {
                     $query->where('name', 'like', "$q%")
@@ -448,10 +460,10 @@ class ProductController extends Controller
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->product_browse_pg_name);
-                // $product->name = ucwords($name);
+                $product->type = $product->type;
                 $product->name = ucfirst($name . ' ' . $product->fractionsemimount);
                 $product->menu = Menu::find($product->menu)['slug'];
-                $product->white_gold_price = round(ProductPrice::where('product_sku', $product['sku'])->where('metalType', '18kt')->where('metalColor', 'White')->where('diamond_type', 'natural')->first()['price'] ?? 0, 0);
+                $product->white_gold_price = $product->white_gold_price;
                 array_push($searched_product, $product);
             }
         } else {
