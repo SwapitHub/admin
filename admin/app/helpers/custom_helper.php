@@ -77,8 +77,9 @@ if (!function_exists('getProductImages')) {
     function getProductImages($id, $color)
     {
         $product =  ProductModel::where('id', $id)->first();
-        $image = $product->default_image_url;
-        $extension = pathinfo($image, PATHINFO_EXTENSION);
+        $imageovermounting = $product->default_image_url;
+        $extension = pathinfo($imageovermounting, PATHINFO_EXTENSION);
+        $image = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
         $img = explode('.' . $extension, $image);
         switch ($color) {
             case '18K WHITE GOLD':
