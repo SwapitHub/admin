@@ -271,12 +271,12 @@
                             </a>
                             <ul class="sidebar-submenu">
                                 <li>
-                                    <a href="{{ route('admin.menus') }}">
+                                    <a href="{{ route('admin.catlist') }}">
                                         <i class="fa fa-circle"></i>Main Category
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('admin.createmenu') }}">
+                                    <a href="{{ route('admin.subcatlist') }}">
                                         <i class="fa fa-circle"></i>Subcategory
                                     </a>
                                 </li>

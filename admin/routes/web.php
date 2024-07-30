@@ -65,7 +65,25 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/emailsmtp', [App\Http\Controllers\SmtpController::class, 'index'])->name('admin.emailsmtp');
 	Route::post('/emailsmtp', [App\Http\Controllers\SmtpController::class, 'updateSmtp'])->name('admin.updatesmtp');
 
-    // Route::get('/product-category', [App\Http\Controllers\MenuController::class, 'index'])->name('admin.menus');
+    Route::get('/product-category', [App\Http\Controllers\ProductCategoryController::class, 'index'])->name('admin.catlist');
+    Route::get('/delete-product-category/{id}', [App\Http\Controllers\ProductCategoryController::class, 'deleteCategory']);
+
+    Route::get('/product-category/add', [App\Http\Controllers\ProductCategoryController::class, 'createProductCategory'])->name('admin.create.productcat');
+	Route::post('/product-category/add', [App\Http\Controllers\ProductCategoryController::class, 'postCreateProductCategory'])->name('admin.post.category');
+	Route::get('/product-category/edit/{id}', [App\Http\Controllers\ProductCategoryController::class, 'editProductCategory'])->name('admin.edit.productcat');
+	Route::post('/product-category/update/{id}', [App\Http\Controllers\ProductCategoryController::class, 'postEditProCategory'])->name('admin.update.procat');
+
+
+
+    Route::get('/delete-product-subcategory/{id}', [App\Http\Controllers\ProductCategoryController::class, 'deleteSubcategory']);
+    Route::get('/product-subcategory', [App\Http\Controllers\ProductCategoryController::class, 'subcatList'])->name('admin.subcatlist');
+
+    Route::get('/product-subcategory/add', [App\Http\Controllers\ProductCategoryController::class, 'createProductSubcategory'])->name('admin.create.productsubcat');
+	Route::post('/product-subcategory/add', [App\Http\Controllers\ProductCategoryController::class, 'postCreateProductSubcategory'])->name('admin.post.subcategory');
+	Route::get('/product-subcategory/edit/{id}', [App\Http\Controllers\ProductCategoryController::class, 'editProductSubcategory'])->name('admin.edit.productsubcat');
+	Route::post('/product-subcategory/update/{id}', [App\Http\Controllers\ProductCategoryController::class, 'postEditProSubcategory'])->name('admin.update.prosubcat');
+
+
 
 
 	Route::get('/menus', [App\Http\Controllers\MenuController::class, 'index'])->name('admin.menus');
