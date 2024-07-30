@@ -247,7 +247,7 @@
                         <li>
                             <a class="sidebar-header" href="javascript:void(0)">
                                 <i data-feather="align-left"></i>
-                                <span>Menus</span>
+                                <span>Navigation</span>
                                 <i class="fa fa-angle-right pull-right"></i>
                             </a>
                             <ul class="sidebar-submenu">
@@ -259,6 +259,25 @@
                                 <li>
                                     <a href="{{ route('admin.createmenu') }}">
                                         <i class="fa fa-circle"></i>Create Menu
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="sidebar-header" href="javascript:void(0)">
+                                <i data-feather="align-left"></i>
+                                <span>Product Categories</span>
+                                <i class="fa fa-angle-right pull-right"></i>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="{{ route('admin.menus') }}">
+                                        <i class="fa fa-circle"></i>Main Category
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.createmenu') }}">
+                                        <i class="fa fa-circle"></i>Subcategory
                                     </a>
                                 </li>
                             </ul>

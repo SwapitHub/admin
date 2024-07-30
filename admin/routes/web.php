@@ -64,6 +64,10 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/cms_deletecontent/{id}', [App\Http\Controllers\CmsController::class, 'deleteCmsContent']);
 	Route::get('/emailsmtp', [App\Http\Controllers\SmtpController::class, 'index'])->name('admin.emailsmtp');
 	Route::post('/emailsmtp', [App\Http\Controllers\SmtpController::class, 'updateSmtp'])->name('admin.updatesmtp');
+
+    // Route::get('/product-category', [App\Http\Controllers\MenuController::class, 'index'])->name('admin.menus');
+
+
 	Route::get('/menus', [App\Http\Controllers\MenuController::class, 'index'])->name('admin.menus');
 	Route::get('/createmenu', [App\Http\Controllers\MenuController::class, 'createMenuView'])->name('admin.createmenu');
 	Route::post('/createmenu', [App\Http\Controllers\MenuController::class, 'postCreateMenu'])->name('admin.postcreatemenu');

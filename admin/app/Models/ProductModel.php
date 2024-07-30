@@ -30,7 +30,7 @@ class ProductModel extends Model
 	{
 		$videos = explode(',',$videos);
 		if ($videos != NULL || !empty($videos)) {
-			//sort videos 
+			//sort videos
 			$colors = ['rose', 'white', 'yellow'];
 			$colorVideoMapping = [];
 			foreach ($videos as $video) {
@@ -53,4 +53,6 @@ class ProductModel extends Model
 			return null;
 		}
 	}
+
+
 }

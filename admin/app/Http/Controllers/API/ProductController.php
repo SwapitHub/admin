@@ -10,6 +10,8 @@ use App\Models\DiamondShape;
 use App\Models\ProductPrice;
 use App\Models\ProductImageModel;
 use App\Models\ProductVideosModel;
+use App\Models\ProductCategory;
+use App\Models\ProductSubcategory;
 use App\Models\CenterStone;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Validator;
@@ -124,6 +126,24 @@ class ProductController extends Controller
                 });
             }
         }
+
+        if (!is_null($request->query('subcategory'))) {
+            $subcatSlugs = explode(',', $request->query('subcategory'));
+
+            ## Fetch corresponding IDs based on slugs
+            $subcatIds = ProductSubcategory::whereIn('slug', $subcatSlugs)->pluck('id')->toArray();
+
+            ## If there are IDs, use them in the WHERE clause
+            if (!empty($subcatIds)) {
+                $products->where(function ($query) use ($subcatIds) {
+                    foreach ($subcatIds as $id) {
+                        $query->orWhereRaw("FIND_IN_SET(?, products.subcategory_ids)", [$id]);
+                    }
+                });
+            }
+        }
+
+
 
         if (!is_null($request->query('metal_color'))) {
             $metalcolor_id = $request->query('metal_color');
