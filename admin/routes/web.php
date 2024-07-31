@@ -218,6 +218,10 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::post('/product/update/{id}', [App\Http\Controllers\ProductController::class, 'updateProduct'])->name('admin.product.postupdate');
 
 
+    Route::get('/get-subcategories/{category_id}', [App\Http\Controllers\ProductController::class, 'getSubcategories']);
+
+
+
 	Route::get('/blog/category', [App\Http\Controllers\BlogController::class, 'blogCategory'])->name('admin.blog.cat');
 	Route::post('/blog/category', [App\Http\Controllers\BlogController::class, 'postBlogCategory'])->name('admin.blog.cat');
 	Route::get('/blog/category/list', [App\Http\Controllers\BlogController::class, 'blogCategoryList'])->name('admin.blog.catlist');

@@ -30,7 +30,7 @@
                                     <i data-feather="home"></i>
                                 </a>
                             </li>
-                            <li class="breadcrumb-item">Configurable</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.product.dblist') }}">Product List</a></li>
                             <li class="breadcrumb-item active">Add Product</li>
                         </ol>
                     </div>
@@ -201,9 +201,8 @@
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             Metal Weight (in dwt)</label>
-                                        <input class="form-control" id="validationCustom02" name="metalWeight"
-                                            type="text" required=""
-                                            value="{{ old('metalWeight', $product->metalWeight) }}">
+                                        <input class="form-control" id="" name="metalWeight" type="text"
+                                            required="" value="{{ old('metalWeight', $product->metalWeight) }}">
                                         @error('metalWeight')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -228,7 +227,7 @@
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             SideDiamondNumber</label>
-                                        <input class="form-control" id="validationCustom02" name="SideDiamondNumber"
+                                        <input class="form-control" id="" name="SideDiamondNumber"
                                             type="number" required=""
                                             value="{{ old('SideDiamondNumber', $product->SideDiamondNumber) }}">
                                         @error('SideDiamondNumber')
@@ -238,14 +237,13 @@
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             No Of Gemstones</label>
-                                        <input class="form-control" id="validationCustom02" name="NoOfGemstones1"
-                                            type="text" required=""
-                                            value="{{ old('NoOfGemstones1', $product->NoOfGemstones1) }}">
+                                        <input class="form-control" id="" name="NoOfGemstones1" type="text"
+                                            required="" value="{{ old('NoOfGemstones1', $product->NoOfGemstones1) }}">
                                         @error('NoOfGemstones1')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span></span>
                                             Center stone</label>
 
@@ -268,7 +266,7 @@
                                                     {{ $centerstone['name'] }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             Center Shape</label>
@@ -737,6 +735,75 @@
 
 
                         </div>
+                        {{-- <div class="card">
+                            <div class="card-header">
+                                <h5 class="col-form-label">Product Category and subcategory</h5>
+                            </div>
+                            <div class="card-body" id="similar-table">
+                                <div class="form-group">
+                                    <label for="validationCustom02" class="col-form-label"><span></span>
+                                        Product Category</label>
+                                    <select name="category_id" id="category_id" class="custom-select form-control">
+                                        <option selected disabled>--select--</option>
+                                        @foreach ($product_categories as $product_category)
+                                            <option value="{{ $product_category['id'] }}" {{ $product_category['id']==$product['category_id']?'selected':''; }}>
+                                                {{ $product_category['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="validationCustom02" class="col-form-label"><span></span>
+                                        Product Subcategory</label>
+                                        <?php
+                                        $subcategories = explode(',', $product['subcategory_ids']);
+                                        ?>
+                                    <select name="subcategory_ids[]" id="subcategory_ids"
+                                        class="custom-select form-control multichoose" multiple>
+                                        <option selected disabled>--select--</option>
+                                        @foreach ($product_subcategories as $product_subcategory)
+                                        <option value="{{ $product_subcategory['id'] }}" {{ in_array($product_subcategory['id'],$subcategories)?'selected':'' }}>{{ $product_subcategory['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div> --}}
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="col-form-label">Product Category and Subcategory</h5>
+                            </div>
+                            <div class="card-body" id="similar-table">
+                                <div class="form-group">
+                                    <label for="category_id" class="col-form-label">Product Category</label>
+                                    <select name="category_id" id="category_id" class="custom-select form-control">
+                                        <option selected disabled>--select--</option>
+                                        @foreach ($product_categories as $product_category)
+                                            <option value="{{ $product_category['id'] }}"
+                                                {{ $product_category['id'] == $product['category_id'] ? 'selected' : '' }}>
+                                                {{ $product_category['name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subcategory_ids" class="col-form-label">Product Subcategory</label>
+                                    <?php
+                                    $subcategories = explode(',', $product['subcategory_ids']);
+                                    ?>
+                                    <select name="subcategory_ids[]" id="subcategory_ids"
+                                        class="custom-select form-control " multiple>
+                                        <option selected disabled>--select--</option>
+                                        @foreach ($product_subcategories as $product_subcategory)
+                                            <option value="{{ $product_subcategory['id'] }}"
+                                                {{ in_array($product_subcategory['id'], $subcategories) ? 'selected' : '' }}>
+                                                {{ $product_subcategory['name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="digital-add needs-validation mb-3" style="display: flex;flex-direction: row-reverse;">
@@ -888,6 +955,7 @@
     </div>
 
     @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
         <script>
             $("#similar-menu").change(function() {
                 var menuid = $("#similar-menu").val();
@@ -1095,6 +1163,49 @@
                     }
                 });
             }
+
+            $(document).ready(function() {
+                // Initialize Select2 on subcategory_ids
+                $('#subcategory_ids').select2();
+
+                $('#category_id').change(function() {
+                    var categoryId = $(this).val();
+                    $.ajax({
+                        url: '/get-subcategories/' + categoryId,
+                        type: 'GET',
+                        success: function(data) {
+                            console.log('Data received from server:', data); // Debug AJAX response
+
+                            // Clear existing options
+                            $('#subcategory_ids').empty();
+
+                            // Ensure data is an array
+                            if (Array.isArray(data)) {
+                                // Add new options
+                                data.forEach(function(subcategory) {
+                                    var newOption = new Option(subcategory.name, subcategory
+                                        .id, false, false);
+                                    $('#subcategory_ids').append(newOption).trigger(
+                                        'change');
+                                });
+
+                                // Ensure the Select2 options are updated
+                                $('#subcategory_ids').trigger('change');
+                            } else {
+                                console.error('Invalid data format received:',
+                                data); // Handle invalid data format
+                            }
+                        },
+                        error: function() {
+                            alert('Error fetching subcategories.');
+                        }
+                    });
+                });
+
+                // Set initial values
+                var initialValues = <?php echo json_encode($subcategories); ?>;
+                $('#subcategory_ids').val(initialValues).trigger('change');
+            });
         </script>
     @endpush
 @endsection
