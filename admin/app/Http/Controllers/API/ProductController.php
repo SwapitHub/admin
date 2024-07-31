@@ -83,7 +83,11 @@ class ProductController extends Controller
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
         $products = ProductModel::where('menu', 7)
-            ->whereNull('products.parent_sku')
+            // ->whereNull('products.parent_sku')
+            ->where(function ($query) {
+                $query->whereNull('products.parent_sku')
+                    ->orWhere('products.parent_sku', '');
+            })
             ->where('products.status', 'true');
         // Apply the bridal sets filter
         if ($request->bridal_sets == 'true') {
