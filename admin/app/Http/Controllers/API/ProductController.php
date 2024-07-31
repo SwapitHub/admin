@@ -143,10 +143,10 @@ class ProductController extends Controller
         }
 
         // Debug the query
-        $sql = $products->toSql();
-        $bindings = $products->getBindings();
+        // $sql = $products->toSql();
+        // $bindings = $products->getBindings();
 
-        dd($sql, $bindings);
+        // dd($sql, $bindings);
 
 
 
