@@ -131,7 +131,7 @@ class ProductController extends Controller
             $subcatSlugs = explode(',', $request->query('subcategory'));
 
             ## Fetch corresponding IDs based on slugs
-             $subcatIds = ProductSubcategory::where('category_id',1)->whereIn('slug', $subcatSlugs)->pluck('id')->toArray();
+            $subcatIds = ProductSubcategory::where('category_id', 1)->whereIn('slug', $subcatSlugs)->pluck('id')->toArray();
             ## If there are IDs, use them in the WHERE clause
             if (!empty($subcatIds)) {
                 $products->where(function ($query) use ($subcatIds) {
@@ -141,6 +141,12 @@ class ProductController extends Controller
                 });
             }
         }
+
+        // Debug the query
+        $sql = $products->toSql();
+        $bindings = $products->getBindings();
+
+        dd($sql, $bindings);
 
 
 
