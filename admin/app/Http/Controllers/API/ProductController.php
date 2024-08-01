@@ -403,7 +403,7 @@ class ProductController extends Controller
                         ->orWhere('metalWeight', 'like', "$q%")
                         ->orWhere('finishLevel', 'like', "$q%");
                 })
-                ->select('name', 'product_browse_pg_name', 'fractionsemimount', 'slug', 'menu', 'default_image_url', 'white_gold_price', 'sku', 'type')
+                ->select('name', 'product_browse_pg_name', 'fractionsemimount', 'slug', 'menu', 'default_image_url', 'white_gold_price', 'sku', 'type','internal_sku')
                 ->limit(5)
                 ->get();
             $searched_product = [];
