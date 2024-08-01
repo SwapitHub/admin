@@ -410,6 +410,11 @@ class ProductController extends Controller
             foreach ($products as $product) {
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
+                $path = parse_url($product->default_image_url, PHP_URL_PATH);
+                $extension = pathinfo($path, PATHINFO_EXTENSION);
+                ## create image
+                $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
+                $product->default_image_url = $defaulImg;
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->name);
                 $product->name = ucfirst($name);
@@ -483,6 +488,11 @@ class ProductController extends Controller
                 // $product->name = ucfirst(strtolower($product->name));
                 $product->description = ucfirst(strtolower($product->description));
                 $product->images = json_decode($product->images);
+                $path = parse_url($product->default_image_url, PHP_URL_PATH);
+                $extension = pathinfo($path, PATHINFO_EXTENSION);
+                ## create image
+                $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
+                $product->default_image_url = $defaulImg;
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->product_browse_pg_name);
                 $product->type = $product->type;

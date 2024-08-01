@@ -365,7 +365,9 @@ class ProductController extends Controller
         $product->CenterShape = $request->center_shape;
         $product->default_image_alt = $request->default_image_alt;
         ##center stone name and value
-        $product->center_stones = $centerstones;
+        // $product->center_stones = $centerstones;
+        $product->category_id = $request->category_id;
+        $product->subcategory_ids = !empty($request->subcategory_ids)?implode(',',$request->subcategory_ids):'';
         ##center stone name and value
         $product->FingerSize = $request->finger_size;
         $product->meta_title = $request->meta_title;
@@ -414,6 +416,8 @@ class ProductController extends Controller
                     $child_product->description = $request->description;
                     ##center stone name and value
                     // $child_product->center_stones = $centerstones;
+                    $child_product->category_id = $request->category_id;
+                    $child_product->subcategory_ids = !empty($request->subcategory_ids)?implode(',',$request->subcategory_ids):'';
                     ##center stone name and value
                     $child_product->FingerSize = $request->finger_size;
                     $child_product->save();
