@@ -647,11 +647,13 @@
                                         Variant</button>
                                 </div>
                                 <div class="card-body">
-                                    <div class="user-status table-responsive products-table">
+                                    {{-- <div class="user-status table-responsive products-table"> --}}
+                                    <div class="user-status table-responsive">
                                         <table class="table table-bordernone mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Details</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">SKU</th>
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Remove</th>
                                                 </tr>
@@ -662,6 +664,7 @@
                                                 @foreach ($variations as $variation)
                                                     <tr data-row-id="{{ $variation['id'] }}">
 
+                                                        <td>{{ $variation['product_browse_pg_name'] }}</td>
                                                         <td>{{ $variation['sku'] }}</td>
 
                                                         <td class="action">
