@@ -25,6 +25,22 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
 
+    public function removeVariantProduct($id)
+    {
+        $product = ProductModel::findOrFail($id);
+        if ($product) {
+            $product->type = 'parent_product';
+            $product->parent_sku = '';
+            $product->save();
+            $output['res'] = 'success';
+            $output['msg'] = 'Data Removed';
+        } else {
+            $output['res'] = 'error';
+            $output['msg'] = 'Product Id Required';
+        }
+        echo json_encode($output);
+    }
+
     public function getSubcategories($category_id)
     {
         $subcategories = ProductSubcategory::where('category_id', $category_id)->get();
@@ -176,7 +192,7 @@ class ProductController extends Controller
         $data['carats'] = Carat::orderBy('id', 'desc')
             ->where('status', 'true')
             ->get();
-        $data['info'] = ['meta_title'=>'Sama Product Listing', 'meta_keyword'=>'Sama Product Listing','meta_description'=>'Sama Product Listing'];
+        $data['info'] = ['meta_title' => 'Sama Product Listing', 'meta_keyword' => 'Sama Product Listing', 'meta_description' => 'Sama Product Listing'];
         return view('admin.db-product', $data);
     }
 
@@ -336,12 +352,9 @@ class ProductController extends Controller
         } else {
             $is_bestseller = '0';
         }
-        if($request->center_stone)
-        {
+        if ($request->center_stone) {
             $centerstones = implode(',', $request->center_stone);
-        }
-        else
-        {
+        } else {
             $centerstones = '';
         }
 
@@ -367,7 +380,7 @@ class ProductController extends Controller
         ##center stone name and value
         // $product->center_stones = $centerstones;
         $product->category_id = $request->category_id;
-        $product->subcategory_ids = !empty($request->subcategory_ids)?implode(',',$request->subcategory_ids):'';
+        $product->subcategory_ids = !empty($request->subcategory_ids) ? implode(',', $request->subcategory_ids) : '';
         ##center stone name and value
         $product->FingerSize = $request->finger_size;
         $product->meta_title = $request->meta_title;
@@ -394,11 +407,11 @@ class ProductController extends Controller
                             $slug = $child_product->slug;
                         }
                     }
-                    $semimount[0] = rand(1,10);
+                    $semimount[0] = rand(1, 10);
                     // $centerstones = implode(',', $request->center_stone);
                     $child_product->name = $request->name;
-                    $child_product->sku = $product->sku .'-'.$semimount[0];
-                    $child_product->internal_sku = 'SA'.$product->sku .'-'.$semimount[0];
+                    $child_product->sku = $product->sku . '-' . $semimount[0];
+                    $child_product->internal_sku = 'SA' . $product->sku . '-' . $semimount[0];
                     $child_product->product_browse_pg_name = $request->product_browse_pg_name . ' ' . $semimount[0];
                     $child_product->menu = $request->menu;
                     $child_product->slug = $slug;
@@ -417,7 +430,7 @@ class ProductController extends Controller
                     ##center stone name and value
                     // $child_product->center_stones = $centerstones;
                     $child_product->category_id = $request->category_id;
-                    $child_product->subcategory_ids = !empty($request->subcategory_ids)?implode(',',$request->subcategory_ids):'';
+                    $child_product->subcategory_ids = !empty($request->subcategory_ids) ? implode(',', $request->subcategory_ids) : '';
                     ##center stone name and value
                     $child_product->FingerSize = $request->finger_size;
                     $child_product->save();
@@ -492,8 +505,8 @@ class ProductController extends Controller
             'centerstones' => $centerStone,
             'categories' => $catdata,
             'sub_categories' => $subcatdata,
-            'product_categories'=>ProductCategory::orderBy('id','desc')->where('status','true')->get(),
-            'product_subcategories'=>ProductSubcategory::orderBy('id','desc')->where('category_id',$product['category_id'])->where('status','true')->get(),
+            'product_categories' => ProductCategory::orderBy('id', 'desc')->where('status', 'true')->get(),
+            'product_subcategories' => ProductSubcategory::orderBy('id', 'desc')->where('category_id', $product['category_id'])->where('status', 'true')->get(),
         ];
 
         if ($product['type'] == 'Configurable' || $product['type'] == 'parent_product') {
@@ -501,10 +514,8 @@ class ProductController extends Controller
         } else {
             $data['variations'] = '';
         }
-        $data['info'] = ['meta_title'=>$product['name'], 'meta_keyword'=>!empty($product['meta_keyword'])?$product['meta_keyword']:$product['description'],'meta_description'=>!empty($product['meta_description'])?$product['meta_description']:$product['description']];
+        $data['info'] = ['meta_title' => $product['name'], 'meta_keyword' => !empty($product['meta_keyword']) ? $product['meta_keyword'] : $product['description'], 'meta_description' => !empty($product['meta_description']) ? $product['meta_description'] : $product['description']];
         return view('admin.configurable-product', $data);
-
-
     }
 
 
@@ -558,18 +569,14 @@ class ProductController extends Controller
 
         //modifyed code
         if (!empty($request->menu)) {
-            if($request->menu == 'ENGAGEMENT RINGS')
-            {
+            if ($request->menu == 'ENGAGEMENT RINGS') {
                 $productImport = new ProductImport($request->menu);
                 $res = Excel::import($productImport, $request->file('excel_file'));
-            }
-            else
-            {
+            } else {
                 $productImport1 = new ProductImport1($request->menu);
                 $res = Excel::import($productImport1, $request->file('excel_file'));
-
             }
-             // Get the imported data from the ProductImport instance
+            // Get the imported data from the ProductImport instance
             // Get the imported data and import status
             // $importedData = $productImport->getImportedData();
             // $importStatus = $productImport->getImportStatus();

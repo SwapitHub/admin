@@ -11,6 +11,8 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use App\Models\ProductImageModel;
 use App\Models\ProductVideosModel;
+use App\Models\ProductCategory;
+use App\Models\ProductSubcategory;
 use App\Models\MetalColor;
 use App\Models\RingMetal;
 use App\Models\ProductModel;
@@ -18,6 +20,7 @@ use Illuminate\Support\Str;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class ProductImport1 implements ToCollection, WithHeadingRow
 {
@@ -44,25 +47,65 @@ class ProductImport1 implements ToCollection, WithHeadingRow
             if ($row->filter()->isNotEmpty()) {
                 $input = $row->toArray();
                 //    dd($input);
+
+
+                ## insert category and subcategory
+                $categories = explode('/', $input['subcategory']);
+                $mainMenu = $categories[0];
+                $subMenus = array_slice($categories, 1);
+
+                ## Create or get the main category
+                $ProductCategory = new  ProductCategory;
+                $category = DB::table('product_category')->where('name', $mainMenu)->first();
+                if (!$category) {
+                    $categoryId = DB::table('product_category')->insertGetId(['name' => $mainMenu, 'slug' => $ProductCategory->generateUniqueSlug($mainMenu)]);
+                } else {
+                    $categoryId = $category->id;
+                }
+
+                ## Create or get the subcategories
+                $ProductSubcategory = new  ProductSubcategory;
+                $subcategoryIds = [];
+                foreach ($subMenus as $subMenu) {
+                    $subcategory = DB::table('product_subcategory')
+                        ->where('category_id', $categoryId)
+                        ->where('name', $subMenu)
+                        ->first();
+
+                    if (!$subcategory) {
+                        $subcategoryId = DB::table('product_subcategory')->insertGetId([
+                            'category_id' => $categoryId,
+                            'name' => $subMenu,
+                            'slug' => $ProductSubcategory->generateUniqueSlug($subMenu)
+                        ]);
+                    } else {
+                        $subcategoryId = $subcategory->id;
+                    }
+                    $subcategoryIds[] = $subcategoryId;
+                }
+                $input['category_id'] = $categoryId;
+                $input['subcategory_ids'] = implode(',', $subcategoryIds);
+                ## insert category and subcategory
+
+
                 $values = $input['subcategory'];
                 $splitValues = explode('/', $values);
                 $input['menu'] = $this->menu_id;
                 $response =  $this->fetchCatSubcatValues($splitValues);
                 $input['category'] = $response['cat'];
                 $input['sub_category'] = $response['subcat'];
-                $input['slug'] = $product->generateUniqueSlug(!empty($input['product_browse_pg_name'])?$input['product_browse_pg_name']:$input['name']);
-                if($input['parent_sku'] == $input['sku'])
-                {
+                $input['slug'] = $product->generateUniqueSlug(!empty($input['product_browse_pg_name']) ? $input['product_browse_pg_name'] : $input['name']);
+                if ($input['parent_sku'] == $input['sku']) {
                     $input['parent_sku'] = null;
                 }
-                if($input['parent_sku'] == null){
-					$input['type'] = 'parent_product';
-					}else{
-					$input['type'] = 'child_product';
-				}
+                if ($input['parent_sku'] == null) {
+                    $input['type'] = 'parent_product';
+                } else {
+                    $input['type'] = 'child_product';
+                }
                 $input['internal_sku'] = $input['sku'];
                 $input['videos'] = ($input['videos'] != null) ? $product->sortVideos($input['videos']) : null;
-                $input['images'] = (!empty($input['images']))?json_encode(explode(',', $input['images'])):null;
+                $input['images'] = (!empty($input['images'])) ? json_encode(explode(',', $input['images'])) : null;
                 $input['metalType_id'] = $this->getMetalTypeIdByName('18 Kt');
                 $input['metalColor_id'] = $this->getMetalColorIdByName($input['metalcolor']);
                 $input['status'] = 'true';
@@ -78,7 +121,7 @@ class ProductImport1 implements ToCollection, WithHeadingRow
                 var_dump($saved);
 
 
-            //    dd($input);
+                //    dd($input);
             }
         }
     }
@@ -122,9 +165,9 @@ class ProductImport1 implements ToCollection, WithHeadingRow
         //    var_dump($values);
         $cat_id = $this->createOrFetchCategory($values[1]);
         if (isset($values[2]) && !empty($values[2])) {
-           $subcat_id =  $this->createOrFetchSubCategory($cat_id,$values[2]);
+            $subcat_id =  $this->createOrFetchSubCategory($cat_id, $values[2]);
         }
-        return ['cat'=>$cat_id,'subcat'=>$subcat_id??null];
+        return ['cat' => $cat_id, 'subcat' => $subcat_id ?? null];
     }
 
     ## get product category and subcategories

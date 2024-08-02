@@ -211,6 +211,7 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/db-product-list/edit/{id}', [App\Http\Controllers\ProductController::class, 'editProduct'])->name('admin.product.edit');
 	Route::post('/db-product-list/edit/{id}', [App\Http\Controllers\ProductController::class, 'postUpdateProduct'])->name('admin.product.update');
 	Route::get('/db-product-list/delete/{id}', [App\Http\Controllers\ProductController::class, 'deleteProduct'])->name('admin.product.delete');
+	Route::get('/remove/variant-product/{id}', [App\Http\Controllers\ProductController::class, 'removeVariantProduct'])->name('admin.product.remove');
 	Route::post('/product/import', [App\Http\Controllers\ProductController::class, 'importProducts'])->name('admin.product.import');
 	Route::get('/product/export', [App\Http\Controllers\ProductController::class, 'exportProduct'])->name('admin.product.export');
 	Route::post('/product/create', [App\Http\Controllers\ProductController::class, 'productCreate'])->name('admin.product.create');
@@ -346,7 +347,9 @@ Route::group(['middleware' => ['admin.auth', 'checkUserAllowed']], function () {
 	Route::get('/filter-category/{id}', [App\Http\Controllers\FilterDataController::class, 'filterCategory']);
 	Route::get('/filter-subcategory/{menu}/{category}', [App\Http\Controllers\FilterDataController::class, 'filterSubCategory']);
 	Route::post('/filter-product', [App\Http\Controllers\FilterDataController::class, 'filterProduct']);
+	Route::any('/filter-variant-product', [App\Http\Controllers\FilterDataController::class, 'filterVariantProduct']);
 	Route::post('/add-similar-product', [App\Http\Controllers\FilterDataController::class, 'addSimilarProduct'])->name('admin.product.similar');
+    Route::post('/add-variant-product/{base_product_id}', [App\Http\Controllers\FilterDataController::class, 'addVariantProduct'])->name('admin.product.variant');
 	Route::post('/similar-product/remove', [App\Http\Controllers\FilterDataController::class, 'removeSimilarProduct'])->name('admin.remove.similar');
 
 

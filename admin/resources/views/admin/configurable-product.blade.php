@@ -651,12 +651,9 @@
                                         <table class="table table-bordernone mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th style="min-width: 10px !important;"><span type="button"
-                                                            class="badge badge-primary add-row delete_all"><i
-                                                                class="fa fa-trash"></i></span></th>
                                                     <th scope="col">Details</th>
-                                                    <th scope="col">Price</th>
-                                                    <th scope="col">action</th>
+                                                    <th scope="col">Edit</th>
+                                                    <th scope="col">Remove</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -664,19 +661,16 @@
                                                         name="url" id="url"></tr>
                                                 @foreach ($variations as $variation)
                                                     <tr data-row-id="{{ $variation['id'] }}">
-                                                        <td style="min-width: 10px !important;">
-                                                            <input class="checkbox_animated check-it" type="checkbox"
-                                                                value="" id="flexCheckDefault"
-                                                                data-id="{{ $variation['id'] }}">
-                                                        </td>
+
                                                         <td>{{ $variation['sku'] }}</td>
-                                                        <td class="digits"><a href="#"><i class="fa fa-eye"
-                                                                    title="view Price"><i></i></td>
+
                                                         <td class="action">
                                                             <a
                                                                 href="{{ route('admin.product.edit', ['id' => $variation['id']]) }}"><i
                                                                     class="fa fa-edit"></i></a>
-                                                            {{-- <a href="javascript:void(0)" onclick="deleteItem('{{ url('db-product-list/delete/') }}/{{ $variation['id'] }}')"><i class="fa fa-trash"></i></a> --}}
+                                                        </td>
+                                                        <td class="action">
+                                                            <a href="javascript:void(0)" onclick="deleteItem('{{ url('/remove/variant-product/') }}/{{ $variation['id'] }}')"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -723,7 +717,8 @@
                                                     <td>{{ $items['name'] }}</td>
                                                     <td>{{ $items['sku'] }}</td>
                                                     <td><i class="fa fa-trash delete-similar-product"
-                                                            data-product-id="{{ $items['id'] }}"></i></td>
+                                                            data-product-id="{{ $items['id'] }}"></i>
+                                                        </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -901,7 +896,7 @@
     <div class="modal fade" id="addVariantProductModal" tabindex="-1" aria-labelledby="addVariantProductModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <form action="#" method="POST" id="submit-variant">
+            <form action="{{ route('admin.product.variant',['base_product_id'=>$product['id']]) }}" method="POST" id="submit-variant">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -939,7 +934,7 @@
                         <div class="form-group" id="multichoice-pro">
                             <label for="" class="col-form-label"><span class="text-danger">*</span>
                                 Products</label>
-                            <select class="custom-select form-control multichoose" multiple name="variant-product[]"
+                            <select class="custom-select form-control multichoose" multiple name="variant_product[]"
                                 id="" required="">
                                 <option value="">--Select--</option>
                             </select>
@@ -1145,7 +1140,7 @@
                 };
                 var csrfToken = '{{ csrf_token() }}';
                 $.ajax({
-                    url: "{{ url('filter-product') }}",
+                    url: "{{ url('filter-variant-product') }}",
                     method: "POST",
                     data: {
                         _token: csrfToken,

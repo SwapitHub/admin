@@ -261,6 +261,15 @@
                                         <i class="fa fa-circle"></i>Create Menu
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('admin.categories') }}">
+                                        <i class="fa fa-circle"></i>Category
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.subcategories') }}">
+                                        <i class="fa fa-circle"></i>Subcategory</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -376,7 +385,7 @@
                             </a>
 
                             <ul class="sidebar-submenu">
-                                <li>
+                                {{-- <li>
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-circle"></i>
                                         <span>manage category
@@ -396,7 +405,7 @@
                                                 <i class="fa fa-circle"></i>Subcategory</a>
                                         </li>
                                     </ul>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a href="javascript:void(0)">
                                         <i class="fa fa-circle"></i>
@@ -455,30 +464,30 @@
                                             </a>
                                         </li>
                                         <!---li>
-          <a href="{{ route('admin.carat') }}">
-          <i class="fa fa-circle"></i>Diamond carat
-          </a>
-          </li>
-          <li>
-          <a href="{{ route('admin.cut') }}">
-          <i class="fa fa-circle"></i>Diamond cut
-          </a>
-          </li>
-          <li>
-          <a href="{{ route('admin.diamondcolor') }}">
-          <i class="fa fa-circle"></i>Diamond color
-          </a>
-          </li>
-          <li>
-          <a href="{{ route('admin.diamondclarity') }}">
-          <i class="fa fa-circle"></i>Diamond clarity
-          </a>
-          </li>
-          <li>
-          <a href="{{ route('admin.diamond') }}">
-          <i class="fa fa-circle"></i>Manage Diamond
-          </a>
-         </li---->
+                                        <a href="{{ route('admin.carat') }}">
+                                        <i class="fa fa-circle"></i>Diamond carat
+                                        </a>
+                                        </li>
+                                        <li>
+                                        <a href="{{ route('admin.cut') }}">
+                                        <i class="fa fa-circle"></i>Diamond cut
+                                        </a>
+                                        </li>
+                                        <li>
+                                        <a href="{{ route('admin.diamondcolor') }}">
+                                        <i class="fa fa-circle"></i>Diamond color
+                                        </a>
+                                        </li>
+                                        <li>
+                                        <a href="{{ route('admin.diamondclarity') }}">
+                                        <i class="fa fa-circle"></i>Diamond clarity
+                                        </a>
+                                        </li>
+                                        <li>
+                                        <a href="{{ route('admin.diamond') }}">
+                                        <i class="fa fa-circle"></i>Manage Diamond
+                                        </a>
+                                        </li---->
                                         {{-- <li>
 										<a href="{{ route('admin.ringstyle') }}">
 											<i class="fa fa-circle"></i>Ring Style
@@ -840,6 +849,7 @@
             searchPlaceholderValue: 'Type to search',
             removeItemButton: true
         });
+
 
         // The DOM element you wish to replace with Tagify
         var input = document.querySelector('.tagify');
