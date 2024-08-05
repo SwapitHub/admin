@@ -19,8 +19,7 @@ Route::get('/csrf-token', function () {
 Route::prefix('v1')->group(function () {
     Route::post('user-registration', [App\Http\Controllers\API\RegisterController::class, 'registerUser']);
     Route::any('login', [App\Http\Controllers\API\RegisterController::class, 'login']);
-    Route::get('homecontent', [App\Http\Controllers\API\SiteinfoController::class, 'homeContent']);
-    Route::middleware('auth:sanctum')->group(function () {
+    // Route::middleware('auth:sanctum')->group(function () {
         Route::any('newsletter', [App\Http\Controllers\API\NewsletterController::class, 'index']);
         Route::get('token', [App\Http\Controllers\API\SiteinfoController::class, 'getCsrfToken']);
         Route::get('diamondshape', [App\Http\Controllers\API\DiamondController::class, 'diamondShape']);
@@ -37,7 +36,7 @@ Route::prefix('v1')->group(function () {
         Route::get('weddingband-products/', [App\Http\Controllers\API\WeddingBandProducts::class, 'index']);
         Route::get('product/{entity_id}', [App\Http\Controllers\API\ProductController::class, 'productDetails']);
         Route::get('faq', [App\Http\Controllers\API\FaqController::class, 'index']);
-
+        Route::get('homecontent', [App\Http\Controllers\API\SiteinfoController::class, 'homeContent']);
         // Route::get('homecontent-bottom',[App\Http\Controllers\API\SiteinfoController::class,'ourstoryMission']);
         Route::get('metalcolor', [App\Http\Controllers\API\SiteinfoController::class, 'metalColor']);
         Route::post('findimage', [App\Http\Controllers\API\ProductController::class, 'getImageForListing']);
@@ -74,7 +73,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/invoice/{order_id}', [App\Http\Controllers\InvoiceController::class, 'invoicePdf'])->name('sale.orders.invoice.download');
         Route::any('check', [App\Http\Controllers\API\MenuController::class, 'check']);
         Route::any('cms-metadata', [App\Http\Controllers\API\MenuController::class, 'cmsMetaData']);
-    });
+    // });
 });
 
 	// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
