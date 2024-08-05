@@ -226,6 +226,26 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="validationCustom02" class="col-form-label"><span>*</span>
+                                            Finish Level</label>
+                                            {{-- <input type="text" name="finishLevel" class="form-control" value="{{ $product['finishLevel'] }}"> --}}
+                                        <select name="finishLevel" class="form-control">
+                                            <option selected disabled>--Select--</option>
+                                            <option value="Polished Blank (no stones)"
+                                                {{ $product->finishLevel == 'Polished Blank (no stones)' ? 'selected' : '' }}>Polished Blank (no stones)
+                                            </option>
+                                            <option value="Semi-mount (no center)"
+                                                {{ $product->finishLevel == 'Semi-mount (no center)' ? 'selected' : '' }}>Semi-mount (no center)
+                                            </option>
+                                            <option value="Complete"
+                                                {{ $product->finishLevel == 'Complete' ? 'selected' : '' }}>Complete
+                                            </option>
+                                        </select>
+                                        @error('finishLevel')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="validationCustom02" class="col-form-label"><span>*</span>
                                             SideDiamondNumber</label>
                                         <input class="form-control" id="" name="SideDiamondNumber"
                                             type="number" required=""

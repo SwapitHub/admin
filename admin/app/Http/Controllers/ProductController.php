@@ -313,6 +313,7 @@ class ProductController extends Controller
             'metalColor' => 'required',
             'metalWeight' => 'required',
             'diamond_quality' => 'required',
+            'finishLevel' => 'required',
             'NoOfGemstones1' => 'required',
             'center_shape' => 'required',
             'finger_size' => 'required',
@@ -327,6 +328,7 @@ class ProductController extends Controller
             'metalColor.required' => 'The metalColor field is required.',
             'metalWeight.required' => 'The metalWeight field is required.',
             'diamond_quality.required' => 'The diamond_quality field is required.',
+            'finishLevel.required' => 'The finishLevel field is required.',
             'NoOfGemstones1.required' => 'The NoOfGemstones field is required.',
             'center_shape.required' => 'The center shape field is required.',
             'finger_size.required' => 'The fingersize field is required.',
@@ -372,6 +374,7 @@ class ProductController extends Controller
         $product->metalColor = getMetalColorByID($request->metalColor);
         $product->metalWeight = $request->metalWeight;
         $product->diamondQuality = $request->diamond_quality;
+        $product->finishLevel = $request->finishLevel;
         $product->SideDiamondNumber = $request->SideDiamondNumber;
         $product->shippingDay = $request->shippingDay;
         $product->NoOfGemstones1 = $request->NoOfGemstones1;
@@ -422,6 +425,7 @@ class ProductController extends Controller
                     $child_product->metalColor = getMetalColorByID($request->metalColor);
                     $child_product->metalWeight = $request->metalWeight;
                     $child_product->diamondQuality = $request->diamond_quality;
+                    $child_product->finishLevel = $request->finishLevel;
                     $child_product->NoOfGemstones1 = $request->NoOfGemstones1;
                     $child_product->CenterShape = $request->center_shape;
                     $child_product->SideDiamondNumber = $request->SideDiamondNumber;
