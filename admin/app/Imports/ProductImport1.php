@@ -114,10 +114,17 @@ class ProductImport1 implements ToCollection, WithHeadingRow
                 $matchData = [
                     'sku' => $input['sku'],
                 ];
-                $saved = ProductModel::updateOrCreate($matchData, $input);
-                if (!$saved) {
-                    $stat = 'false';
-                }
+                // $saved = ProductModel::updateOrCreate($matchData, $input);
+                $saved = ProductModel::updateOrCreate(
+                    $matchData,
+                    [
+                        'category_id' => $categoryId,
+                        'subcategory_ids' => implode(',', $subcategoryIds)
+                    ]
+                );
+                // if (!$saved) {
+                //     $stat = 'false';
+                // }
                 var_dump($saved);
 
 
