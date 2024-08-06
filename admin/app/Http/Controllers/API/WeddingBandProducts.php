@@ -10,6 +10,7 @@ use App\Models\Subcategory;
 use App\Models\DiamondShape;
 use App\Models\ProductPrice;
 use App\Models\CenterStone;
+use App\Models\ProductSubcategory;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
@@ -191,6 +192,20 @@ class WeddingBandProducts extends Controller
                 $min = $range[0];
                 $max = $range[1];
                 $query->whereBetween(DB::raw('IFNULL(products.white_gold_price, 0)'), [$min, $max]);
+            }
+        }
+
+        if (!is_null($request->query('subcategory'))) {
+            $subcatSlugs = explode(',', $request->query('subcategory'));
+            ## Fetch corresponding IDs based on slugs
+            $subcatIds = ProductSubcategory::where('category_id', 2)->whereIn('slug', $subcatSlugs)->pluck('id')->toArray();
+            ## If there are IDs, use them in the WHERE clause
+            if (!empty($subcatIds)) {
+                $query->where(function ($querys) use ($subcatIds) {
+                    foreach ($subcatIds as $id) {
+                        $querys->orWhereRaw("FIND_IN_SET(?, products.subcategory_ids)", [$id]);
+                    }
+                });
             }
         }
 
