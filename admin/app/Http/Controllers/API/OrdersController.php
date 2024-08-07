@@ -73,7 +73,7 @@ class OrdersController extends Controller
                     $ring_details_arr = [];
                     $ring_data = ProductModel::find($order_data->ring_id);
                     $ring_details_arr['ring_name'] = $ring_data['name'];
-                    $ring_details_arr['ring_style'] = $ring_data['sku'];
+                    $ring_details_arr['ring_style'] = $ring_data['internal_sku'];
                     $ring_details_arr['ring_size'] = $order_data->ring_size;
                     $ring_details_arr['ring_price'] = $order_data->ring_price;
                     // get product Image
