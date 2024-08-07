@@ -462,7 +462,7 @@ class HomeContentController extends Controller
             return 'no data';
         }
         $data = [
-            'url_action' => route('admin.shopbycat.edit', ['id' => $editdata['id']]),
+            'url_action' => route('admin.shopbycat.update', ['id' => $editdata['id']]),
             'backtrack' => 'admin.shopbycat.list',
             'title' => 'Edit Shop by category',
             'obj' => $editdata,
