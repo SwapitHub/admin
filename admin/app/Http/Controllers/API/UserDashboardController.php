@@ -12,6 +12,7 @@ use App\Models\Wishlist;
 use App\Models\User;
 use App\Models\OrderModel;
 use App\Models\OrderItem;
+use App\Models\AddresModel;
 use Validator;
 
 class UserDashboardController extends Controller
@@ -39,6 +40,23 @@ class UserDashboardController extends Controller
             $output['cart'] = $cart;
             $output['wishlist'] = $wishlist;
             $output['order_history'] = $this->getOrderHistory($request->user_id);
+            $address = AddresModel::where('user_id',$request->user_id);
+            $address_arr = [];
+            if($address->exists())
+            {
+                foreach($address->get() as $add)
+                {
+                    if($add['address_type'] == 'billing_address')
+                    {
+                        $address_arr['billing_address'] =  $add;
+                    }
+                    else if($add['address_type'] == 'shipping_address')
+                    {
+                        $address_arr['shipping_address'] =  $add;
+                    }
+                }
+            }
+            $output['address'] = $address_arr;
         }
         return response()->json($output, 200);
     }
