@@ -186,7 +186,7 @@ class ProductController extends Controller
                 $path = parse_url($product->default_image_url, PHP_URL_PATH);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
                 ## create image
-                $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
+                $defaulImg = env('AWS_URL').'products/images/'. $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
                 $product->default_image_url = $defaulImg;
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
@@ -412,7 +412,7 @@ class ProductController extends Controller
                 $path = parse_url($product->default_image_url, PHP_URL_PATH);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
                 ## create image
-                $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
+                $defaulImg = env('AWS_URL').'products/images/'. $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
                 $product->default_image_url = $defaulImg;
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->name);
@@ -490,7 +490,7 @@ class ProductController extends Controller
                 $path = parse_url($product->default_image_url, PHP_URL_PATH);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
                 ## create image
-                $defaulImg = "https://s3-sama.s3.us-east-2.amazonaws.com/products/images/" . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
+                $defaulImg = env('AWS_URL').'products/images/'. $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
                 $product->default_image_url = $defaulImg;
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->product_browse_pg_name);
