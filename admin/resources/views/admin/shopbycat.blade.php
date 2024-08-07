@@ -60,7 +60,7 @@
 										<label for="validationCustom1" class="col-xl-3 col-md-4">Link </label>
 										<div class="col-xl-8 col-md-7">
 											<input class="form-control" id="link" name="link"
-											value="{{ old('link') }}" type="text"  placeholder="{!! $obj['link']??'link' !!}">
+											value="{{ old('link',$obj['link']) }}" type="text" >
 											@error('link')
 											<div class="invalid-feedback">{{ $message }}</div>
 											@enderror
