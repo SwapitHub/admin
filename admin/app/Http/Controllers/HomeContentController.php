@@ -445,7 +445,7 @@ class HomeContentController extends Controller
         // }
         $shopbyshape = new ShopByCategoryHomePage;
         $shopbyshape->title = $request->title;
-        $shopbyshape->link = $request->link;;
+        $shopbyshape->link = $request->link;
         $shopbyshape->order_number = $request->order_number ?? 0;
         // $shopbyshape->image = $imagepath;
         $shopbyshape->image_alt = $request->image_alt;;
