@@ -473,7 +473,7 @@ class HomeContentController extends Controller
     public function updateShopByCat(Request $request, $id)
     {
 
-        $obj = RingMetal::find($id);
+        $obj = ShopByCategoryHomePage::find($id);
         $this->validate($request, [
             'title' => 'required',
         ], [
@@ -492,8 +492,6 @@ class HomeContentController extends Controller
         // } else {
         //     $imagepath = $obj->icon;
         // }
-
-
         $obj->title = $request->title;
         $obj->link = $request->link;
         $obj->order_number = $request->order_number;
