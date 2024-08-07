@@ -72,7 +72,7 @@ class CheckOutController extends Controller
         }
     }
 
-    private function generateOrderID($length = 3)
+    private function generateOrderID($length = 10)
     {
         $characters = '0123456789';
         $charactersLength = strlen($characters);
