@@ -285,7 +285,9 @@ class WeddingBandProducts extends Controller
             $output['res'] = 'error';
             $output['msg'] = 'No product found!';
             $output['data'] = [];
-            return response()->json($output, 200);
+            // return response()->json($output, 200);
+            return response()->json($output)
+            ->header('Cache-Control', 'max-age=86400, public');
         }
 
 

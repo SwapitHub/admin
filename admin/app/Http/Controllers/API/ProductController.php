@@ -238,9 +238,13 @@ class ProductController extends Controller
             $output['res'] = 'error';
             $output['msg'] = 'No product found!';
             $output['data'] = [];
-            return response()->json($output, 200);
+            // return response()->json($output, 200);
+            return response()->json($output)
+                 ->header('Cache-Control', 'max-age=86400, public');
         }
-        return response()->json($output);
+        // return response()->json($output);
+        return response()->json($output)
+                 ->header('Cache-Control', 'max-age=86400, public');
 
 
         ######################################################
@@ -375,7 +379,9 @@ class ProductController extends Controller
         }
         $output['from'] = 'db';
         $output['data'] = $product;
-        return response()->json($output, 200);
+        // return response()->json($output, 200);
+        return response()->json($output)
+        ->header('Cache-Control', 'max-age=86400, public');
     }
 
     public function searhSuggestion(Request $request)
@@ -424,7 +430,9 @@ class ProductController extends Controller
             $searched_product = [];
         }
         $output['data'] = $searched_product;
-        return response()->json($output, 200);
+        // return response()->json($output, 200);
+        return response()->json($output)
+        ->header('Cache-Control', 'max-age=86400, public');
     }
 
     public function globleSearch(Request $request)
@@ -506,7 +514,9 @@ class ProductController extends Controller
         }
         $output['product_count'] = isset($count) ? $count : 0;
         $output['data'] = $searched_product;
-        return response()->json($output, 200);
+        // return response()->json($output, 200);
+        return response()->json($output)
+        ->header('Cache-Control', 'max-age=86400, public');
     }
 
     public function productStyle(Request $request)
