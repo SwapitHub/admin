@@ -141,7 +141,9 @@ class MenuController extends Controller
         $output['res'] = 'success';
         $output['msg'] = 'data retrieved successfully';
         $output['data'] = $metadata;
-        return response()->json($output, 200);
+        // return response()->json($output, 200);
+        return response()->json($output)
+        ->header('Cache-Control', 'max-age=86400, public');
     }
 
     ## get meta data

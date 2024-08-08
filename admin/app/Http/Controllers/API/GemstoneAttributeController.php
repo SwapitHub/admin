@@ -41,15 +41,19 @@
 
 				$attributes = ['gemstones'=>$stones,'gemstone_shape'=>$shapes,'gemstone_color'=>$colors];
              	Cache::put($cacheKey, $attributes, $minutes = 60);
-				 $output['from'] = 'db';
+				//  $output['from'] = 'db';
 				$output['data'] = $attributes;
-				return response()->json($output, 200);
+				// return response()->json($output, 200);
+                return response()->json($output)
+                ->header('Cache-Control', 'max-age=86400, public');
 
 			}else
 			{
-				$output['from'] = 'cache';
+				// $output['from'] = 'cache';
 				$output['data'] = $gemstone_attr;
-				return response()->json($output, 200);
+				// return response()->json($output, 200);
+                return response()->json($output)
+                ->header('Cache-Control', 'max-age=86400, public');
 			}
 
 		}

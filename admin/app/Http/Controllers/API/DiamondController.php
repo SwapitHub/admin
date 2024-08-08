@@ -29,12 +29,16 @@
 				}
 				Cache::put($cacheKey, $data, $minutes = 60);
 				$output['data'] = $data;
-				$output['from'] = 'db';
-				return response()->json($output, 200);
+				// $output['from'] = 'db';
+				// return response()->json($output, 200);
+                return response()->json($output)
+                ->header('Cache-Control', 'max-age=86400, public');
 			}else{
 				$output['data'] = $diamond_shape;
-				$output['from'] = 'cache';
-				return response()->json($output, 200);
+				// $output['from'] = 'cache';
+				// return response()->json($output, 200);
+                return response()->json($output)
+                ->header('Cache-Control', 'max-age=86400, public');
 			}
 
 
