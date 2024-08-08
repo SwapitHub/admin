@@ -19,6 +19,8 @@
 			  $banner->banner =env('AWS_URL').'public/'.$banner->banner;
 			}
 			$output['data'] = $data;
-			return response()->json($output, 200);
+			// return response()->json($output, 200);
+            return response()->json($output)
+            ->header('Cache-Control', 'max-age=86400, public');
 		}
 	}

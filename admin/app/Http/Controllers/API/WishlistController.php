@@ -78,6 +78,7 @@ class WishlistController extends Controller
             $output['msg'] = 'product added in wishlist';
             $output['data'] = Wishlist::latest()->first();
             return response()->json($output, 200);
+
         }
     }
 
@@ -228,7 +229,9 @@ class WishlistController extends Controller
             }
 
             $output['data'] = $cart_collection;
-            return response()->json($output, 200);
+            // return response()->json($output, 200);
+            return response()->json($output)
+            ->header('Cache-Control', 'max-age=86400, public');
         }
     }
 

@@ -34,7 +34,9 @@ class SiteinfoController extends Controller
         $data->logo = env('AWS_URL') . 'public/storage/' . $data->logo;
         $data->favicon =  env('AWS_URL') . 'public/storage/' . $data->favicon;
         $output['data'] = $data;
-        return response()->json($output, 200);
+        // return response()->json($output, 200);
+        return response()->json($output)
+        ->header('Cache-Control', 'max-age=86400, public');
     }
 
     public function homeContent()
@@ -94,7 +96,9 @@ class SiteinfoController extends Controller
             $output['check_from'] = 'from cache';
         }
         // Return JSON response with output
-        return response()->json($output, 200);
+        // return response()->json($output, 200);
+        return response()->json($output)
+        ->header('Cache-Control', 'max-age=86400, public');
     }
 
 
@@ -133,7 +137,9 @@ class SiteinfoController extends Controller
         $collection['classic_rings'] = Widget::where('name', 'Classic rings')->first();
 
         $output['data'] = $collection;
-        return response()->json($output, 200);
+        // return response()->json($output, 200);
+        return response()->json($output)
+        ->header('Cache-Control', 'max-age=86400, public');
     }
 
      ## get meta data
