@@ -199,7 +199,7 @@ class ProductController extends Controller
 
     public function exportProduct()
     {
-        return Excel::download(new ProductExport, 'products.xlsx');
+        return Excel::download(new ProductExport, 'products.csv', \Maatwebsite\Excel\Excel::CSV);
     }
 
 
