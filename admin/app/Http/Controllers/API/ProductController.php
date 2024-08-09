@@ -186,7 +186,7 @@ class ProductController extends Controller
                 $path = parse_url($product->default_image_url, PHP_URL_PATH);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
                 ## create image
-                $defaulImg = env('AWS_URL').'products/images/'. $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
+                $defaulImg = env('AWS_URL') . 'products/images/' . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
                 $product->default_image_url = $defaulImg;
                 $product->images = json_decode($product->images);
                 $product->videos = json_decode($product->videos);
@@ -240,11 +240,11 @@ class ProductController extends Controller
             $output['data'] = [];
             // return response()->json($output, 200);
             return response()->json($output)
-                 ->header('Cache-Control', 'max-age=86400, public');
+                ->header('Cache-Control', 'max-age=86400, public');
         }
         // return response()->json($output);
         return response()->json($output)
-                 ->header('Cache-Control', 'max-age=86400, public');
+            ->header('Cache-Control', 'max-age=86400, public');
 
 
         ######################################################
@@ -381,7 +381,7 @@ class ProductController extends Controller
         $output['data'] = $product;
         // return response()->json($output, 200);
         return response()->json($output)
-        ->header('Cache-Control', 'max-age=86400, public');
+            ->header('Cache-Control', 'max-age=86400, public');
     }
 
     public function searhSuggestion(Request $request)
@@ -408,7 +408,7 @@ class ProductController extends Controller
                         ->orWhere('metalWeight', 'like', "$q%")
                         ->orWhere('finishLevel', 'like', "$q%");
                 })
-                ->select('name', 'product_browse_pg_name', 'fractionsemimount', 'slug', 'menu', 'default_image_url', 'white_gold_price', 'sku', 'type','internal_sku')
+                ->select('name', 'product_browse_pg_name', 'fractionsemimount', 'slug', 'menu', 'default_image_url', 'white_gold_price', 'sku', 'type', 'internal_sku')
                 ->limit(5)
                 ->get();
             $searched_product = [];
@@ -418,7 +418,7 @@ class ProductController extends Controller
                 $path = parse_url($product->default_image_url, PHP_URL_PATH);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
                 ## create image
-                $defaulImg = env('AWS_URL').'products/images/'. $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
+                $defaulImg = env('AWS_URL') . 'products/images/' . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
                 $product->default_image_url = $defaulImg;
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->name);
@@ -432,7 +432,7 @@ class ProductController extends Controller
         $output['data'] = $searched_product;
         // return response()->json($output, 200);
         return response()->json($output)
-        ->header('Cache-Control', 'max-age=86400, public');
+            ->header('Cache-Control', 'max-age=86400, public');
     }
 
     public function globleSearch(Request $request)
@@ -498,7 +498,7 @@ class ProductController extends Controller
                 $path = parse_url($product->default_image_url, PHP_URL_PATH);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
                 ## create image
-                $defaulImg = env('AWS_URL').'products/images/'. $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
+                $defaulImg = env('AWS_URL') . 'products/images/' . $product->internal_sku . '/' . $product->internal_sku . '.' . $extension;
                 $product->default_image_url = $defaulImg;
                 $product->videos = json_decode($product->videos);
                 $name = strtolower($product->product_browse_pg_name);
@@ -516,7 +516,7 @@ class ProductController extends Controller
         $output['data'] = $searched_product;
         // return response()->json($output, 200);
         return response()->json($output)
-        ->header('Cache-Control', 'max-age=86400, public');
+            ->header('Cache-Control', 'max-age=86400, public');
     }
 
     public function productStyle(Request $request)
@@ -571,6 +571,13 @@ class ProductController extends Controller
                 ->orwhere('is_bestseller', 1)
                 ->limit(5)
                 ->get();
+            foreach ($query as $pro) {
+                $path = parse_url($pro->default_image_url, PHP_URL_PATH);
+                $extension = pathinfo($path, PATHINFO_EXTENSION);
+                ## create image
+                $defaulImg = env('AWS_URL') . 'products/images/' . $pro->internal_sku . '/' . $pro->internal_sku . '.' . $extension;
+                $pro->default_image_url = $defaulImg;
+            }
         } else {
             $menu = 2;
             $query = ProductModel::where('menu', $menu)
@@ -579,6 +586,13 @@ class ProductController extends Controller
                 ->orwhere('is_bestseller', 1)
                 ->limit(5)
                 ->get();
+            foreach ($query as $pro) {
+                $path = parse_url($pro->default_image_url, PHP_URL_PATH);
+                $extension = pathinfo($path, PATHINFO_EXTENSION);
+                ## create image
+                $defaulImg = env('AWS_URL') . 'products/images/' . $pro->internal_sku . '/' . $pro->internal_sku . '.' . $extension;
+                $pro->default_image_url = $defaulImg;
+            }
         }
         $output['data'] = $query;
         return response()->json($output, 200);
