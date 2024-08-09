@@ -58,9 +58,9 @@ class UserDashboardController extends Controller
             }
             $output['address'] = $address_arr;
         }
-        // return response()->json($output, 200);
-        return response()->json($output)
-        ->header('Cache-Control', 'max-age=86400, public');
+        return response()->json($output, 200);
+        // return response()->json($output)
+        // ->header('Cache-Control', 'max-age=86400, public');
     }
 
     public function getUserData($user_id)
