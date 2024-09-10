@@ -101,6 +101,8 @@ class CartController extends Controller
 
     public function cartItems(Request $request)
     {
+        echo "OK";
+        exit;
         $rules = [
             'user_id' => 'required',
             'engraving' => 'sometimes|required_with:font',
