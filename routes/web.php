@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Mail;
 	*/
 
 
-
 Auth::routes();
 Route::get('/ping', function () {
     return response()->json(['status' => 'ok'], 200);
